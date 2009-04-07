@@ -8,10 +8,9 @@
 /*
  * 1. List:  ( Sequence ) | ( )
  * 2. Sequence:  ListElement, Sequence | ListElement
- * 3. ListElement:  List | NUMBER 
+ * 3. ListElement:  List | NUMBER
  */
- */
-	
+
 // CUP Specification for a List Parser
 import java_cup.runtime.*;
 
@@ -27,20 +26,29 @@ terminal Character  NUM;
 non terminal NFA    List, Sequence, ListElement;
 
 /* Precedences */
-//precedence left x;
+// NONE
 
 /* The grammar */
-List ::= LPAREN Sequence:s RPAREN
-          (: RESULT = new ListObj (s); :)
-          | LPAREN RPAREN;
-          (: RESULT = new ListObj (); :)
-          
-Sequence ::= ListElement:e COMMA Sequence:s
-          (: RESULT = (ListObj)e.add(s); :)
-          | ListElement:e;
-          (: RESULT = (ListObj)e; :)
-          
-ListElement ::= List:l 
-          (: RESULT = (ListObj)l; :)
-           | NUM:n;
-          (: RESULT = (ListObj)addNum(n); :)
+List ::=
+    LPAREN Sequence:s RPAREN
+    {: RESULT = new ListObj (s); :}
+    |
+    LPAREN RPAREN
+    {: RESULT = new ListObj (); :}
+    ;
+
+Sequence ::=
+    ListElement:e COMMA Sequence:s
+    {: RESULT = (ListObj)e.add(s); :}
+    |
+    ListElement:e
+    {: RESULT = (ListObj)e; :}
+    ;
+
+ListElement ::=
+    List:l
+    {: RESULT = (ListObj)l; :}
+    |
+    NUM:n
+    {: RESULT = (ListObj)addNum(n); :}
+    ;
