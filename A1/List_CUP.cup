@@ -1,0 +1,46 @@
+/*
+ *  Program:  List_CUP.cup
+ *  Authors:  Jordan Osecki, Joseph Conley, Geoff Oxholm, and Rich Price
+ *  Class:    CS550, Assignment 1, Spring 2009
+ *  Description:  Uses a parser coded in CUP to parse a list, store it in an object, and then print it out.
+ */
+
+/*
+ * 1. List:  ( Sequence ) | ( )
+ * 2. Sequence:  ListElement, Sequence | ListElement
+ * 3. ListElement:  List | NUMBER 
+ */
+ */
+	
+// CUP Specification for a List Parser
+import java_cup.runtime.*;
+
+/* Preliminaries to set up and use the scanner. */
+init with {: scanner.init();              :};
+scan with {: return scanner.next_token(); :};
+
+/* Terminals (tokens returned by the scanner). */
+terminal            COMMA, LPAREN, RPAREN;
+terminal Character  NUM;
+
+/* Non terminals */
+non terminal NFA    List, Sequence, ListElement;
+
+/* Precedences */
+//precedence left x;
+
+/* The grammar */
+List ::= LPAREN Sequence:s RPAREN
+          (: RESULT = new ListObj (s); :)
+          | LPAREN RPAREN;
+          (: RESULT = new ListObj (); :)
+          
+Sequence ::= ListElement:e COMMA Sequence:s
+          (: RESULT = (ListObj)e.add(s); :)
+          | ListElement:e;
+          (: RESULT = (ListObj)e; :)
+          
+ListElement ::= List:l 
+          (: RESULT = (ListObj)l; :)
+           | NUM:n;
+          (: RESULT = (ListObj)addNum(n); :)
