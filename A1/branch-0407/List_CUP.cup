@@ -1,0 +1,70 @@
+/*
+ *  Program:  List_CUP.cup
+ *  Authors:  Jordan Osecki, Joseph Conley, Geoff Oxholm, and Rich Price
+ *  Class:    CS550, Assignment 1, Spring 2009
+ *  Description:  Uses a parser coded in CUP to parse a list, store it in an object, and then print it out.
+ */
+
+/*
+ * 1. List:  ( Sequence ) | ( )
+ * 2. Sequence:  ListElement, Sequence | ListElement
+ * 3. ListElement:  List | NUMBER
+ */
+
+// CUP Specification for a List Parser
+import java_cup.runtime.*;
+
+/* Preliminaries to set up and use the scanner.
+init with {: scanner.init();              :};
+scan with {: return scanner.next_token(); :};
+*/
+
+
+parser code {:
+
+    /* this part is included in the parser class */
+    public static void main (String args[]) throws Exception{
+        new parser(new Yylex(System.in)).parse();
+    }
+:}
+
+
+/* Terminals (tokens returned by the scanner). */
+terminal            COMMA, LPAREN, RPAREN;
+terminal Integer  NUM;
+
+/* Non terminals */
+non terminal List List;
+non terminal Sequence Sequence;
+non terminal ListElement ListElement;
+
+/* Precedences */
+// NONE
+
+/* The grammar */
+List ::=
+    /* List with a sequence in it */
+    LPAREN Sequence:s RPAREN
+    {: RESULT = new List(s); :}
+    |
+    /* Empty List */
+    LPAREN RPAREN
+    {: RESULT = new List(); :}
+    ;
+
+Sequence ::=
+    /* More than one item */
+    ListElement:e COMMA Sequence:s
+    {: RESULT = new Sequence(e, s); :}
+    |
+    ListElement:e
+    {: RESULT = new Sequence(e); :}
+    ;
+
+ListElement ::=
+    List:l
+    {: RESULT = new ListListElement(l); :}
+    |
+    NUM:n
+    {: RESULT = new NumberListElement(n); :}
+    ;
