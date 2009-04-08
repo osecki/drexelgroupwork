@@ -18,51 +18,33 @@ public class List_RDP
 {
 	// Global variables for current line and current token
 	private static String line = "";
-	private static char token;
+	private static Character token;
 
 	// Recursive-descent parser functions
 	
 	private static List List()
 	{
 		// Match '('
-	    if (token == '(')
+		match('(');
+	    	
+	    List temp;
+	    	
+	    if (token != ')')
 	    {
-	    	System.out.println("Just found '('");
-	    	grabChar();
-	    	
-	    	List temp;
-	    	
-	    	if (token == ')')
-	    	{
-	    		System.out.println("Just found ')'");
-	    		temp = new List(); // Match an empty list
-	    		return temp;
-	    	}
-	    	else
-	    	{
-	    		// Match Sequence
-	    		temp = new List ( Sequence() );
-	    		
-	    		grabChar();
-	    		
-	    		// Match ')'
-	    		if ( peakAtNext() == ')')
-	    		{
-	    			grabChar();
-	    			return temp;
-	    		}
-	    		else
-	    		{
-	    			error();
-	    			return null;
-	    		}
-	    	}
+	    	// Means it is not an empty list
+	    	temp = new List( Sequence() );
 	    }
 	    else
 	    {
-	    	error();
-	    	return null;
+	    	// Means it is an empty list
+	    	temp = new List ();
 	    }
+	    		
+	    // Match ')'
+	    if (token != ')')
+	    	error();
+	    
+	    return temp;
 	}
 
 	private static Sequence Sequence ()
@@ -71,14 +53,16 @@ public class List_RDP
 		ListElement tempLE = ListElement();
 	    
 		// Look for comma
-	    if ( peakAtNext() == ',' )
+	    if ( token == ',' )
 	    {
+	    	// Means more than one item in list
 	    	grabChar();
 	    	Sequence temp = new Sequence (tempLE, Sequence());
 	    	return temp;
 	    }
 	    else
 	    {
+	    	// Means only one item in list
 	    	Sequence temp = new Sequence (tempLE);
 	    	return temp;
 	    }
@@ -89,14 +73,24 @@ public class List_RDP
 		// Match a number
 		if ( Character.isDigit(token))
 		{
-			ListElement temp = new NumberListElement((int)token);		
+			// Grab all of its digits
+			String number = token.toString();
+			grabChar();
+			
+			while ( Character.isDigit(token))
+			{
+				number += token.toString();
+				grabChar();
+			}
+			
+			ListElement temp = new NumberListElement(Integer.parseInt(number));	
 			return temp;
 		}
 		// Match a list
-		else if (peakAtNext() == '(')
+		else if (token == '(')
 		{
 			ListElement temp = new ListListElement (List());
-			
+			grabChar();
 			return temp;
 		}
 		// Matched neither, so there was an error
@@ -126,11 +120,22 @@ public class List_RDP
 		else
 			return '~';
 	}
+	
+	// Function which takes a symbol, matches it if token equals it, otherwise throws error
+	private static void match (char c)
+	{
+		if (token == c)
+		{
+			grabChar();
+		}
+		else
+			error();
+	}
 
 	// Error in parsing gets caught here
 	private static void error() 
 	{
-	   System.out.println("Invalid regular expression given.");
+	   System.out.println("Invalid list syntax used.");
 	   System.exit(1);
 	}
 	
