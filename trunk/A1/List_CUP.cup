@@ -31,22 +31,27 @@ terminal          COMMA, LPAREN, RPAREN, ENDLINE;
 terminal Integer  NUM;
 
 /* Non terminals */
-non terminal List ListTop, List;
+non terminal Expression;
+non terminal ExpressionList;
+
+non terminal List List;
 non terminal Sequence Sequence;
 non terminal ListElement ListElement;
 
 /* Precedences */
 // NONE
 
+
 /* Top Level to print from and handle endline */
-ListTop ::=
-    ListTop:lt List:l ENDLINE
-    {: System.out.print("Output:  "); l.print(); :}
-    | List:l ENDLINE
-    {: System.out.print("Output:  "); l.print(); :}
+ExpressionList ::=
+    ExpressionList Expression
+    |
+    Expression;
+
+Expression ::= List:l
+    {: System.out.print(": "); l.print(); :}
     ;
 
-/* The grammar */
 List ::=
     /* List with a sequence in it */
     LPAREN Sequence:s RPAREN
