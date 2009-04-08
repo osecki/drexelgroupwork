@@ -27,16 +27,24 @@ parser code {:
 :}
 
 /* Terminals (tokens returned by the scanner). */
-terminal          COMMA, LPAREN, RPAREN;
+terminal          COMMA, LPAREN, RPAREN, ENDLINE;
 terminal Integer  NUM;
 
 /* Non terminals */
-non terminal List List;
+non terminal List ListTop, List;
 non terminal Sequence Sequence;
 non terminal ListElement ListElement;
 
 /* Precedences */
 // NONE
+
+/* Top Level to print from and handle endline */
+ListTop ::=
+    ListTop:lt List:l ENDLINE
+    {: l.print(); :}
+    | List:l ENDLINE
+    {: l.print(); :}
+    ;
 
 /* The grammar */
 List ::=
