@@ -25,7 +25,7 @@ public class Sequence {
         String s = "";
 
         for (Iterator<ListElement> iterator = elements.iterator (); iterator.hasNext (); ) {
-            s = s + iterator.next();
+            s = s + iterator.next().toString();
             if(iterator.hasNext()) {
                 s = s + ", ";
             }
