@@ -14,41 +14,57 @@
 // CUP Specification for a List Parser
 import java_cup.runtime.*;
 
-/* Preliminaries to set up and use the scanner. */
+/* Preliminaries to set up and use the scanner.
 init with {: scanner.init();              :};
 scan with {: return scanner.next_token(); :};
+*/
+
+
+parser code {:
+
+    /* this part is included in the parser class */
+    public static void main (String args[]) throws Exception{
+        new parser(new Yylex(System.in)).parse();
+    }
+:}
+
 
 /* Terminals (tokens returned by the scanner). */
 terminal            COMMA, LPAREN, RPAREN;
-terminal Character  NUM;
+terminal Integer  NUM;
 
 /* Non terminals */
-non terminal NFA    List, Sequence, ListElement;
+non terminal List List;
+non terminal Sequence Sequence;
+non terminal ListElement ListElement;
 
 /* Precedences */
 // NONE
 
 /* The grammar */
 List ::=
+    /* List with a sequence in it */
     LPAREN Sequence:s RPAREN
-    {: RESULT = new ListObj (s); :}
+    {: RESULT = new List(s); :}
     |
+    /* Empty List */
     LPAREN RPAREN
-    {: RESULT = new ListObj (); :}
+    {: RESULT = new List(); :}
     ;
 
 Sequence ::=
+    /* More than one item */
     ListElement:e COMMA Sequence:s
-    {: RESULT = (ListObj)e.add(s); :}
+    {: RESULT = new Sequence(e, s); :}
     |
     ListElement:e
-    {: RESULT = (ListObj)e; :}
+    {: RESULT = new Sequence(e); :}
     ;
 
 ListElement ::=
     List:l
-    {: RESULT = (ListObj)l; :}
+    {: RESULT = new ListListElement(l); :}
     |
     NUM:n
-    {: RESULT = (ListObj)addNum(n); :}
+    {: RESULT = new NumberListElement(n); :}
     ;
