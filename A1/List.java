@@ -17,7 +17,7 @@ public class List extends ListElement {
     }
 
     public String toString() {
-        String s = "List (";
+        String s = "(";
         if (elements != null) {
              s = s + elements.toString();
         }
