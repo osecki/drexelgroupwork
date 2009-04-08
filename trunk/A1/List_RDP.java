@@ -6,11 +6,6 @@
  */
 
 /*
- * Regex:  Term UNION Regex | Term
- * Term:  Factor CONCAT Term | Factor
- * Factor:  Object CLOSURE | Object
- * Object:  CHAR | LParen Regex RPAREN
- * 
  * 1. List:  ( Sequence ) | ( )
  * 2. Sequence:  ListElement, Sequence | ListElement
  * 3. ListElement:  List | NUMBER 
@@ -27,24 +22,24 @@ public class List_RDP
 
 	// Recursive-descent parser functions
 	
-	private static ListObj List()
+	private static List List()
 	{
 		// Match '('
 	    if (token == '(')
 	    {
 	    	grabChar();
 	    	
-	    	ListObj temp;
+	    	List temp;
 	    	
 	    	if (token == ')')
 	    	{
-	    		temp = new ListObj(); // Match an empty list
+	    		temp = new List(); // Match an empty list
 	    		return temp;
 	    	}
 	    	else
 	    	{
 	    		// Match Sequence
-	    		temp = new ListObj ( Sequence() );
+	    		temp = new List ( Sequence() );
 	    		
 	    		grabChar();
 	    		
@@ -52,7 +47,10 @@ public class List_RDP
 	    		if (token == ')')
 	    			return temp;
 	    		else
+	    		{
 	    			error();
+	    			return null;
+	    		}
 	    	}
 	    }
 	    else
@@ -62,38 +60,39 @@ public class List_RDP
 	    }
 	}
 
-	private static ListObj Sequence ()
+	private static Sequence Sequence ()
 	{
 		// Match ListElement
-		ListObj temp = ListElement();
+		ListElement tempLE = ListElement();
 	    
 		grabChar();
 		
 		// Look for comma
 	    if ( token == ',' )
 	    {
-	    	grabChar();
-	    	ListObj temp2 = Sequence();
-	    	temp.add(temp2);
+	    	Sequence temp = new Sequence (tempLE, Sequence());
+	    	return temp;
 	    }
-	    
-	    return temp;
+	    else
+	    {
+	    	Sequence temp = new Sequence (tempLE);
+	    	return temp;
+	    }
 	}
 
-	private static ListObj ListElement()
+	private static ListElement ListElement()
 	{
 		// Match a number
 		if ( Character.isDigit(token))
 		{
-			ListObj temp = new ListObj();
-			temp.add(token + "");			
+			ListElement temp = new NumberListElement((int)token);		
 			return temp;
 		}
 		// Match a list
 		else if (peakAtNext() == '(')
 		{
 			grabChar();
-			ListObj temp = List();
+			ListElement temp = new ListListElement (List());
 			
 			return temp;
 		}
@@ -101,7 +100,7 @@ public class List_RDP
 		else
 		{
 			error();
-			return new ListObj();
+			return null;
 		}
 	}
 
@@ -145,7 +144,7 @@ public class List_RDP
 		    {
 		      line = br.readLine();
 		      grabChar();
-		      ListObj temp = List();
+		      List temp = List();
 		      temp.print();
 		     }
 		    catch (Exception e) 
