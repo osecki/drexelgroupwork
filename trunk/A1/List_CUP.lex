@@ -17,7 +17,6 @@ import java_cup.runtime.Symbol;
 %%
 %cup
 %eof{
-  System.out.println("Done");
 %eof}
 %%
 [\n] {return new Symbol(sym.ENDLINE); }

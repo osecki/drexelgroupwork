@@ -25,7 +25,7 @@ public class Sequence {
         for ( int i = 0; i < elements.size(); i++ )
         {
         	if ( i != elements.size() - 1 )
-        		s = s + elements.elementAt(i).toString() + ", ";
+        		s = s + elements.elementAt(i).toString() + ",";
         	else
         		s = s + elements.elementAt(i).toString();
         }

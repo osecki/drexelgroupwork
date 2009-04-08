@@ -41,9 +41,9 @@ non terminal ListElement ListElement;
 /* Top Level to print from and handle endline */
 ListTop ::=
     ListTop:lt List:l ENDLINE
-    {: l.print(); :}
+    {: System.out.print("Output:  "); l.print(); :}
     | List:l ENDLINE
-    {: l.print(); :}
+    {: System.out.print("Output:  "); l.print(); :}
     ;
 
 /* The grammar */

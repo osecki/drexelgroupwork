@@ -71,7 +71,7 @@ public class List_RDP
 	private static ListElement ListElement()
 	{
 		// Match a number
-		if ( Character.isDigit(token))
+		if ( Character.isDigit(token) || (token == '-' && Character.isDigit(peakAtNext())) )
 		{
 			// Grab all of its digits
 			String number = token.toString();
@@ -153,7 +153,7 @@ public class List_RDP
 		      line = br.readLine();
 		      grabChar();
 		      List temp = List();
-		      temp.print();
+		      System.out.print("Output:  "); temp.print();
 		     }
 		    catch (Exception e) 
 		    {
