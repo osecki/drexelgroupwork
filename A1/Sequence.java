@@ -6,6 +6,7 @@
  **/
 
 import java.util.Vector;
+import java.util.Iterator;
 
 public class Sequence {
     private Vector<ListElement> elements;
@@ -22,13 +23,14 @@ public class Sequence {
 
     public String toString() {
         String s = "";
-        for ( int i = 0; i < elements.size(); i++ )
-        {
-        	if ( i != elements.size() - 1 )
-        		s = s + elements.elementAt(i).toString() + ",";
-        	else
-        		s = s + elements.elementAt(i).toString();
+
+        for (Iterator<ListElement> iterator = elements.iterator (); iterator.hasNext (); ) {
+            s = s + iterator.next();
+            if(iterator.hasNext()) {
+                s = s + ", ";
+            }
         }
+
         return s;
     }
 }
