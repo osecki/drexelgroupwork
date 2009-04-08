@@ -8,7 +8,7 @@
 /*
  * 1. List:  ( Sequence ) | ( )
  * 2. Sequence:  ListElement, Sequence | ListElement
- * 3. ListElement:  List | NUMBER
+ * 3. ListElement:  List | NUMBER 
  */
 
 // This is the lex file for the List
