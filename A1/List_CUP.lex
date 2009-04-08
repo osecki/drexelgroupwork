@@ -20,6 +20,6 @@ import java_cup.runtime.Symbol;
 "(" {return new Symbol(sym.LPAREN); }
 ")" {return new Symbol(sym.RPAREN); }
 "," {return new Symbol(sym.COMMA); }
-[0-9] {return new Symbol(sym.NUM, new Integer(yytext())); }
+([0-9]+)|(-[0-9]+) {return new Symbol(sym.NUM, new Integer(yytext())); }
 [ \t\r\n\f] {/* ignore white space */}
 . {System.err.println("Illegal character: "+yytext());}

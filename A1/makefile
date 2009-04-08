@@ -8,7 +8,14 @@ parse: *.cup
 lex: *.lex
 	jflex *.lex
 
-compile: sym.java parser.java Yylex.java 
+compile1: sym.java parser.java Yylex.java 
 	$(JAVAC) sym.java parser.java Yylex.java List.java ListElement.java NumberListElement.java Sequence.java Sequence.java
-run:
+	
+run1:
 	$(JAVA) -classpath $(CLASSPATH) parser
+
+compile2: List_RDP.java
+	$(JAVAC) List_RDP.java List.java ListElement.java NumberListElement.java Sequence.java Sequence.java
+
+run2:
+	$(JAVA) List_RDP

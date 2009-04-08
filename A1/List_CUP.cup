@@ -19,18 +19,15 @@ init with {: scanner.init();              :};
 scan with {: return scanner.next_token(); :};
 */
 
-
 parser code {:
-
     /* this part is included in the parser class */
     public static void main (String args[]) throws Exception{
         new parser(new Yylex(System.in)).parse();
     }
 :}
 
-
 /* Terminals (tokens returned by the scanner). */
-terminal            COMMA, LPAREN, RPAREN;
+terminal          COMMA, LPAREN, RPAREN;
 terminal Integer  NUM;
 
 /* Non terminals */
