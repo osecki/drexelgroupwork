@@ -16,10 +16,14 @@
 import java_cup.runtime.Symbol;
 %%
 %cup
+%eof{
+  System.out.println("Done");
+%eof}
 %%
-"(" {return new Symbol(sym.LPAREN); }
-")" {return new Symbol(sym.RPAREN); }
-"," {return new Symbol(sym.COMMA); }
+[\n] {return new Symbol(sym.ENDLINE); }
+[(] {return new Symbol(sym.LPAREN); }
+[)] {return new Symbol(sym.RPAREN); }
+[,] {return new Symbol(sym.COMMA); }
 ([0-9]+)|(-[0-9]+) {return new Symbol(sym.NUM, new Integer(yytext())); }
 [ \t\r\n\f] {/* ignore white space */}
 . {System.err.println("Illegal character: "+yytext());}
