@@ -1,6 +1,6 @@
 /*
  *  Program:  List_RDP.java
- *  Authors:  Jordan Osecki, Joseph Conley, Geoff Oxholm, and Rich Price
+ *  Authors:  Jordan Osecki, Geoff Oxholm, and Rich Price
  *  Class:    CS550, Assignment 1, Spring 2009
  *  Description:  Uses a recursive-descent parser to parse a simple list (of numbers and of lists), store it, and print it back out
  */
