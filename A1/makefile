@@ -2,6 +2,9 @@ JAVAC = javac
 JAVA = java
 CLASSPATH = /usr/share/java/cup.jar:/usr/share/java/JLex.jar:.
 
+part1: compile2 run2
+part2: parse lex compile1 run1
+
 parse: *.cup
 	cup *.cup
 

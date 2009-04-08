@@ -27,12 +27,14 @@ public class List_RDP
 		// Match '('
 	    if (token == '(')
 	    {
+	    	System.out.println("Just found '('");
 	    	grabChar();
 	    	
 	    	List temp;
 	    	
 	    	if (token == ')')
 	    	{
+	    		System.out.println("Just found ')'");
 	    		temp = new List(); // Match an empty list
 	    		return temp;
 	    	}
@@ -44,8 +46,11 @@ public class List_RDP
 	    		grabChar();
 	    		
 	    		// Match ')'
-	    		if (token == ')')
+	    		if ( peakAtNext() == ')')
+	    		{
+	    			grabChar();
 	    			return temp;
+	    		}
 	    		else
 	    		{
 	    			error();
@@ -65,11 +70,10 @@ public class List_RDP
 		// Match ListElement
 		ListElement tempLE = ListElement();
 	    
-		grabChar();
-		
 		// Look for comma
-	    if ( token == ',' )
+	    if ( peakAtNext() == ',' )
 	    {
+	    	grabChar();
 	    	Sequence temp = new Sequence (tempLE, Sequence());
 	    	return temp;
 	    }
@@ -91,7 +95,6 @@ public class List_RDP
 		// Match a list
 		else if (peakAtNext() == '(')
 		{
-			grabChar();
 			ListElement temp = new ListListElement (List());
 			
 			return temp;
