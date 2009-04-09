@@ -41,7 +41,6 @@ non terminal ListElement ListElement;
 /* Precedences */
 // NONE
 
-
 /* Top Level to print from and handle endline */
 ExpressionList ::=
     ExpressionList Expression
@@ -52,6 +51,7 @@ Expression ::= List:l
     {: System.out.print(": "); l.print(); :}
     ;
 
+/* Grammar */
 List ::=
     /* List with a sequence in it */
     LPAREN Sequence:s RPAREN
