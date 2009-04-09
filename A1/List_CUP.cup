@@ -48,7 +48,7 @@ ExpressionList ::=
     Expression;
 
 Expression ::= List:l
-    {: System.out.print(": "); l.print(); :}
+    {: System.out.print("Output: "); l.print(); /* System.out.flush(); */ :}
     ;
 
 /* Grammar */
