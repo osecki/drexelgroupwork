@@ -110,6 +110,12 @@ public class List_RDP
 		
 		token = line.charAt(0);
 		line = line.substring(1);
+
+		while ( token == ' ' )
+		{
+			token = line.charAt(0);
+			line = line.substring(1);
+		}
 	}
 	
 	// Function which returns the next character, if one exists
