@@ -43,12 +43,13 @@ non terminal ListElement ListElement;
 
 /* Top Level to print from and handle endline */
 ExpressionList ::=
-    ExpressionList Expression
+    ExpressionList Expression ENDLINE
     |
-    Expression;
+    Expression ENDLINE
+    ;
 
 Expression ::= List:l
-    {: System.out.print("Output: "); l.print(); /* System.out.flush(); */ :}
+    {: System.out.print("Output: "); l.print(); System.out.flush(); :}
     ;
 
 /* Grammar */
