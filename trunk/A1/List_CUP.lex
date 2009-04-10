@@ -19,7 +19,7 @@ import java_cup.runtime.Symbol;
 %eof{
 %eof}
 %%
-// [\r\n]+ {return new Symbol(sym.ENDLINE); }
+[\r\n|\n]+ {return new Symbol(sym.ENDLINE); }
 [(] {return new Symbol(sym.LPAREN); }
 [)] {return new Symbol(sym.RPAREN); }
 [,] {return new Symbol(sym.COMMA); }
