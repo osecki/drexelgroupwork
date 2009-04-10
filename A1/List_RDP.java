@@ -18,18 +18,18 @@ public class List_RDP
 {
 	// Global variables for current line and current token
 	private static String line = "";
-	private static Character token;
+	private static String token;
 
 	// Recursive-descent parser functions
 	
 	private static List List()
 	{
 		// Match '('
-		match('(');
+		match("(");
 	    	
 	    List temp;
 	    	
-	    if (token != ')')
+	    if ( ! token.equals(")") )
 	    {
 	    	// Means it is not an empty list
 	    	temp = new List( Sequence() );
@@ -41,7 +41,7 @@ public class List_RDP
 	    }
 	    		
 	    // Match ')'
-	    if (token != ')')
+	    if ( ! token.equals(")") )
 	    	error();
 	    
 	    return temp;
@@ -53,7 +53,7 @@ public class List_RDP
 		ListElement tempLE = ListElement();
 	    
 		// Look for comma
-	    if ( token == ',' )
+	    if ( token.equals(",") )
 	    {
 	    	// Means more than one item in list
 	    	grabChar();
@@ -70,24 +70,27 @@ public class List_RDP
 
 	private static ListElement ListElement()
 	{
-		// Match a number
-		if ( Character.isDigit(token) || (token == '-' && Character.isDigit(peakAtNext())) )
+    // Test if token is a number
+		boolean isNum = true;
+
+		try
 		{
-			// Grab all of its digits
-			String number = token.toString();
+			Integer.parseInt(token);
+		}
+		catch (Exception e)
+		{
+			isNum = false;
+		}
+
+		// Match a number
+		if ( isNum )
+		{
+			ListElement temp = new NumberListElement(Integer.parseInt(token));	
 			grabChar();
-			
-			while ( Character.isDigit(token))
-			{
-				number += token.toString();
-				grabChar();
-			}
-			
-			ListElement temp = new NumberListElement(Integer.parseInt(number));	
 			return temp;
 		}
 		// Match a list
-		else if (token == '(')
+		else if (token.equals("("))
 		{
 			ListElement temp = new ListListElement (List());
 			grabChar();
@@ -108,13 +111,25 @@ public class List_RDP
 		if (line.length() == 0 )
 			error();
 		
-		token = line.charAt(0);
+		// Grab initial token
+		token = line.substring(0, 1);
 		line = line.substring(1);
 
-		while ( token == ' ' )
+		// Move it past white space to something real
+		while ( token.equals(" ") ) //&& line.length() > 0 )
 		{
-			token = line.charAt(0);
+			token = line.substring(0, 1);
 			line = line.substring(1);
+		}
+
+		// Grab more if it is a number
+		if ( Character.isDigit(token.charAt(0)) || ( token.charAt(0) == '-' && Character.isDigit(peakAtNext())) )
+		{
+			while ( Character.isDigit(peakAtNext()) )
+			{
+				token += Character.toString(peakAtNext());
+				line = line.substring(1);
+			}
 		}
 	}
 	
@@ -128,9 +143,9 @@ public class List_RDP
 	}
 	
 	// Function which takes a symbol, matches it if token equals it, otherwise throws error
-	private static void match (char c)
+	private static void match (String c)
 	{
-		if (token == c)
+		if (token.equals(c))
 		{
 			grabChar();
 		}
