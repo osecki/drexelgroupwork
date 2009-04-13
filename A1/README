@@ -1,7 +1,7 @@
 Assignment 1
 CS550 Programming Languages
 Spring 2009, 4/13/2009
-Team:  Jordan Osecki, Geoff Oxholm, Rich Price
+Team: (Group 7) Jordan Osecki, Geoff Oxholm, Rich Price, and Alimore Reza
 Team Lead on this Assignment:  Jordan Osecki and Geoff Oxholm
 
 Implemented successfully are the rescursive descent parser written by hand
@@ -13,7 +13,7 @@ routine to print it out exactly as is. It can be run with standard input or
 by being given a file.
 
 Part 2:  The parser generator (CUP/Lex) reads a list using the same grammer.
-It creates an internal data structure (using action code) and then uses a 
+It creates an internal data structure (using action code) and then uses a
 print routine to print it out exactly as is.
 
 Files Included:
