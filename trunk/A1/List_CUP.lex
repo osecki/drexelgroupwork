@@ -1,9 +1,9 @@
-/*
+/**
  *  Program:  List_CUP.lex
- *  Authors:  Jordan Osecki, Geoff Oxholm, and Rich Price
+ *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, and Alimoor Reza
  *  Class:    CS550, Assignment 1, Spring 2009
  *  Description:  Uses a parser coded in CUP to parse a list, store it in an object, and then print it out.
- */
+ **/
 
 /*
  * 1. List:  ( Sequence ) | ( )

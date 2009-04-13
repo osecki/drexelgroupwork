@@ -1,14 +1,14 @@
-/*
+/**
  *  Program:  List_RDP.java
- *  Authors:  Jordan Osecki, Geoff Oxholm, and Rich Price
+ *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, and Alimoor Reza
  *  Class:    CS550, Assignment 1, Spring 2009
  *  Description:  Uses a recursive-descent parser to parse a simple list (of numbers and of lists), store it, and print it back out
- */
+ **/
 
 /*
  * 1. List:  ( Sequence ) | ( )
  * 2. Sequence:  ListElement, Sequence | ListElement
- * 3. ListElement:  List | NUMBER 
+ * 3. ListElement:  List | NUMBER
  */
 
 import java.io.BufferedReader;
@@ -21,14 +21,14 @@ public class List_RDP
 	private static String token;
 
 	// Recursive-descent parser functions
-	
+
 	private static List List()
 	{
 		// Match '('
 		match("(");
-	    	
+
 	    List temp;
-	    	
+
 	    if ( ! token.equals(")") )
 	    {
 	    	// Means it is not an empty list
@@ -39,11 +39,11 @@ public class List_RDP
 	    	// Means it is an empty list
 	    	temp = new List ();
 	    }
-	    		
+
 	    // Match ')'
 	    if ( ! token.equals(")") )
 	    	error();
-	    
+
 	    return temp;
 	}
 
@@ -51,7 +51,7 @@ public class List_RDP
 	{
 		// Match ListElement
 		ListElement tempLE = ListElement();
-	    
+
 		// Look for comma
 	    if ( token.equals(",") )
 	    {
@@ -85,7 +85,7 @@ public class List_RDP
 		// Match a number
 		if ( isNum )
 		{
-			ListElement temp = new NumberListElement(Integer.parseInt(token));	
+			ListElement temp = new NumberListElement(Integer.parseInt(token));
 			grabChar();
 			return temp;
 		}
@@ -105,12 +105,12 @@ public class List_RDP
 	}
 
 	// Function which grabs next token (character) and shortens 'line'
-	private static void grabChar () 
-	{	
+	private static void grabChar ()
+	{
 		// Error if line empty when a token is asked for
 		if (line.length() == 0 )
 			error();
-		
+
 		// Grab initial token
 		token = line.substring(0, 1);
 		line = line.substring(1);
@@ -132,7 +132,7 @@ public class List_RDP
 			}
 		}
 	}
-	
+
 	// Function which returns the next character, if one exists
 	private static char peakAtNext()
 	{
@@ -141,7 +141,7 @@ public class List_RDP
 		else
 			return '~';
 	}
-	
+
 	// Function which takes a symbol, matches it if token equals it, otherwise throws error
 	private static void match (String c)
 	{
@@ -154,12 +154,12 @@ public class List_RDP
 	}
 
 	// Error in parsing gets caught here
-	private static void error() 
+	private static void error()
 	{
 	   System.out.println("Invalid list syntax used.");
 	   System.exit(1);
 	}
-	
+
 	// Main:  Reads from Stdin multiple regular expressions, sending them to parser
 	public static void main ( String [] args )
 	{
@@ -167,16 +167,16 @@ public class List_RDP
 		InputStreamReader sr = new InputStreamReader(System.in);
 		BufferedReader br    = new BufferedReader(sr);
 
-		while (true) 
+		while (true)
 		{
-			try 
+			try
 		    {
 		      line = br.readLine();
 		      grabChar();
 		      List temp = List();
 		      System.out.print("Output:  "); temp.print();
 		     }
-		    catch (Exception e) 
+		    catch (Exception e)
 		    {
 		    	System.out.println("Stdin exited. Please re-run the file to test more Regular expressions.");
 		    	break;

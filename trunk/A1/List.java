@@ -1,6 +1,6 @@
 /**
  *  Program:  List.java
- *  Authors:  Jordan Osecki, Geoff Oxholm, and Rich Price
+ *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, and Alimoor Reza
  *  Class:    CS550, Assignment 1, Spring 2009
  *  Description:  List Class which can be built from parser and can print
  **/
