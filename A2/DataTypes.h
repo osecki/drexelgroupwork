@@ -29,6 +29,14 @@ public:
 private:
 };
 
+// Started to create class Element, which can be list or number
+class Element
+{
+	  Element() {};
+		virtual ~Element() {}
+}
+
+
 class Number : public Expr
 {
 public:
