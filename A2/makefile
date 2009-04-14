@@ -1,7 +1,4 @@
-JAVAC = javac
-JAVA = java
-CLASSPATH = /usr/share/java/cup.jar:/usr/share/java/JFLex.jar:.
-INPUT_FILE = sample_input
+INPUT_FILE = sampleprog1.p
 
 parse: ML-interpreterBody.ypp ML-interpreterHead.y
 	bison ML-interpreterBody.ypp
@@ -19,3 +16,6 @@ run: Compiler
 
 runfile: Compiler
 	./Compiler < $(INPUT_FILE)
+
+clean:
+	rm -f lex.yy.c lex.yy.o *.tab.*
