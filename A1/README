@@ -37,7 +37,9 @@ part2" for each part, respectively. It will compile the code and then run it
 accepting standard in. The only problem with this is that for Part 2, it
 responds to your inputs one step behind. This was a problem I also had in
 CS360 (Undergrad version) and the professor could not figure out how to fix
-it and said it was fine.
+it and said it was fine. I also discussed it with KP and he acknowledged
+that it was a glitch in cup/lex, and that it is okay. He recommended using
+input files, which is a feature we have already included.
 
 -To run the code with a file as input, simply run "make part1file" and "make
 part2file" for each part, respectively. This will run it with sample_input
