@@ -18,4 +18,4 @@ runfile: Compiler
 	./Compiler < $(INPUT_FILE)
 
 clean:
-	rm -f lex.yy.c lex.yy.o *.tab.*
+	rm -f lex.yy.c lex.yy.o *.tab.* Compiler

@@ -64,9 +64,25 @@ term: term '*' factor   { printf("term -> term * factor\n"); }
     ;
 
 factor:     '(' expr ')'  { printf("factor -> ( expr ) \n"); }
-    |       NUMBER { printf("factor -> number\n"); }
+    |       element { printf("factor -> element\n"); }
     |       IDENT { printf("factor -> identifier\n"); }
     |       funcall { printf("factor -> funcall\n"); }
+    ;
+
+element:		list { printf("element -> list\n"); }
+	  |				NUMBER { printf("element -> NUMBER\n"); }
+    ;
+
+list:				'[' sequence ']' { printf("list -> sequence\n"); }
+    |       '[' ']' { printf("list -> empty list\n"); }
+    ;
+
+sequence:   listelement ',' sequence { printf("sequence -> listelem , seq\n"); }
+    |       listelement { printf("sequence -> listelem\n"); }
+    ;
+
+listelement: list { printf("listelement -> list\n"); }
+    |        NUMBER { printf("listelement -> NUMBER\n"); }
     ;
 
 funcall:  IDENT '(' expr_list ')' 

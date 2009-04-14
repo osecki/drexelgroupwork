@@ -108,9 +108,25 @@ term: term '*' factor   { $$ = new Times($1,$3); }
     ;
 
 factor:     '(' expr ')'  { $$ = $2; }
-    |       NUMBER { $$ = new Number($1); }
+    |       element { $$ = new Element($1); }
     |       IDENT { $$ = new Ident(string($1)); }
     |       funcall { $$ = $1; }
+    ;
+
+element:    list { $$ = new List($1); }
+    |       NUMBER { $$ = new Number($1); }
+    ;
+
+list:       '[' sequence ']' { $$ = new List($2); }
+    |       '[' ']' { $$ = new List(); }
+    ;
+
+sequence:   listelement ',' sequence { $$ = new Sequence($1, $3); }
+    |       listelement { $$ = new Sequence($1); }
+    ;
+
+listelement: list { $$ = new ListListElement($1); }
+    |        NUMBER { $$ = new NumberListElement($1); }
     ;
 
 funcall:  IDENT '(' expr_list ')'
