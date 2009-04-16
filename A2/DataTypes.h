@@ -1,6 +1,6 @@
 /*
  * file:  program.h (contains declarations of Program, StmtList, Stmt, Expr)
- * Author: Jeremy Johnson 
+ * Author: Jeremy Johnson
  * Date: 2/05/07
  *
  * Description:
@@ -10,12 +10,18 @@
 #include <map>
 #include <list>
 
+#include "List.h"
+#include "ListElement.h"
+#include "ListListElement.h"
+#include "NumberListElement.h"
+#include "Sequence.h"
+
 using namespace std;
 
 
-// forward declarations 
+// forward declarations
 // StmtList used by IfStmt and WhileStmt which are Stmt
-// Proc which contains StmtList used in Expr, Stmt, StmtList 
+// Proc which contains StmtList used in Expr, Stmt, StmtList
 class StmtList;
 class Proc;
 
@@ -23,18 +29,13 @@ class Expr
 {
 public:
 	Expr() {};
-	virtual ~Expr() {};  
-	virtual int eval(map<string,int> NT, map<string,Proc*> FT) const = 0;  
+	virtual ~Expr() {};
+	virtual int eval(map<string,int> NT, map<string,Proc*> FT) const = 0;
 
 private:
 };
 
-// Started to create class Element, which can be list or number
-class Element
-{
-	  Element() {};
-		virtual ~Element() {}
-}
+
 
 
 class Number : public Expr
@@ -101,12 +102,12 @@ private:
 };
 
 
-class Stmt 
+class Stmt
 {
 public:
 	Stmt() {};
-	virtual ~Stmt() {};  
-	virtual void eval(map<string,int> &NT, map<string,Proc*> &FT) const = 0;  
+	virtual ~Stmt() {};
+	virtual void eval(map<string,int> &NT, map<string,Proc*> &FT) const = 0;
 
 private:
 };
@@ -116,7 +117,7 @@ class AssignStmt: public Stmt
 {
 public:
 	AssignStmt(string name="", Expr *E=NULL);
-	~AssignStmt() {delete E_;}; 
+	~AssignStmt() {delete E_;};
 	void eval(map<string,int> &NT, map<string,Proc*> &FT) const;
 private:
 	string name_;
@@ -124,11 +125,11 @@ private:
 };
 
 class DefineStmt : public Stmt
-{ 
+{
 public:
 	DefineStmt(string name="", Proc *P=NULL);
-	virtual ~DefineStmt();  
-	virtual void eval(map<string,int> &NT, map<string,Proc*> &FT) const;  
+	virtual ~DefineStmt();
+	virtual void eval(map<string,int> &NT, map<string,Proc*> &FT) const;
 private:
 	string name_;
 	Proc* P_;
@@ -159,12 +160,12 @@ private:
 };
 
 
-class StmtList 
+class StmtList
 {
 public:
 	StmtList() {};
-	void eval(map<string,int> &NT, map<string,Proc*> &FT);  
-	void insert(Stmt *T);  
+	void eval(map<string,int> &NT, map<string,Proc*> &FT);
+	void insert(Stmt *T);
 
 private:
 	list<Stmt*> SL_;
@@ -174,7 +175,7 @@ class Proc
 {
 public:
 	Proc(list<string> *PL, StmtList *SL);
-	~Proc() {delete SL_; };  
+	~Proc() {delete SL_; };
 	int apply(map<string,int> &NT, map<string,Proc*> &FT, list<Expr*> *EL);
 private:
 	StmtList *SL_;
@@ -182,13 +183,13 @@ private:
 	int NumParam_;
 };
 
-class Program 
+class Program
 {
 public:
 	Program(StmtList *SL);
-	~Program() {delete SL_; };  
+	~Program() {delete SL_; };
 	void dump();
-	void eval();  
+	void eval();
 
 private:
 	StmtList *SL_;
