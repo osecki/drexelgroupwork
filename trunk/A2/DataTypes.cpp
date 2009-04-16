@@ -212,3 +212,173 @@ int Proc::apply(map<string,int> &NT, map<string,Proc*> &FT, list<Expr*> *EL)
 		exit(1);
 	}
 }
+
+
+/*
+ * List.h
+ *
+ *  Created on: Apr 13, 2009
+ *      Author: reza
+ */
+
+#ifndef LIST_H_
+#define LIST_H_
+#include<iostream>
+#include "ListElement.h"
+#include "Sequence.h"
+using namespace std;
+class List : public ListElement{
+
+public:
+	// default constructor
+	List() {
+		elements = NULL;
+	}
+
+	// constructor with sequence
+	List (Sequence s) {
+		elements = s;
+	}
+
+	string toString() {
+		string s = "(";
+		if (elements != NULL)
+			s = s + elements.toString();
+		return s + ")";
+	}
+
+	void print() {
+		cout<<toString()<<endl;
+	}
+private:
+	Sequence elements;
+};
+#endif /* LIST_H_ */
+
+
+/*
+ * Sequence.h
+ *
+ *  Created on: Apr 13, 2009
+ *      Author: reza
+ */
+
+#ifndef SEQUENCE_H_
+#define SEQUENCE_H_
+
+#include<iostream>
+#include<vector>
+using namespace std;
+#include "ListElement.h";
+
+class Sequence {
+
+public:
+
+	Sequence(ListElement e) {
+		elements = new vector<ListElement>();
+		elements.push_front(e);
+	}
+
+	string toString() {
+        string s = "";
+
+        for (Iterator<ListElement> iterator = elements.iterator (); iterator.hasNext (); ) {
+            s = s + iterator.next().toString();
+            if(iterator.hasNext()) {
+                s = s + ",";
+            }
+        }
+        return s;
+    }
+
+private:
+	vector<ListElement> elements;
+
+};
+#endif /* SEQUENCE_H_ */
+
+
+/*
+ * ListElement.h
+ *
+ *  Created on: Apr 13, 2009
+ *      Author: reza
+ */
+
+#ifndef LISTELEMENT_H_
+#define LISTELEMENT_H_
+
+#include<iostream>
+using namespace std;
+
+class ListElement{
+public:
+	// this method must be overriden in the child class
+	virtual string toString();
+	void print() {
+		cout<<toString()<<endl;
+	}
+
+
+};
+
+
+#endif /* LISTELEMENT_H_ */
+
+
+/*
+ * ListListElement.h
+ *
+ *  Created on: Apr 13, 2009
+ *      Author: reza
+ */
+
+#ifndef LISTLISTELEMENT_H_
+#define LISTLISTELEMENT_H_
+#include "ListElement.h"
+class ListListElement : public ListElement {
+public:
+	ListListElement() {
+		l = new List();
+	}
+
+	ListListElement(List l) {
+		this.l = l;
+	}
+
+	string toString() {
+		return l.toString();
+	}
+private:
+	List l;
+};
+
+#endif /* LISTLISTELEMENT_H_ */
+
+
+/*
+ * NumberListElement.h
+ *
+ *  Created on: Apr 13, 2009
+ *      Author: reza
+ */
+
+#ifndef NUMBERLISTELEMENT_H_
+#define NUMBERLISTELEMENT_H_
+#include "ListElement.h"
+
+class NumberListElement : public ListElement {
+public:
+	NumberListElement(int n) {
+		this.n = n;
+	}
+	/*string toString() {
+		return n.toString();
+	}*/
+
+protected:
+	int n;
+};
+
+#endif /* NUMBERLISTELEMENT_H_ */
