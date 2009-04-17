@@ -30,7 +30,6 @@ Program *P;
   List* listptr;
   Sequence* sequenceptr;
   ListElement* listelementptr;
-
 }
 
 
@@ -88,7 +87,7 @@ stmt:  assign_stmt { $$ = $1; }
     ;
 
 assign_stmt: IDENT ASSIGNOP expr
-                    { $$ = new AssignStmt(string($1),$3); }
+                    { $$ = new AssignStmt(string($1),$3); printf("Good");}
            ;
 
 define_stmt: DEFINE IDENT PROC '(' param_list ')' stmt_list END
@@ -119,6 +118,7 @@ term: term '*' factor   { $$ = new Times($1,$3); }
 
 factor:     '(' expr ')'  { $$ = $2; }
     //|       listelement { $$ = $1; }
+    |       NUMBER { $$ = new Number($1); }
     |       IDENT { $$ = new Ident(string($1)); }
     |       funcall { $$ = $1; }
     ;
