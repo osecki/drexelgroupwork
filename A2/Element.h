@@ -5,22 +5,22 @@
  *      Author: reza
  */
 
-#ifndef LISTELEMENT_H_
-#define LISTELEMENT_H_
+#ifndef ELEMENT_H
+#define ELEMENT_H
 
+#include "Expr.h"
 #include<iostream>
 using namespace std;
 
-class ListElement{
+class Element : public Expr {
 public:
-	// this method must be overriden in the child class
-	virtual string toString();
+    Element() {};
+	virtual string toString() const = 0;
 	void print() {
 		cout<<toString()<<endl;
 	}
-
-
 };
 
 
-#endif /* LISTELEMENT_H_ */
+#endif
+
