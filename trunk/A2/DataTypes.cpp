@@ -10,7 +10,19 @@
 #include <string>
 #include <map>
 #include <list>
-#include "DataTypes.h"
+#include "Element.h"
+#include "Expr.h"
+#include "FunCall.h"
+#include "Ident.h"
+#include "Math.h"
+#include "Proc.h"
+#include "Program.h"
+#include "Statements.h"
+#include "Stmt.h"
+#include "StmtList.h"
+#include "List.h"
+#include "Number.h"
+#include <sstream>
 
 using namespace std;
 
@@ -121,6 +133,13 @@ int Number::eval(map<string,int> NT, map<string,Proc*> FT) const
 {
 	return value_;
 }
+
+string Number::toString() const {
+    std::stringstream s;
+    s << value_;
+    return s.str();
+}
+
 
 Ident::Ident(string name)
 {
