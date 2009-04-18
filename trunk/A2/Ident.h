@@ -13,8 +13,16 @@ class Proc;
 class Ident : public Expr
 {
 public:
-    Ident(string name = "");
-    virtual int eval(map<string,int> NT, map<string,Proc*> FT) const;
+    Ident(string name = "")
+    {
+	name_ = name;
+    }
+
+    virtual int eval(map<string,int> NT, map<string,Proc*> FT) const
+    {
+	return NT[name_];
+    }
+
 private:
     string name_;
 };
