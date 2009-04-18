@@ -7,9 +7,9 @@ parse: ML-interpreterBody.ypp ML-interpreterHead.y
 flex: ML-lex.l
 	flex ML-lex.l
 
-compile: lex.yy.c ML-interpreterBody.tab.cpp DataTypes.cpp
+compile: lex.yy.c ML-interpreterBody.tab.cpp
 	gcc -c lex.yy.c
-	g++-4.2 ML-interpreterBody.tab.cpp DataTypes.cpp lex.yy.o -o Compiler
+	g++-4.2 ML-interpreterBody.tab.cpp *.h lex.yy.o -o Compiler
 
 run: Compiler
 	./Compiler
