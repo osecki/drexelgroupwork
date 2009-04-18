@@ -2,6 +2,7 @@
 #define STMTLIST_H
 
 #include <map>
+#include <list>
 #include <string>
 #include "Stmt.h"
 
@@ -23,11 +24,12 @@ public:
 
     void insert(Stmt *T)
     {
-        SL_.push_front(S);
+        SL_.push_front(T);
     }
 
 private:
-    list<Stmt*> SL_;
+    list <Stmt*> SL_;
 };
 
 #endif
+

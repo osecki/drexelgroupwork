@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include "StmtList.h"
+#include <iostream>
 
 using namespace std;
 
@@ -54,5 +55,5 @@ private:
     int NumParam_;
 };
 
-
 #endif
+

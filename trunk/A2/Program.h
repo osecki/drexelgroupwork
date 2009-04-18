@@ -1,7 +1,7 @@
 #ifndef PROGRAM_H
 #define PROGRAM_H
 
-
+#include <iostream>
 #include <map>
 #include <string>
 #include "StmtList.h"
@@ -46,3 +46,4 @@ private:
 };
 
 #endif
+

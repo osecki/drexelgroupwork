@@ -56,4 +56,6 @@ public:
 private:
 	list<Element*> *elements;
 };
-#endif /* LIST_H_ */
+
+#endif
+

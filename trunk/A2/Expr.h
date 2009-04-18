@@ -3,6 +3,8 @@
 
 #include <map>
 #include <string>
+#include "Proc.h"
+
 using namespace std;
 
 class Proc;

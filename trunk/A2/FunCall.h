@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include "Expr.h"
+#include "Proc.h"
 
 using namespace std;
 

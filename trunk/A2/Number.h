@@ -4,6 +4,7 @@
 #include "Element.h"
 #include <map>
 #include <string>
+#include <sstream>
 
 class Proc;
 
