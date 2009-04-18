@@ -5,6 +5,7 @@
 #include <string>
 #include "Stmt.h"
 #include "Expr.h"
+#include "StmtList.h"
 
 class Proc;
 
@@ -39,7 +40,7 @@ public:
          P_ = P;
     }
 
-    virtual ~DefineStmt() {delete P_;}
+    ~DefineStmt() {delete P_;}
 
     virtual void eval(map<string,int> &NT, map<string,Proc*> &FT) const
     {
@@ -102,3 +103,4 @@ private:
 };
 
 #endif
+
