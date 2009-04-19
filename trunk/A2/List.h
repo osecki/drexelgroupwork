@@ -21,41 +21,19 @@ class List : public Element {
 
 public:
 	// default constructor
-	List() {
-		elements = NULL;
-	}
+	List();
 
 	// constructor with sequence
-	List (list<Element*> *s) {
-		elements = s;
-	}
+	List (list<Element*> *s);
 
-	virtual string toString() const {
-		string s = "(";
-
-        for (list<Element*>::iterator iterator = elements->begin(); iterator != elements->end(); iterator++) {
-            s = s + (*iterator)->toString();
-            s = s + ",";
-        }
-        return s;
-		return s + ")";
-	}
+	virtual string toString() const;
 
     // What does it mean to evalute a list?
-    virtual int eval(map<string,int> NT, map<string,Proc*> FT) const {
-        return 0;
-    }
+    virtual int eval(map<string,int> NT, map<string,Proc*> FT) const;
 
-    virtual ~List() {
-        for (list<Element*>::iterator iterator = elements->begin(); iterator != elements->end(); iterator++) {
-            delete (*iterator);
-        }
-        delete elements;
-    }
+    virtual ~List();
 
 private:
 	list<Element*> *elements;
 };
-
-#endif
-
+#endif /* LIST_H_ */

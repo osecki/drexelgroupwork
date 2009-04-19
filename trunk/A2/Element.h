@@ -14,11 +14,8 @@ using namespace std;
 
 class Element : public Expr {
 public:
-    Element() {};
 	virtual string toString() const = 0;
-	void print() {
-		cout<<toString()<<endl;
-	}
+	void print();
 };
 
 
