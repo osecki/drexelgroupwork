@@ -26,6 +26,8 @@ public:
 	// constructor with sequence
 	List (list<Element*> *s);
 
+    Element* getFirst();
+
 	virtual string toString() const;
 
     // What does it mean to evalute a list?

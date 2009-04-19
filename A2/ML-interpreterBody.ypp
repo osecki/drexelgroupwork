@@ -152,6 +152,7 @@ param_list:
 expr: expr '+' term   { $$ = new Plus($1,$3); }
     | expr '-' term   { $$ = new Minus($1,$3); }
     | term            { $$ = $1; }
+    | 'car' list      { $$ = $2->getFirst();}
     ;
 
 term: term '*' factor   { $$ = new Times($1,$3); }
