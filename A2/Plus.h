@@ -1,6 +1,5 @@
-#ifndef IDENT_H
-#define IDENT_H
-
+#ifndef PLUS_H
+#define PLUS_H
 
 #include <map>
 #include <string>
@@ -10,13 +9,15 @@ using namespace std;
 
 class Proc;
 
-class Ident : public Expr
+class Plus : public Expr
 {
 public:
-    Ident(string name = "");
+    Plus(Expr* op1 = NULL, Expr* op2 = NULL);
+    virtual ~Plus() {delete op1_; delete op2_;};
     virtual int eval(map<string,int> NT, map<string,Proc*> FT) const;
 private:
-    string name_;
+    Expr* op1_;
+    Expr* op2_;
 };
 
 #endif

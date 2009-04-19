@@ -2,8 +2,8 @@
 #define STMTLIST_H
 
 #include <map>
-#include <list>
 #include <string>
+#include <list>
 #include "Stmt.h"
 
 using namespace std;
@@ -14,22 +14,11 @@ class StmtList
 {
 public:
     StmtList() {};
-
-    void eval(map<string,int> &NT, map<string,Proc*> &FT)
-    {
-        list<Stmt*>::iterator Sp;
-        for (Sp = SL_.begin();Sp != SL_.end();Sp++)
-	      (*Sp)->eval(NT,FT);
-    }
-
-    void insert(Stmt *T)
-    {
-        SL_.push_front(T);
-    }
+    void eval(map<string,int> &NT, map<string,Proc*> &FT);
+    void insert(Stmt *T);
 
 private:
-    list <Stmt*> SL_;
+    list<Stmt*> SL_;
 };
 
 #endif
-

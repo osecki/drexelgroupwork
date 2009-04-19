@@ -9,7 +9,7 @@ flex: ML-lex.l
 
 compile: lex.yy.c ML-interpreterBody.tab.cpp
 	gcc -c lex.yy.c
-	g++-4.2 ML-interpreterBody.tab.cpp *.h lex.yy.o -o Compiler
+	g++-4.2 *.cpp lex.yy.o -o Compiler
 
 run: Compiler
 	./Compiler

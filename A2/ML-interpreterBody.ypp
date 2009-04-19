@@ -5,10 +5,15 @@
 #include "Expr.h"
 #include "FunCall.h"
 #include "Ident.h"
-#include "Math.h"
+#include "Plus.h"
+#include "Minus.h"
+#include "Times.h"
 #include "Proc.h"
 #include "Program.h"
-#include "Statements.h"
+#include "IfStmt.h"
+#include "WhileStmt.h"
+#include "AssignStmt.h"
+#include "DefineStmt.h"
 #include "Stmt.h"
 #include "StmtList.h"
 #include "List.h"
@@ -214,4 +219,3 @@ void yyerror (const char *error)
 {
     cout << error << endl;
 }
-

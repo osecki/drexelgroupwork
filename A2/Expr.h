@@ -3,8 +3,6 @@
 
 #include <map>
 #include <string>
-#include "Proc.h"
-
 using namespace std;
 
 class Proc;
@@ -12,7 +10,6 @@ class Proc;
 class Expr
 {
 public:
-    Expr() {};
     virtual ~Expr() {};
     virtual int eval(map<string,int> NT, map<string,Proc*> FT) const = 0;
 
