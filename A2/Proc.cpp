@@ -12,7 +12,7 @@ Proc::Proc(list<string> *PL, StmtList *SL)
     NumParam_ = PL->size();
 }
 
-int Proc::apply(map<string,int> &NT, map<string,Proc*> &FT, list<Expr*> *EL)
+Element* Proc::apply(map<string,Element*> &NT, map<string,Proc*> &FT, list<Expr*> *EL)
 {
     map<string,int> NNT;
     NNT.clear();

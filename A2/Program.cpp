@@ -11,7 +11,7 @@ SL_ = SL;
 
 void Program::dump()
 {
-  map<string,int>::iterator p;
+  map<string,Element*>::iterator p;
   map<string,Proc*>::iterator f;
 
   cout << "Dump of Symbol Table" << endl;

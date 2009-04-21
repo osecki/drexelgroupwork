@@ -12,7 +12,7 @@ DefineStmt::DefineStmt(string name, Proc *P)
   P_ = P;
 }
 
-void DefineStmt::eval(map<string,int> &NT, map<string,Proc*> &FT) const
+void DefineStmt::eval(map<string,Element*> &NT, map<string,Proc*> &FT) const
 {
     FT[name_] = P_;
 }

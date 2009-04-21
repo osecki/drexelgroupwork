@@ -1,7 +1,6 @@
-#ifndef FUNCALL_H
-#define FUNCALL_H
+#ifndef CAR_H
+#define CAR_H
 
-#include <list>
 #include <map>
 #include <string>
 #include "Expr.h"
@@ -10,15 +9,14 @@ using namespace std;
 
 class Proc;
 
-class FunCall : public Expr
+class Car : public Expr
 {
 public:
-    FunCall(string name, list<Expr*> *AL);
-    virtual ~FunCall();
+    Car (Expr* op1 = NULL);
+    virtual ~Car() {delete op1_;};
     virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
 private:
-    string name_;
-    list<Expr*> *AL_;
+    Expr* op1_;
 };
 
 #endif

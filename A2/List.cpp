@@ -74,9 +74,8 @@ string List::toString() const {
     return s + ")";
 }
 
-// What does it mean to evalute a list?
-int List::eval(map<string,int> NT, map<string,Proc*> FT) const {
-    return elements->size();
+Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
+    return elements;
 }
 
 List::~List() {

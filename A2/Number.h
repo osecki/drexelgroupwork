@@ -11,7 +11,7 @@ class Number : public Element
 {
 public:
     Number(int value = 0);
-    virtual int eval(map<string,int> NT, map<string,Proc*> FT) const;
+    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
     virtual string toString() const;
 private:
     int value_;

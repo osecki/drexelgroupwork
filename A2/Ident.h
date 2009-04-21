@@ -13,7 +13,7 @@ class Ident : public Expr
 {
 public:
     Ident(string name = "");
-    virtual int eval(map<string,int> NT, map<string,Proc*> FT) const;
+    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
 private:
     string name_;
 };

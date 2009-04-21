@@ -7,7 +7,7 @@ Ident::Ident(string name)
     name_ = name;
 }
 
-int Ident::eval(map<string,int> NT, map<string,Proc*> FT) const
+Element* Ident::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
     return NT[name_];
 }
