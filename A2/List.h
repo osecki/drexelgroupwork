@@ -28,7 +28,10 @@ public:
 
     Element* getFirst();
     Element* getRest();
-
+    /*void nullp();
+		List* cons (Element x);
+	  List* concatenate ( List a, List b);
+    */
 	  virtual string toString() const;
 
     // What does it mean to evalute a list?
