@@ -1,4 +1,5 @@
 %{
+
 #include <iostream>
 #include <string>
 #include "Element.h"
@@ -21,6 +22,7 @@
 
 using namespace std;
 void yyerror (const char *error);
+
 extern "C"
 {
         int yyparse(void);
@@ -31,13 +33,16 @@ extern "C"
         }
 
 }
+
 StmtList *SL;
 list<string> *PL;
 list<Expr*> *EL;
 list<Element*> *SQ;
 Program *P;
+
 %}
-%union {
+
+%union x {
   int       value;  /* For the lexical analyser. NUMBER tokens */
   char      *ident;  /* For the lexical analyser. IDENT tokens */
   Expr      *exprptr;
@@ -63,6 +68,12 @@ Program *P;
 %token OD
 %token PROC
 %token END
+%token CAR
+%token CDR
+%token NULLP
+%token LISTP
+%token INTP
+%token CONS
 %type <exprptr> expr
 %type <exprptr> term
 %type <exprptr> factor
@@ -83,102 +94,139 @@ Program *P;
 %%
 
 program:
-    stmt_list { P = new Program($1);
-                cout << "Running Program" << endl;
+    stmt_list { cout << "Program -> StmtList" << endl;
+                P = new Program($1);
+                cout << "Program -> StmtList" << endl;
                 P->eval();
                 P->dump(); }
     ;
 
 stmt_list:
-    stmt ';' stmt_list { $3->insert($1); $$ = $3; }
+    stmt ';' stmt_list { cout << "StmtList -> Stmt ; StmtList" << endl;
+                         $3->insert($1); $$ = $3; }
     |
-    stmt  { SL = new StmtList();  SL->insert($1); $$ = SL; }
+    stmt  { cout << "StmtList -> Stmt" << endl;
+            SL = new StmtList();  SL->insert($1); $$ = SL; }
     ;
 
-stmt:  assign_stmt { $$ = $1; }
-    |  define_stmt { $$ = $1; }
-    |  if_stmt { $$ = $1; }
-    |  while_stmt { $$ = $1; }
+stmt:  assign_stmt { cout << "Stmt -> AssignStmt" << endl;
+                     $$ = $1; }
+    |  define_stmt { cout << "Stmt -> DefineStmt" << endl;
+                     $$ = $1; }
+    |  if_stmt     { cout << "Stmt -> IfStmt" << endl;
+                     $$ = $1; }
+    |  while_stmt  { cout << "Stmt -> WhileStmt" << endl;
+                     $$ = $1; }
     ;
 
 assign_stmt:
-    IDENT ASSIGNOP expr { $$ = new AssignStmt(string($1),$3); }
+    IDENT ASSIGNOP expr { cout << "AssignStmt -> Identifier := Expr" << endl;
+                          $$ = new AssignStmt(string($1),$3); }
     ;
 
 define_stmt:
-    DEFINE IDENT PROC '(' param_list ')' stmt_list END { $$ = new DefineStmt(string($2),new Proc($5,$7)); }
+    DEFINE IDENT PROC '(' param_list ')' stmt_list END { cout << "DefineStmt -> Define ID proc" << endl;
+                                                         cout << "( param_list ) StmtList end" << endl;
+                                                         $$ = new DefineStmt(string($2),new Proc($5,$7)); }
     ;
 
 
 if_stmt:
-    IF expr THEN stmt_list ELSE stmt_list FI { $$ = new IfStmt($2,$4,$6); }
+    IF expr THEN stmt_list ELSE stmt_list FI { cout << "IfStmt -> IF expr THEN StmtList ELSE StmtList FI" << endl;
+                                               $$ = new IfStmt($2,$4,$6); }
     ;
 
 while_stmt:
-    WHILE expr DO stmt_list OD { $$ = new WhileStmt($2,$4); }
+    WHILE expr DO stmt_list OD { cout << "WhileStmt -> WHILE expr DO StmtList OD" << endl;
+                                 $$ = new WhileStmt($2,$4); }
     ;
 
 param_list:
-    IDENT ',' param_list { $3->push_front(string($1)); $$ = $3; }
+    IDENT ',' param_list { cout << "ParamList -> IDENT, ParamList" << endl;
+                           $3->push_front(string($1)); $$ = $3; }
     |
-    IDENT { PL = new list<string>;
+    IDENT { cout << "ParamList -> IDENT" << endl;
+            PL = new list<string>;
             PL->push_front(string($1));
             $$ = PL; }
     ;
 
-expr: expr '+' term                  { $$ = new Plus($1,$3); }
-    | expr '-' term                  { $$ = new Minus($1,$3); }
-    | expr '||' expr                 { }
-    | term                           { $$ = $1; }
-    | 'car' '(' expr ')'             { $$ = $3->getFirst();}
-    | 'cdr' '(' expr ')'             { }
-    | 'nullp' '(' expr ')'           { }
-    | 'intp' '(' expr ')'            { }
-    | 'listp' '(' expr ')'           { }
-    | 'cons' '(' expr ',' expr ')'   { }
+expr: expr '+' term                { cout << "Expr -> expr + term" << endl;
+                                     $$ = new Plus($1,$3); }
+    | expr '-' term                { cout << "Expr -> expr - term" << endl;
+                                     $$ = new Minus($1,$3); }
+    | expr '||' expr               { cout << "Expr -> expr || expr" << endl;
+                                     }
+    | term                         { cout << "Expr -> term" << endl;
+                                     $$ = $1; }
+    | CAR '(' list ')'             { cout << "Expr -> car (list)" << endl;
+                                     $$ = $3->getFirst(); }
+    | CDR '(' list ')'             { cout << "Expr -> cdr (list)" << endl;
+                                     }
+    | NULLP '(' list ')'           { cout << "Expr -> nullp (list)" << endl;
+                                     }
+    | INTP '(' expr ')'            { cout << "Expr -> intp (expr)" << endl;
+                                     }
+    | LISTP '(' expr ')'           { cout << "Expr -> listp (expr)" << endl;
+                                     }
+    | CONS '(' expr ',' list ')'   { cout << "Expr -> cons (expr, list)" << endl;
+                                     }
     ;
 
-term: term '*' factor   { $$ = new Times($1,$3); }
-    | factor            { $$ = $1; }
+term: term '*' factor   { cout << "Term -> Term * Factor" << endl;
+                          $$ = new Times($1,$3); }
+    | factor            { cout << "Term -> Factor" << endl;
+                          $$ = $1; }
     ;
 
-factor:     '(' expr ')'  { $$ = $2; }
-    |       list { $$ = $1; }
-    |       NUMBER { $$ = new Number($1); }
-    |       IDENT { $$ = new Ident(string($1)); }
-    |       funcall { $$ = $1; }
+factor:     '(' expr ')'  { cout << "Factor -> (expr)" << endl;
+                            $$ = $2; }
+    |       list          { cout << "Factor -> list" << endl;
+                            $$ = $1; }
+    |       NUMBER        { cout << "Factor -> NUMBER" << endl;
+                            $$ = new Number($1); }
+    |       IDENT         { cout << "Factor -> IDENT" << endl;
+                            $$ = new Ident(string($1)); }
+    |       funcall       { cout << "Factor -> funcall" << endl;
+                            $$ = $1; }
     ;
 
-list:       '[' sequence ']' { $$ = new List($2); }
-    |       '[' ']' { $$ = new List(); }
+list:       '[' sequence ']' { cout << "List -> [ sequence ]" << endl;
+                               $$ = new List($2); }
+    |       '[' ']'          { cout << "List  -> []" << endl;
+                               $$ = new List(); }
     ;
 
-// Modeled after the various _list types above
 sequence:
-    element ',' sequence { $3->push_front($1); $$ = $3; }
+    element ',' sequence { cout << "Seq -> element, seq" << endl;
+                           $3->push_front($1); $$ = $3; }
     |
-    element { SQ = new list<Element*>;
+    element { cout << "seq -> element" << endl;
+              SQ = new list<Element*>;
               SQ->push_front($1);
               $$ = SQ; }
     ;
 
 element:
-    NUMBER { $$ = new Number($1); }
+    NUMBER { cout << "elment -> number" << endl;
+             $$ = new Number($1); }
     |
-    list { $$ = $1; }
+    list { cout << "Element -> list" << endl;
+           $$ = $1; }
     ;
 
 funcall:
-    IDENT '(' expr_list ')' { $$ = new FunCall(string($1),$3); }
+    IDENT '(' expr_list ')' { cout << "Funcall -> Identifier ( expr_list)" << endl;
+                              $$ = new FunCall(string($1),$3); }
     ;
 
 expr_list:
-    expr ',' expr_list {
-        $3->push_front($1);  $$ = $3; }
+    expr ',' expr_list { cout << "ExprList -> expr, exprList" << endl;
+                         $3->push_front($1);  $$ = $3; }
     |
-    expr {
-        EL = new list<Expr*>;
-        EL->push_front($1); $$ = EL;
+    expr { cout << "ExprList -> expr" << endl;
+           EL = new list<Expr*>;
+           EL->push_front($1); $$ = EL;
     }
 %%
 

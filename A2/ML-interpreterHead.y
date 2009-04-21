@@ -16,6 +16,12 @@
 %token OD
 %token PROC
 %token END
+%token CAR
+%token CDR
+%token NULLP
+%token LISTP
+%token INTP
+%token CONS
 
 %%
 
@@ -57,12 +63,12 @@ expr: expr '+' term   { printf("expr -> expr + term\n"); }
     | expr '-' term   { printf("expr -> expr - term\n"); }
     | expr '||' expr  { printf("expr -> expr || expr\n"); }
     | term            { printf("expr -> term\n"); }
-    | 'car' '(' expr ')'             { printf("expr -> car (expr)\n"); }
-    | 'cdr' '(' expr ')'             { printf("expr -> cdr (expr)\n"); }
-    | 'nullp' '(' expr ')'           { printf("expr -> nullp(expr)\n"); }
-    | 'intp' '(' expr ')'            { printf("expr -> intp(expr)\n"); }
-    | 'listp' '(' expr ')'           { printf("expr -> listp(expr)\n"); }
-    | 'cons' '(' expr ',' expr ')'   { printf("expr -> cons(expr, expr)\n"); }
+    | CAR '(' expr ')'             { printf("expr -> car (expr)\n"); }
+    | CDR '(' expr ')'             { printf("expr -> cdr (expr)\n"); }
+    | NULLP '(' expr ')'           { printf("expr -> nullp(expr)\n"); }
+    | INTP '(' expr ')'            { printf("expr -> intp(expr)\n"); }
+    | LISTP '(' expr ')'           { printf("expr -> listp(expr)\n"); }
+    | CONS '(' expr ',' expr ')'   { printf("expr -> cons(expr, expr)\n"); }
     ;
 
 term: term '*' factor   { printf("term -> term * factor\n"); }
