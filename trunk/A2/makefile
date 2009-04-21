@@ -1,5 +1,3 @@
-INPUT_FILE = samples/sampleNEW
-
 parse: ML-interpreterBody.ypp ML-interpreterHead.y
 	bison ML-interpreterBody.ypp
 	bison -d ML-interpreterHead.y
@@ -13,9 +11,6 @@ compile: lex.yy.c ML-interpreterBody.tab.cpp
 
 run: Compiler
 	./Compiler
-
-runfile: Compiler
-	./Compiler < $(INPUT_FILE)
 
 clean:
 	rm -f lex.yy.c lex.yy.o *.tab.* Compiler
