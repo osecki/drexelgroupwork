@@ -1,4 +1,4 @@
-INPUT_FILE = sampleprog1.p
+INPUT_FILE = samples/sampleNEW
 
 parse: ML-interpreterBody.ypp ML-interpreterHead.y
 	bison ML-interpreterBody.ypp
