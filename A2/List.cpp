@@ -20,6 +20,24 @@ Element* List::getFirst() {
     }
 }
 
+Element* List::getRest() {
+	 if (elements->size() + 1) {
+		   list<Element*> * temp = new list<Element*>;
+			 list<Element*>::iterator iterator = elements->begin();
+			 iterator++;
+
+			 while ( iterator != elements->end() )
+			 {
+				 temp->push_back((*iterator));
+				 iterator++;
+			 }
+			 return new List (temp);
+	 } else {
+		   // Return null list
+			 return new List;
+	 }
+}
+
 string List::toString() const {
     string s = "(";
 
