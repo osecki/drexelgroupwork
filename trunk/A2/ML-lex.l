@@ -14,6 +14,13 @@
 \,       { return yytext[0]; }
 \[       { return yytext[0]; }
 \]       { return yytext[0]; }
+[car]    { return yytext[0]; }
+[cdr]    { return yytext[0]; }
+[nullp]  { return yytext[0]; }
+[intp]   { return yytext[0]; }
+[listp]  { return yytext[0]; }
+[cons]   { return yytext[0]; }
+[||]     { return yytext[0]; }
 :=       { return ASSIGNOP; }
 define   { return DEFINE; }
 if       { return IF; }
