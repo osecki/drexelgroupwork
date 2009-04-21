@@ -14,7 +14,7 @@ class Times : public Expr
 public:
     Times(Expr * op1 = NULL, Expr * op2 = NULL);
     virtual ~Times() {delete op1_; delete op2_;};
-    virtual int eval(map<string,int> NT, map<string,Proc*> FT) const;
+    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
 private:
     Expr* op1_;
     Expr* op2_;

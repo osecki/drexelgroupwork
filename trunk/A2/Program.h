@@ -17,8 +17,8 @@ public:
 
 private:
     StmtList *SL_;
-    map<string,int> NameTable_;
-    map<string,Proc*> FunctionTable_;
+    map<string, Element*> NameTable_;
+    map<string, Proc*> FunctionTable_;
 };
 
 #endif

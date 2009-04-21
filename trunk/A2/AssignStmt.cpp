@@ -8,7 +8,7 @@ AssignStmt::AssignStmt(string name, Expr *E)
   E_ = E;
 }
 
-void AssignStmt::eval(map<string,int> &NT, map<string,Proc*> &FT) const
+void AssignStmt::eval(map<string,Element*> &NT, map<string,Proc*> &FT) const
 {
     NT[name_] = E_->eval(NT,FT);
 }

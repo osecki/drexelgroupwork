@@ -15,7 +15,7 @@ class DefineStmt : public Stmt
 public:
     DefineStmt(string name="", Proc *P=NULL);
     virtual ~DefineStmt();
-    virtual void eval(map<string,int> &NT, map<string,Proc*> &FT) const;
+    virtual void eval(map<string,Element*> &NT, map<string,Proc*> &FT) const;
 private:
     string name_;
     Proc* P_;

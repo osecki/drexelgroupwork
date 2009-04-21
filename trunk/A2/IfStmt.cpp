@@ -12,7 +12,7 @@ IfStmt::IfStmt(Expr *E, StmtList *S1, StmtList *S2)
 
 IfStmt::~IfStmt() { delete E_; delete S1_; delete S2_; }
 
-void IfStmt::eval(map<string,int> &NT, map<string,Proc*> &FT) const
+void IfStmt::eval(map<string,Element*> &NT, map<string,Proc*> &FT) const
 {
     if (E_->eval(NT,FT) > 0)
         S1_->eval(NT,FT);

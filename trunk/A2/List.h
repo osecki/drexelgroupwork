@@ -33,8 +33,7 @@ public:
     */
 	  virtual string toString() const;
 
-    // What does it mean to evalute a list?
-    virtual int eval(map<string,int> NT, map<string,Proc*> FT) const;
+    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
 
     virtual ~List();
 

@@ -11,8 +11,9 @@
 #include<iostream>
 using namespace std;
 
-class Element : public Expr {
+class Element : Expr {
 public:
+	virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const = 0;
 	virtual string toString() const = 0;
 	void print();
 };

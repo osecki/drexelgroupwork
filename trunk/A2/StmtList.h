@@ -14,7 +14,7 @@ class StmtList
 {
 public:
     StmtList() {};
-    void eval(map<string,int> &NT, map<string,Proc*> &FT);
+    void eval(map<string,Element*> &NT, map<string,Proc*> &FT);
     void insert(Stmt *T);
 
 private:

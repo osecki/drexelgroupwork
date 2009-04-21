@@ -18,7 +18,7 @@ public:
 
     ~WhileStmt();
 
-    virtual void eval(map<string,int> &NT, map<string,Proc*> &FT) const;
+    virtual void eval(map<string,Element*> &NT, map<string,Proc*> &FT) const;
 
 private:
     Expr* E_;
