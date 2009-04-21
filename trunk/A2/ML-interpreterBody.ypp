@@ -19,6 +19,13 @@
 #include "StmtList.h"
 #include "List.h"
 #include "Number.h"
+#include "Car.h"
+#include "Cdr.h"
+#include "Cons.h"
+#include "Concat.h"
+#include "Nullp.h"
+#include "Listp.h"
+#include "Intp.h"
 
 using namespace std;
 void yyerror (const char *error);
@@ -162,22 +169,22 @@ expr: expr '+' term                { cout << "Expr -> expr + term" << endl;
                                      $$ = new Plus($1,$3); }
     | expr '-' term                { cout << "Expr -> expr - term" << endl;
                                      $$ = new Minus($1,$3); }
-    | expr '||' expr               { cout << "Expr -> expr || expr" << endl;
-                                     }
+    | factor '||' factor             { cout << "Expr -> expr || expr" << endl;
+                                     $$ = new Concat ($1, $3); }
     | term                         { cout << "Expr -> term" << endl;
                                      $$ = $1; }
-    | CAR '(' list ')'             { cout << "Expr -> car (list)" << endl;
+    | CAR '(' factor ')'           { cout << "Expr -> car (list)" << endl;
                                      $$ = new Car ($3); }
-    | CDR '(' list ')'             { cout << "Expr -> cdr (list)" << endl;
+    | CDR '(' factor ')'           { cout << "Expr -> cdr (list)" << endl;
                                      $$ = new Cdr ($3); }
-    | NULLP '(' list ')'           { cout << "Expr -> nullp (list)" << endl;
-                                     /*$$ = $3->nullp();*/ }
-    | INTP '(' element ')'           { cout << "Expr -> intp (expr)" << endl;
-                                     }
-    | LISTP '(' element ')'          { cout << "Expr -> listp (expr)" << endl;
-                                     }
-    | CONS '(' element  ',' list ')' { cout << "Expr -> cons (expr, list)" << endl;
-                                     /*$$ = $5->cons($3);*/ }
+    | NULLP '(' factor ')'         { cout << "Expr -> nullp (list)" << endl;
+                                     $$ = new Nullp ($3); }
+    | INTP '(' factor ')'          { cout << "Expr -> intp (expr)" << endl;
+                                       $$ = new Intp ($3); }
+    | LISTP '(' factor ')'         { cout << "Expr -> listp (expr)" << endl;
+                                       $$ = new Listp ($3); }
+    | CONS '(' factor ',' factor ')' { cout << "Expr -> cons (expr, list)" << endl;
+                                       $$ = new Cons ($5, $3); }
     ;
 
 term: term '*' factor   { cout << "Term -> Term * Factor" << endl;
