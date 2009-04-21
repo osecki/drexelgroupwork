@@ -37,7 +37,26 @@ Element* List::getRest() {
 			 return new List;
 	 }
 }
+/*
+void nullp()
+{
+	if ( elements->size() == 0 )
+		return 1;
+	else
+		return 0;
+}
 
+List* cons (Element x)
+{
+	elements->push_front(x);
+	return new List (elements);
+}
+
+List* concatenate ( List a, List b)
+{
+
+}
+*/
 string List::toString() const {
     string s = "(";
 
@@ -48,7 +67,6 @@ string List::toString() const {
     return s;
     return s + ")";
 }
-
 
 // What does it mean to evalute a list?
 int List::eval(map<string,int> NT, map<string,Proc*> FT) const {

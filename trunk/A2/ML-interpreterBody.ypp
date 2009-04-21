@@ -164,13 +164,13 @@ expr: expr '+' term                { cout << "Expr -> expr + term" << endl;
     | CDR '(' list ')'             { cout << "Expr -> cdr (list)" << endl;
                                      $$ = $3->getRest(); }
     | NULLP '(' list ')'           { cout << "Expr -> nullp (list)" << endl;
+                                     /*$$ = $3->nullp();*/ }
+    | INTP '(' element ')'           { cout << "Expr -> intp (expr)" << endl;
                                      }
-    | INTP '(' expr ')'            { cout << "Expr -> intp (expr)" << endl;
+    | LISTP '(' element ')'          { cout << "Expr -> listp (expr)" << endl;
                                      }
-    | LISTP '(' expr ')'           { cout << "Expr -> listp (expr)" << endl;
-                                     }
-    | CONS '(' expr ',' list ')'   { cout << "Expr -> cons (expr, list)" << endl;
-                                     }
+    | CONS '(' element  ',' list ')' { cout << "Expr -> cons (expr, list)" << endl;
+                                     /*$$ = $5->cons($3);*/ }
     ;
 
 term: term '*' factor   { cout << "Term -> Term * Factor" << endl;
