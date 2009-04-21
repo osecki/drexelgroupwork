@@ -4,7 +4,7 @@
 %}
 
 %%
-[ \t\n] ;    /* ignore whitespace */
+[ \t\n\r] ;    /* ignore whitespace */
 \+       { return yytext[0]; }
 \-       { return yytext[0]; }
 \*       { return yytext[0]; }
@@ -12,6 +12,8 @@
 \)       { return yytext[0]; }
 \;       { return yytext[0]; }
 \,       { return yytext[0]; }
+\[       { return yytext[0]; }
+\]       { return yytext[0]; }
 :=       { return ASSIGNOP; }
 define   { return DEFINE; }
 if       { return IF; }
