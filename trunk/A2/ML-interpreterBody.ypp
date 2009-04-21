@@ -162,7 +162,7 @@ expr: expr '+' term                { cout << "Expr -> expr + term" << endl;
     | CAR '(' list ')'             { cout << "Expr -> car (list)" << endl;
                                      $$ = $3->getFirst(); }
     | CDR '(' list ')'             { cout << "Expr -> cdr (list)" << endl;
-                                     }
+                                     $$ = $3->getRest(); }
     | NULLP '(' list ')'           { cout << "Expr -> nullp (list)" << endl;
                                      }
     | INTP '(' expr ')'            { cout << "Expr -> intp (expr)" << endl;

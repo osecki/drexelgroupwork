@@ -27,8 +27,9 @@ public:
 	List (list<Element*> *s);
 
     Element* getFirst();
+    Element* getRest();
 
-	virtual string toString() const;
+	  virtual string toString() const;
 
     // What does it mean to evalute a list?
     virtual int eval(map<string,int> NT, map<string,Proc*> FT) const;
