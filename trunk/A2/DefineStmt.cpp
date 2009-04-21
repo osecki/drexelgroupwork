@@ -1,8 +1,6 @@
 #include "Proc.h"
 #include "DefineStmt.h"
 
-
-
 DefineStmt::~DefineStmt()
 {
   delete P_;

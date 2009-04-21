@@ -7,7 +7,6 @@
 
 using namespace std;
 
-
 class Proc;
 
 class Times : public Expr

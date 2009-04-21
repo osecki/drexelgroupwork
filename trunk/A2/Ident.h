@@ -1,7 +1,6 @@
 #ifndef IDENT_H
 #define IDENT_H
 
-
 #include <map>
 #include <string>
 #include "Expr.h"

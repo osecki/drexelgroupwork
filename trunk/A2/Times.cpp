@@ -2,8 +2,6 @@
 #include "Expr.h"
 #include <map>
 
-
-
 Times::Times(Expr* op1, Expr* op2)
 {
     op1_ = op1;

@@ -1,9 +1,8 @@
-/*
- * ListElement.h
- *
- *  Created on: Apr 13, 2009
- *      Author: reza
- */
+/**
+ *  Program:  Element.h
+ *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, and Alimoor Reza
+ *  Class:    CS550, Assignment 2, Spring 2009
+**/
 
 #ifndef ELEMENT_H
 #define ELEMENT_H

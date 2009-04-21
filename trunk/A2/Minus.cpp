@@ -2,7 +2,6 @@
 #include "Expr.h"
 #include <map>
 
-
 Minus::Minus(Expr* op1, Expr* op2)
 {
     op1_ = op1;

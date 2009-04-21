@@ -3,7 +3,6 @@
 #include "Proc.h"
 #include <map>
 
-
 IfStmt::IfStmt(Expr *E, StmtList *S1, StmtList *S2)
 {
   E_ = E;
