@@ -25,5 +25,4 @@ private:
     StmtList *S_;
 };
 
-
 #endif

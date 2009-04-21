@@ -10,7 +10,6 @@ class Proc;
 
 using namespace std;
 
-
 class AssignStmt: public Stmt
 {
 public:

@@ -22,5 +22,4 @@ private:
     int NumParam_;
 };
 
-
 #endif

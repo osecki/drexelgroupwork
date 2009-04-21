@@ -11,7 +11,6 @@ class Proc;
 
 using namespace std;
 
-
 class IfStmt: public Stmt
 {
 public:

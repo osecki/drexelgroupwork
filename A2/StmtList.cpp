@@ -2,7 +2,6 @@
 #include "Stmt.h"
 #include <map>
 
-
 void StmtList::insert(Stmt * S)
 {
   SL_.push_front(S);

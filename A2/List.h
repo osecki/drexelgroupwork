@@ -1,9 +1,8 @@
-/*
- * List.h
- *
- *  Created on: Apr 13, 2009
- *      Author: reza
- */
+/**
+ * Program:  List.h
+ * Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, and Alimoor Reza
+ * Class:    CS550, Assignment 2, Spring 2009
+**/
 
 #ifndef LIST_H_
 #define LIST_H_
@@ -42,4 +41,4 @@ public:
 private:
 	list<Element*> *elements;
 };
-#endif /* LIST_H_ */
+#endif

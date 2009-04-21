@@ -1,8 +1,6 @@
 #ifndef MINUS_H
 #define MINUS_H
 
-
-
 #include <map>
 #include <string>
 #include "Expr.h"

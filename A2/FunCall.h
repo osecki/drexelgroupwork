@@ -1,7 +1,6 @@
 #ifndef FUNCALL_H
 #define FUNCALL_H
 
-
 #include <list>
 #include <map>
 #include <string>
