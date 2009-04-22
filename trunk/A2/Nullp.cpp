@@ -11,5 +11,5 @@ Nullp::Nullp(Expr* op1)
 
 Element* Nullp::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
-    return new Number(((List*)op1_)->nullp());
+    return new Number(((List*)op1_->eval(NT, FT))->nullp());
 }

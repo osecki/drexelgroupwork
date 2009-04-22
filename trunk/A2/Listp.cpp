@@ -14,5 +14,5 @@ Listp::Listp(Expr* op1)
 
 Element* Listp::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
-    return new Number(((Element*)op1_)->listp());
+    return new Number(((Element*)op1_->eval(NT, FT))->listp());
 }

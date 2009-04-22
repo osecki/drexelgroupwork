@@ -10,6 +10,7 @@ void StmtList::insert(Stmt * S)
 void StmtList::eval(map<string,Element*> &NT, map<string,Proc*> &FT)
 {
   list<Stmt*>::iterator Sp;
-  for (Sp = SL_.begin();Sp != SL_.end();Sp++)
+  for (Sp = SL_.begin();Sp != SL_.end();Sp++) {
     (*Sp)->eval(NT,FT);
+    }
 }

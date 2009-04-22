@@ -10,7 +10,12 @@
    int value;
    char *ident;
 }
-
+%token CAR
+%token CDR
+%token NULLP
+%token LISTP
+%token INTP
+%token CONS
 %token IDENT
 %token NUMBER
 %token ASSIGNOP
@@ -24,12 +29,7 @@
 %token OD
 %token PROC
 %token END
-%token CAR
-%token CDR
-%token NULLP
-%token LISTP
-%token INTP
-%token CONS
+
 
 %%
 

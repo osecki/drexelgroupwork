@@ -10,5 +10,6 @@ Car::Car(Expr* op1)
 
 Element* Car::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
-    return ((List*)op1_)->getFirst();
+    Element* x = ((List*)op1_->eval(NT,FT))->getFirst();
+    return x;
 }
