@@ -68,14 +68,14 @@ param_list: IDENT ',' param_list { printf("param_list -> IDENT, param_list\n"); 
 
 expr: expr '+' term                { printf("expr -> expr + term\n"); }
     | expr '-' term                { printf("expr -> expr - term\n"); }
-    | expr '||' expr               { printf("expr -> expr || expr\n"); }
+    | expr '||' factor               { printf("expr -> expr || expr\n"); }
     | term            						 { printf("expr -> term\n"); }
     | CAR '(' expr ')'             { printf("expr -> car (expr)\n"); }
     | CDR '(' expr ')'             { printf("expr -> cdr (expr)\n"); }
     | NULLP '(' expr ')'           { printf("expr -> nullp(expr)\n"); }
     | INTP '(' expr ')'            { printf("expr -> intp(expr)\n"); }
     | LISTP '(' expr ')'           { printf("expr -> listp(expr)\n"); }
-    | CONS '(' expr ',' expr ')'   { printf("expr -> cons(expr, expr)\n"); }
+    | CONS '(' expr ',' factor ')'   { printf("expr -> cons(expr, expr)\n"); }
     ;
 
 term: term '*' factor   { printf("term -> term * factor\n"); }

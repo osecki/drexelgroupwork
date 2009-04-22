@@ -1,0 +1,14 @@
+define lenr
+proc(m)
+  if nullp(m) then return := 0 else return := 1 + lenr(cdr
+
+(m)) fi
+end;
+mone := [];
+lenfive := lenr(mone);
+mtwo := [15];
+lensix := lenr(mtwo);
+mthree := [5,10,15];
+lenseven := lenr(mthree);
+mfour := [[],[4,5],5,[[]]];
+leneight := lenr(mfour)

@@ -23,6 +23,8 @@ dc := cons (3, ad);
 dd := cons (3, [4,5,6]);
 de := cons ([4,[5]], [6]);
 df := cons ([3], ce);
+dg := cons (car(ad), ac);
+dh := cons (4, (cdr(ad)));
 
 ea := [1, 2] || [3, 4];
 eb := ad || ad;
@@ -30,6 +32,8 @@ ec := ad || [1];
 ed := [1] || ad;
 ee := [] || [1,2,3];
 ef := [1,2,3] || [];
+eg := cdr (ad) || [4];
+eh := [4] || (cdr(ad));
 
 fa := nullp([]);
 fb := nullp(ac);
