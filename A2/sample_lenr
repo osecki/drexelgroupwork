@@ -1,8 +1,6 @@
 define lenr
 proc(m)
-  if nullp(m) then return := 0 else return := 1 + lenr(cdr
-
-(m)) fi
+  if nullp(m) then return := 0 else return := 1 + lenr(cdr(m)) fi
 end;
 mone := [];
 lenfive := lenr(mone);

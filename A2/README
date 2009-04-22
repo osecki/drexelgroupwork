@@ -16,8 +16,9 @@ by creating the class Element and using List grammar from A1, except with
 Part 6:  Supported the following functions:  cons(e,L), car(L), cdr(L),
 nullp(L), intp(e), listp(e), and ||.
 Part 7:  Error checking performed to crash if wrong inputs are given.
-Part 8:  Created a sample_input file that tests all of this and also has the
-two functions to compute the length of a list iteratively and recursively.
+Part 8:  Created a sample_input file that tests all of this and also files
+that have the two functions to compute the length of a list
+iteratively and recursively.
 
 Files Included:
 
@@ -25,6 +26,8 @@ Files Included:
 -README:  This readme file with all required information
 -sample_input:  Input file used to test all program parts, also has
 iterative and recursive length functions
+-sample_len:  Input file with iterative length function
+-sample_lenr:  Input file with recursive length function
 
 -Program.h/.cpp - Mini-compiler File
 -StmtList.h/.cpp - Mini-compiler File
@@ -62,7 +65,8 @@ Running the code:
 -To run the code, run make flex, parse, and compile to build it. Then run
 either "./Compiler < inputFile" or "make run < inputFile". There is an
 included file sample_input which exercises assignment with lists, all 7
-functions, and the two length functions, one iterative and one recursive.
+functions. There is also sample_len and sample_lenr, which have the two
+length functions, one iterative and one recursive.
 
 How the code works:
 -The code works mainly by changing the environment table throughout to a map
