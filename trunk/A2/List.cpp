@@ -1,5 +1,5 @@
 /**
- * Program:  Element.cpp
+ * Program:  List.cpp
  * Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, and Alimoor Reza
  * Class:    CS550, Assignment 2, Spring 2009
 **/
@@ -9,6 +9,7 @@
 #include "Number.h"
 using namespace std;
 
+// default constructor
 List::List() {
     elements = new list<Element*>;
 }
@@ -19,16 +20,28 @@ List::List (list<Element*> *s) {
     elements->insert(elements->begin(), s->begin(), s->end());
 }
 
+// copy constructor
 List::List(List* other) {
     elements = new list<Element*>;
     elements->insert(elements->begin(), other->elements->begin(), other->elements->end());
 }
 
+// destructor
+List::~List() {
+	    for (list<Element*>::iterator iterator = elements->begin(); iterator != elements->end(); iterator++) {
+				        delete (*iterator);
+								    }
+			    delete elements;
+}
+
+// functions for A2
 Element* List::getFirst() {
     if(elements->size()) {
         return elements->front();
     } else {
-        // Return null list
+        // Error out
+				cout << "ERROR:  Cannot do a Car(list) on an empty list or other object." << endl;
+				exit(1);
         return new List;
     }
 }
@@ -46,7 +59,9 @@ Element* List::getRest() {
 			 }
 			 return new List (temp);
 	 } else {
-		   // Return null list
+		   // Error out
+			 cout << "ERROR:  Cannot do a Cdr(list) on an empty list or other object." << endl;
+			 exit(1);
 			 return new List;
 	 }
 }
@@ -56,27 +71,33 @@ int List::nullp()
 	return elements->size() == 0;
 }
 
+int List::listp() {
+	    return 1;
+}
 
 void List::cons (Element* e)
 {
 	elements->push_front(e);
 }
 
-
-
-
 void List::concatenate(List* other) {
     elements->insert(elements->end(), other->elements->begin(), other->elements->end());
 }
 
-
+// general functions
 string List::toString() const {
     string s = "[";
 
-    // TODO convert to in index and avoid last ,
-    for (list<Element*>::iterator iterator = elements->begin(); iterator != elements->end(); iterator++) {
+    // Iterate over elements and print out each one and commas
+    list<Element*>::iterator iterator = elements->begin();
+		while ( iterator != elements->end() )
+		{
         s = s + (*iterator)->toString();
-        s = s + ",";
+
+				iterator++;
+				
+				if ( iterator != elements->end() )
+					s = s + ',';
     }
     return s + "]";
 }
@@ -87,13 +108,3 @@ Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
     return newL;
 }
 
-List::~List() {
-    for (list<Element*>::iterator iterator = elements->begin(); iterator != elements->end(); iterator++) {
-        delete (*iterator);
-    }
-    delete elements;
-}
-
-int List::listp() {
-    return 1;
-}
