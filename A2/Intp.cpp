@@ -14,5 +14,5 @@ Intp::Intp(Expr* op1)
 
 Element* Intp::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
-    return new Number(((Element*)op1_)->intp());
+    return new Number(((Element*)op1_->eval(NT, FT))->intp());
 }

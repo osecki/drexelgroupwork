@@ -7,7 +7,6 @@
 #include "List.h"
 #include "Element.h"
 #include "Number.h"
-#include <iostream>
 using namespace std;
 
 List::List() {

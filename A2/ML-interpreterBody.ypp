@@ -69,6 +69,14 @@ Program *P;
   Element  *elementptr;
 }
 
+%token CAR
+%token CDR
+%token NULLP
+%token LISTP
+%token INTP
+%token CONS
+
+
 %token <ident> IDENT
 %token <value> NUMBER
 %token ASSIGNOP
@@ -82,12 +90,7 @@ Program *P;
 %token OD
 %token PROC
 %token END
-%token CAR
-%token CDR
-%token NULLP
-%token LISTP
-%token INTP
-%token CONS
+
 %type <exprptr> expr
 %type <exprptr> term
 %type <exprptr> factor
@@ -165,26 +168,56 @@ param_list:
             $$ = PL; }
     ;
 
-expr: expr '+' term                { cout << "Expr -> expr + term" << endl;
-                                     $$ = new Plus($1,$3); }
-    | expr '-' term                { cout << "Expr -> expr - term" << endl;
-                                     $$ = new Minus($1,$3); }
-    | factor '||' factor             { cout << "Expr -> expr || expr" << endl;
-                                     $$ = new Concat ($1, $3); }
-    | term                         { cout << "Expr -> term" << endl;
-                                     $$ = $1; }
-    | CAR '(' factor ')'           { cout << "Expr -> car (list)" << endl;
-                                     $$ = new Car ($3); }
-    | CDR '(' factor ')'           { cout << "Expr -> cdr (list)" << endl;
-                                     $$ = new Cdr ($3); }
-    | NULLP '(' factor ')'         { cout << "Expr -> nullp (list)" << endl;
-                                     $$ = new Nullp ($3); }
-    | INTP '(' factor ')'          { cout << "Expr -> intp (expr)" << endl;
-                                       $$ = new Intp ($3); }
-    | LISTP '(' factor ')'         { cout << "Expr -> listp (expr)" << endl;
-                                       $$ = new Listp ($3); }
-    | CONS '(' factor ',' factor ')' { cout << "Expr -> cons (expr, list)" << endl;
-                                       $$ = new Cons ($5, $3); }
+expr:
+    expr '+' term {
+        cout << "Expr -> expr + term" << endl;
+        $$ = new Plus($1,$3);
+    }
+    |
+    expr '-' term {
+        cout << "Expr -> expr - term" << endl;
+        $$ = new Minus($1,$3);
+    }
+    |
+    factor '||' factor {
+        cout << "Expr -> expr || expr" << endl;
+        $$ = new Concat ($1, $3);
+    }
+    |
+    term {
+        cout << "Expr -> term" << endl;
+        $$ = $1;
+    }
+    |
+    CAR '(' expr ')' {
+        cout << "Expr -> car (list)" << endl;
+        $$ = new Car ($3);
+    }
+    |
+    CDR '(' expr ')' {
+        cout << "Expr -> cdr (list)" << endl;
+        $$ = new Cdr ($3);
+    }
+    |
+    NULLP '(' expr ')' {
+        cout << "Expr -> nullp (list)" << endl;
+        $$ = new Nullp ($3);
+    }
+    |
+    INTP '(' expr ')' {
+        cout << "Expr -> intp (expr)" << endl;
+        $$ = new Intp ($3);
+    }
+    |
+    LISTP '(' expr ')' {
+        cout << "Expr -> listp (expr)" << endl;
+        $$ = new Listp ($3);
+    }
+    |
+    CONS '(' expr ',' expr ')' {
+        cout << "Expr -> cons (expr, list)" << endl;
+        $$ = new Cons ($5, $3);
+    }
     ;
 
 term: term '*' factor   { cout << "Term -> Term * Factor" << endl;
