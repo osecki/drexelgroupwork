@@ -5,6 +5,8 @@
 **/
 
 #include "List.h"
+#include "Element.h"
+#include "Number.h"
 #include <iostream>
 using namespace std;
 
@@ -14,7 +16,12 @@ List::List() {
 
 // constructor with sequence
 List::List (list<Element*> *s) {
-    elements = s;
+    elements = new list<Element*>;
+    elements->insert(elements->begin(), s->begin(), s->end());
+}
+
+List::List(List* other) {
+    List(other->elements);
 }
 
 Element* List::getFirst() {
@@ -43,26 +50,26 @@ Element* List::getRest() {
 			 return new List;
 	 }
 }
-/*
-void nullp()
+
+int List::nullp()
 {
-	if ( elements->size() == 0 )
-		return 1;
-	else
-		return 0;
+	return elements->size() == 0;
 }
 
-List* cons (Element x)
+
+void List::cons (Element* e)
 {
-	elements->push_front(x);
-	return new List (elements);
+	elements->push_front(e);
 }
 
-List* concatenate ( List a, List b)
-{
 
+
+
+void List::concatenate(List* other) {
+    elements->insert(elements->begin(), other->elements->begin(), other->elements->end());
 }
-*/
+
+
 string List::toString() const {
     string s = "(";
 
@@ -75,7 +82,9 @@ string List::toString() const {
 }
 
 Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
-    return elements;
+    List* newL = new List;
+    newL->elements = elements;
+    return newL;
 }
 
 List::~List() {
@@ -83,4 +92,8 @@ List::~List() {
         delete (*iterator);
     }
     delete elements;
+}
+
+int List::listp() {
+    return 1;
 }

@@ -8,6 +8,7 @@
 using namespace std;
 
 class Proc;
+class Element;
 
 class Plus : public Expr
 {

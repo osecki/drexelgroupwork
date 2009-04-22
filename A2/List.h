@@ -24,14 +24,17 @@ public:
 
 	// constructor with sequence
 	List (list<Element*> *s);
+    List (List* other);
 
     Element* getFirst();
     Element* getRest();
-    /*void nullp();
-		List* cons (Element x);
-	  List* concatenate ( List a, List b);
-    */
-	  virtual string toString() const;
+    void concatenate(List* other);
+    void cons (Element* e);
+
+    virtual int listp();
+    int nullp();
+
+    virtual string toString() const;
 
     virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
 

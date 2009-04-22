@@ -14,7 +14,7 @@ Proc::Proc(list<string> *PL, StmtList *SL)
 
 Element* Proc::apply(map<string,Element*> &NT, map<string,Proc*> &FT, list<Expr*> *EL)
 {
-    map<string,int> NNT;
+    map<string,Element*> NNT;
     NNT.clear();
 
     // bind parameters in new name table

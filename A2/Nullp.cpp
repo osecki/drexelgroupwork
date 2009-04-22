@@ -1,5 +1,7 @@
-#include "Car.h"
 #include "Expr.h"
+#include "List.h"
+#include "Nullp.h"
+#include "Number.h"
 #include <map>
 
 Nullp::Nullp(Expr* op1)
@@ -9,5 +11,5 @@ Nullp::Nullp(Expr* op1)
 
 Element* Nullp::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
-    return op1_->nullp();
+    return new Number(((List*)op1_)->nullp());
 }

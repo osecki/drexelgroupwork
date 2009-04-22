@@ -1,5 +1,6 @@
 #include "Cons.h"
 #include "Expr.h"
+#include "List.h"
 #include <map>
 
 Cons::Cons(Expr* op1, Expr* op2)
@@ -10,5 +11,7 @@ Cons::Cons(Expr* op1, Expr* op2)
 
 Element* Cons::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
-    return op1_->cons(op2_);
+    List* newL = new List((List*)op1_);
+    newL->cons((Element*)op2_);
+    return newL;
 }
