@@ -24,21 +24,23 @@ public:
 
 	// constructor with sequence
 	List (list<Element*> *s);
-    List (List* other);
+  
+  // copy constructor	
+	List (List* other);
 
-    Element* getFirst();
-    Element* getRest();
-    void concatenate(List* other);
-    void cons (Element* e);
+	// destructor
+  virtual ~List();
 
-    virtual int listp();
-    int nullp();
+	// Functions for A2
+  Element* getFirst();
+  Element* getRest();
+  void concatenate(List* other);
+  void cons (Element* e);
+  virtual int listp();
+  int nullp();
 
-    virtual string toString() const;
-
-    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
-
-    virtual ~List();
+  virtual string toString() const;
+  virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
 
 private:
 	list<Element*> *elements;
