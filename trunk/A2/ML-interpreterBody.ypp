@@ -196,7 +196,7 @@ term: term '*' factor   { cout << "Term -> Term * Factor" << endl;
 // Types of values
 factor:     '(' expr ')'  { cout << "Factor -> (expr)" << endl;
                             $$ = $2; }
-    |       element          { cout << "Factor -> list" << endl;
+    |       element          { cout << "Factor -> element" << endl;
                             $$ = $1; }
     |       IDENT         { cout << "Factor -> IDENT" << endl;
                             $$ = new Ident(string($1)); }

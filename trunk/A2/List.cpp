@@ -21,7 +21,8 @@ List::List (list<Element*> *s) {
 }
 
 List::List(List* other) {
-    List(other->elements);
+    elements = new list<Element*>;
+    elements->insert(elements->begin(), other->elements->begin(), other->elements->end());
 }
 
 Element* List::getFirst() {
@@ -66,19 +67,19 @@ void List::cons (Element* e)
 
 
 void List::concatenate(List* other) {
-    elements->insert(elements->begin(), other->elements->begin(), other->elements->end());
+    elements->insert(elements->end(), other->elements->begin(), other->elements->end());
 }
 
 
 string List::toString() const {
-    string s = "(";
+    string s = "[";
 
+    // TODO convert to in index and avoid last ,
     for (list<Element*>::iterator iterator = elements->begin(); iterator != elements->end(); iterator++) {
         s = s + (*iterator)->toString();
         s = s + ",";
     }
-    return s;
-    return s + ")";
+    return s + "]";
 }
 
 Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
