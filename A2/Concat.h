@@ -17,7 +17,7 @@ public:
     virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
 private:
     Expr* op1_;
-		Expr* op2_;
+    Expr* op2_;
 };
 
 #endif

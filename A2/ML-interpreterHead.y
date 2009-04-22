@@ -7,7 +7,7 @@
  *  Class:    CS550, Assignment 2, Spring 2009
 **/
 
-   int value; 
+   int value;
    char *ident;
 }
 
@@ -46,12 +46,12 @@ stmt:  assign_stmt { printf("stmt -> assign_stmt\n"); }
     |  while_stmt { printf("stmt -> while_stmt\n"); }
     ;
 
-assign_stmt: 
+assign_stmt:
 					 IDENT ASSIGNOP expr { printf("assign_stmt -> identifier := expr\n"); }
            ;
 
 
-define_stmt: 
+define_stmt:
 					 DEFINE IDENT PROC '(' param_list ')' stmt_list END { printf("define_stmt -> define identifier proc");
                                                                 printf("( param_list ) stmt_list end\n"); }
            ;
@@ -69,14 +69,14 @@ param_list: IDENT ',' param_list { printf("param_list -> IDENT, param_list\n"); 
 
 expr: expr '+' term   { printf("expr -> expr + term\n"); }
     | expr '-' term   { printf("expr -> expr - term\n"); }
-    | expr '||' expr  { printf("expr -> expr || expr\n"); }
+    | factor '||' factor  { printf("expr -> expr || expr\n"); }
     | term            { printf("expr -> term\n"); }
-    | CAR '(' expr ')'             { printf("expr -> car (expr)\n"); }
-    | CDR '(' expr ')'             { printf("expr -> cdr (expr)\n"); }
-    | NULLP '(' expr ')'           { printf("expr -> nullp(expr)\n"); }
-    | INTP '(' expr ')'            { printf("expr -> intp(expr)\n"); }
-    | LISTP '(' expr ')'           { printf("expr -> listp(expr)\n"); }
-    | CONS '(' expr ',' expr ')'   { printf("expr -> cons(expr, expr)\n"); }
+    | CAR '(' factor ')'             { printf("expr -> car (expr)\n"); }
+    | CDR '(' factor ')'             { printf("expr -> cdr (expr)\n"); }
+    | NULLP '(' factor ')'           { printf("expr -> nullp(expr)\n"); }
+    | INTP '(' factor ')'            { printf("expr -> intp(expr)\n"); }
+    | LISTP '(' factor ')'           { printf("expr -> listp(expr)\n"); }
+    | CONS '(' factor ',' factor ')'   { printf("expr -> cons(expr, expr)\n"); }
     ;
 
 term: term '*' factor   { printf("term -> term * factor\n"); }
@@ -84,8 +84,7 @@ term: term '*' factor   { printf("term -> term * factor\n"); }
     ;
 
 factor:     '(' expr ')'  { printf("factor -> ( expr ) \n"); }
-    |       list { printf("factor -> list\n"); }
-    |       NUMBER { printf("factor -> NUMBER\n"); }
+    |       element { printf("factor -> element\n"); }
     |       IDENT { printf("factor -> identifier\n"); }
     |       funcall { printf("factor -> funcall\n"); }
     ;
@@ -102,7 +101,7 @@ sequence:   element ',' sequence { printf("sequence -> element, seq\n"); }
     |       element { printf("sequence -> element\n"); }
     ;
 
-funcall:  IDENT '(' expr_list ')' 
+funcall:  IDENT '(' expr_list ')'
          { printf("funcall -> identifier ( expr_list )\n"); }
 
 expr_list: expr ',' expr_list { printf("expr_list -> expr , expr_list\n"); }

@@ -14,7 +14,7 @@ using namespace std;
 class Proc;
 class Number;
 
-class Element : Expr {
+class Element : public Expr {
 public:
     virtual int listp();
     virtual int intp();

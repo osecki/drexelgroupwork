@@ -1,6 +1,7 @@
 #include <map>
 #include <iostream>
 #include "Program.h"
+#include "Element.h"
 
 Program::Program(StmtList *SL)
 {
@@ -17,7 +18,7 @@ void Program::dump()
   cout << "Dump of Symbol Table" << endl;
   cout << "Name Table" << endl;
   for (p = NameTable_.begin();p != NameTable_.end();p++)
-    cout << p->first << " -> " << p->second << endl;
+    cout << p->first << " -> " << p->second->toString() << endl;
   cout << "Function Table" << endl;
   for (f = FunctionTable_.begin();f != FunctionTable_.end();f++)
     cout << f->first << endl;
