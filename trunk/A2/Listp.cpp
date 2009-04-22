@@ -1,6 +1,11 @@
 #include "Listp.h"
 #include "Expr.h"
+#include "Element.h"
 #include <map>
+
+
+
+#include "Number.h"
 
 Listp::Listp(Expr* op1)
 {
@@ -9,5 +14,5 @@ Listp::Listp(Expr* op1)
 
 Element* Listp::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
-    return op1_->listp();
+    return new Number(((Element*)op1_)->listp());
 }

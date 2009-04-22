@@ -8,9 +8,9 @@ Number::Number(int value)
     value_ = value;
 }
 
-int Number::eval(map<string,int> NT, map<string,Proc*> FT) const
+Element* Number::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
-    return value_;
+    return new Number(value_);
 }
 
 string Number::toString() const {
@@ -19,3 +19,11 @@ string Number::toString() const {
     return s.str();
 }
 
+
+int Number::intp(){
+    return 1;
+}
+
+int Number::getValue() {
+    return value_;
+}

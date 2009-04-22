@@ -1,6 +1,11 @@
 #include "Intp.h"
 #include "Expr.h"
+#include "Element.h"
 #include <map>
+
+
+
+#include "Number.h"
 
 Intp::Intp(Expr* op1)
 {
@@ -9,5 +14,5 @@ Intp::Intp(Expr* op1)
 
 Element* Intp::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
-    return op1_->intp();
+    return new Number(((Element*)op1_)->intp());
 }
