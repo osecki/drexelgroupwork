@@ -2,8 +2,7 @@
 
 /**
  *  Program:  ML-lex.l
- *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, and Alimoor
- *  Reza
+ *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, and Alimoor Reza
  *  Class:    CS550, Assignment 2, Spring 2009
 **/
 
@@ -42,5 +41,5 @@ proc     { return PROC; }
 end      { return END; }
 [a-z]+   { yylval.ident = strdup(yytext);  return IDENT; }
 [0-9]+   { yylval.value = atoi(yytext); return NUMBER; }
-.    return yytext[0];
+.        return yytext[0];
 %%

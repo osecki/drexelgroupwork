@@ -45,4 +45,5 @@ public:
 private:
 	list<Element*> *elements;
 };
+
 #endif

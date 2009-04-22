@@ -12,6 +12,7 @@ Proc::Proc(list<string> *PL, StmtList *SL)
     NumParam_ = PL->size();
 }
 
+// Changed environment table here and in function below
 Element* Proc::apply(map<string,Element*> &NT, map<string,Proc*> &FT, list<Expr*> *EL)
 {
     map<string,Element*> NNT;

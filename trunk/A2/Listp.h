@@ -1,3 +1,9 @@
+/**
+ *  Program:  Listp.h
+ *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, Alimoor Reza
+ *  Class:    CS550, Assignment 2, Spring 2009
+**/
+
 #ifndef LISTP_H
 #define LISTP_H
 

@@ -16,7 +16,8 @@ class IfStmt: public Stmt
 public:
     IfStmt(Expr *E,StmtList *S1, StmtList *S2);
     ~IfStmt();
-    void eval(map<string,Element*> &NT, map<string,Proc*> &FT) const;
+		// Changed environment table here
+		void eval(map<string,Element*> &NT, map<string,Proc*> &FT) const;
 private:
     Expr* E_;
     StmtList *S1_;

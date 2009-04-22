@@ -9,7 +9,6 @@ void Element::print() {
     cout<<toString()<<endl;
 }
 
-
 int Element::listp() {
     return 0;
 }

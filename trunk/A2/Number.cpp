@@ -19,11 +19,12 @@ string Number::toString() const {
     return s.str();
 }
 
-
+// Needed for A2
 int Number::intp(){
     return 1;
 }
 
+// Helper function
 int Number::getValue() {
     return value_;
 }

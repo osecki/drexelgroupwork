@@ -179,7 +179,7 @@ expr:
         $$ = new Minus($1,$3);
     }
     |
-    factor '||' factor {
+    expr '||' expr {
         cout << "Expr -> expr || expr" << endl;
         $$ = new Concat ($1, $3);
     }
@@ -190,17 +190,17 @@ expr:
     }
     |
     CAR '(' expr ')' {
-        cout << "Expr -> car (list)" << endl;
+        cout << "Expr -> car (expr)" << endl;
         $$ = new Car ($3);
     }
     |
     CDR '(' expr ')' {
-        cout << "Expr -> cdr (list)" << endl;
+        cout << "Expr -> cdr (expr)" << endl;
         $$ = new Cdr ($3);
     }
     |
     NULLP '(' expr ')' {
-        cout << "Expr -> nullp (list)" << endl;
+        cout << "Expr -> nullp (expr)" << endl;
         $$ = new Nullp ($3);
     }
     |
@@ -215,7 +215,7 @@ expr:
     }
     |
     CONS '(' expr ',' expr ')' {
-        cout << "Expr -> cons (expr, list)" << endl;
+        cout << "Expr -> cons (expr, expr)" << endl;
         $$ = new Cons ($5, $3);
     }
     ;
@@ -229,7 +229,7 @@ term: term '*' factor   { cout << "Term -> Term * Factor" << endl;
 // Types of values
 factor:     '(' expr ')'  { cout << "Factor -> (expr)" << endl;
                             $$ = $2; }
-    |       element          { cout << "Factor -> element" << endl;
+    |       element       { cout << "Factor -> element" << endl;
                             $$ = $1; }
     |       IDENT         { cout << "Factor -> IDENT" << endl;
                             $$ = new Ident(string($1)); }

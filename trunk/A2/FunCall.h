@@ -15,7 +15,8 @@ class FunCall : public Expr
 public:
     FunCall(string name, list<Expr*> *AL);
     virtual ~FunCall();
-    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
+		// Changed environment table here
+		virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
 private:
     string name_;
     list<Expr*> *AL_;

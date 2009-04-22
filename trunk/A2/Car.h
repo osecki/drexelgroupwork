@@ -1,3 +1,9 @@
+/**
+ * Program:  Car.h
+ * Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, Alimoor Reza
+ * Class:    CS550, Assignment 2, Spring 2009
+**/
+
 #ifndef CAR_H
 #define CAR_H
 

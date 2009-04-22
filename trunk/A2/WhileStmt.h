@@ -18,6 +18,7 @@ public:
 
     ~WhileStmt();
 
+		// Changed environment table here
     virtual void eval(map<string,Element*> &NT, map<string,Proc*> &FT) const;
 
 private:

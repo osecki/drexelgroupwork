@@ -36,6 +36,7 @@ List::~List() {
 
 // functions for A2
 Element* List::getFirst() {
+	  // If list size >= 1, then return first element, otherwise crash
     if(elements->size()) {
         return elements->front();
     } else {
@@ -47,6 +48,7 @@ Element* List::getFirst() {
 }
 
 Element* List::getRest() {
+	 // If list size >= 2, return all but the first element, otherwise crash
 	 if (elements->size() + 1) {
 		   list<Element*> * temp = new list<Element*>;
 			 list<Element*>::iterator iterator = elements->begin();

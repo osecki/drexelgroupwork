@@ -14,7 +14,8 @@ class Stmt
 public:
     Stmt() {};
     virtual ~Stmt() {};
-    virtual void eval(map<string,Element*> &NT, map<string,Proc*> &FT) const = 0;
+    // Changed environment table here
+		virtual void eval(map<string,Element*> &NT, map<string,Proc*> &FT) const = 0;
 
 private:
 };
