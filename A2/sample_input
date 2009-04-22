@@ -1,10 +1,51 @@
-a := 5;
-b := 10;
-c := [];
-d := [4,5, 6];
-e := [[4,[5]], 6, [7, 8]];
+aa := 5;
+ab := 10;
+ac := [];
+ad := [4,5, 6];
+ae := [[4,[5]], 6, [7, 8]];
 
-aa := car([4,5,6]);
-ab := car(d);
-ac := car([[4,[5]],6,[7,8]]);
-ad := car(e)
+ba := car([4,5,6]);
+bb := car(ad);
+bc := car([[4,[5]],6,[7,8]]);
+bd := car(ae);
+be := car(car(ae));
+
+ca := cdr([4,5,6]);
+cb := cdr(ad);
+cc := cdr([[4,[5]],6,[7,8]]);
+cd := cdr(ae);
+ce := cdr(cdr(ae));
+cf := (cdr(car(cdr(cdr(ae)))));
+
+da := cons (4, ac);
+db := cons (4, []);
+dc := cons (3, ad);
+dd := cons (3, [4,5,6]);
+de := cons ([4,[5]], [6]);
+df := cons ([3], ce);
+
+ea := [1, 2] || [3, 4];
+eb := ad || ad;
+ec := ad || [1];
+ed := [1] || ad;
+ee := [] || [1,2,3];
+ef := [1,2,3] || [];
+
+fa := nullp([]);
+fb := nullp(ac);
+fc := nullp(ad);
+fd := nullp([1,2]);
+
+ga := intp(aa);
+gb := intp(5);
+gc := intp(ac);
+gd := intp([]);
+ge := intp(ad);
+gf := intp([4,5]);
+
+ha := listp(ac);
+hb := listp([]);
+hc := listp(ad);
+hd := listp([4,5]);
+he := listp(aa);
+hf := listp(5)

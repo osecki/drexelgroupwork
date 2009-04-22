@@ -8,6 +8,7 @@ AssignStmt::AssignStmt(string name, Expr *E)
   E_ = E;
 }
 
+// Changed environment table here
 void AssignStmt::eval(map<string,Element*> &NT, map<string,Proc*> &FT) const
 {
     NT[name_] = E_->eval(NT,FT);

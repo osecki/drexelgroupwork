@@ -12,6 +12,7 @@ SL_ = SL;
 
 void Program::dump()
 {
+	// Changed environment table here
   map<string,Element*>::iterator p;
   map<string,Proc*>::iterator f;
 

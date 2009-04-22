@@ -10,6 +10,7 @@ WhileStmt::WhileStmt(Expr *E, StmtList *S)
 
 WhileStmt::~WhileStmt() { delete E_; delete S_; }
 
+// Changed environment table here
 void WhileStmt::eval(map<string,Element*> &NT, map<string,Proc*> &FT) const
 {
     while (E_->eval(NT,FT) > 0)

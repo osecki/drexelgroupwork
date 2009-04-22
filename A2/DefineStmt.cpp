@@ -12,6 +12,7 @@ DefineStmt::DefineStmt(string name, Proc *P)
   P_ = P;
 }
 
+// Changed environment table here
 void DefineStmt::eval(map<string,Element*> &NT, map<string,Proc*> &FT) const
 {
     FT[name_] = P_;

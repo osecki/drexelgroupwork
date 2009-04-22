@@ -12,6 +12,7 @@ IfStmt::IfStmt(Expr *E, StmtList *S1, StmtList *S2)
 
 IfStmt::~IfStmt() { delete E_; delete S1_; delete S2_; }
 
+// Changed environment table here
 void IfStmt::eval(map<string,Element*> &NT, map<string,Proc*> &FT) const
 {
     if (E_->eval(NT,FT) > 0)

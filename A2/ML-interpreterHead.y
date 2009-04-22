@@ -2,8 +2,7 @@
 
 /**
  *  Program:  ML-interpreterHead.y
- *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, and Alimoor
- *  Reza
+ *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, and Alimoor Reza
  *  Class:    CS550, Assignment 2, Spring 2009
 **/
 
@@ -67,16 +66,16 @@ while_stmt: WHILE expr DO stmt_list OD
 param_list: IDENT ',' param_list { printf("param_list -> IDENT, param_list\n"); }
     |      IDENT { printf("param_list -> IDENT\n"); }
 
-expr: expr '+' term   { printf("expr -> expr + term\n"); }
-    | expr '-' term   { printf("expr -> expr - term\n"); }
-    | factor '||' factor  { printf("expr -> expr || expr\n"); }
-    | term            { printf("expr -> term\n"); }
-    | CAR '(' factor ')'             { printf("expr -> car (expr)\n"); }
-    | CDR '(' factor ')'             { printf("expr -> cdr (expr)\n"); }
-    | NULLP '(' factor ')'           { printf("expr -> nullp(expr)\n"); }
-    | INTP '(' factor ')'            { printf("expr -> intp(expr)\n"); }
-    | LISTP '(' factor ')'           { printf("expr -> listp(expr)\n"); }
-    | CONS '(' factor ',' factor ')'   { printf("expr -> cons(expr, expr)\n"); }
+expr: expr '+' term                { printf("expr -> expr + term\n"); }
+    | expr '-' term                { printf("expr -> expr - term\n"); }
+    | expr '||' expr               { printf("expr -> expr || expr\n"); }
+    | term            						 { printf("expr -> term\n"); }
+    | CAR '(' expr ')'             { printf("expr -> car (expr)\n"); }
+    | CDR '(' expr ')'             { printf("expr -> cdr (expr)\n"); }
+    | NULLP '(' expr ')'           { printf("expr -> nullp(expr)\n"); }
+    | INTP '(' expr ')'            { printf("expr -> intp(expr)\n"); }
+    | LISTP '(' expr ')'           { printf("expr -> listp(expr)\n"); }
+    | CONS '(' expr ',' expr ')'   { printf("expr -> cons(expr, expr)\n"); }
     ;
 
 term: term '*' factor   { printf("term -> term * factor\n"); }

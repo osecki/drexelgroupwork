@@ -12,7 +12,8 @@ class Expr
 {
 public:
     virtual ~Expr() {};
-    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const = 0;
+		// Changed environment table here
+		virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const = 0;
 private:
 };
 
