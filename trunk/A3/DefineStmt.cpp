@@ -13,7 +13,7 @@ DefineStmt::DefineStmt(string name, Proc *P)
 }
 
 // Changed environment table here
-void DefineStmt::eval(map<string,Element*> &NT, map<string,Proc*> &FT) const
+void DefineStmt:: eval(map<string,Element*> &NT, map<string,Proc*> &FT,vector<ConsCell> &listMemory, int &avail) const
 {
     FT[name_] = P_;
 }

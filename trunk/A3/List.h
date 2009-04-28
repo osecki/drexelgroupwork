@@ -11,6 +11,9 @@
 #include <iostream>
 #include <map>
 #include "Element.h"
+#include "ConsCell.h"
+#include<vector>
+
 
 using namespace std;
 
@@ -24,8 +27,8 @@ public:
 
 	// constructor with sequence
 	List (list<Element*> *s);
-  
-  // copy constructor	
+
+  // copy constructor
 	List (List* other);
 
 	// destructor
@@ -38,12 +41,16 @@ public:
   void cons (Element* e);
   virtual int listp();
   int nullp();
+  int getStartAddress();
+  void setStartAddress(int sa);
 
   virtual string toString() const;
-  virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
+  virtual Element* eval(map<string,Element*> &NT, map<string,Proc*> &FT,vector<ConsCell> &listMemory, int &avail) const;
 
 private:
 	list<Element*> *elements;
+	// address in the virtual memory
+	int startAddress;
 };
 
 #endif

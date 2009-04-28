@@ -2,13 +2,16 @@
 #include <map>
 #include "Proc.h"
 #include <sstream>
+#include "ConsCell.h"
+#include<vector>
+
 
 Number::Number(int value)
 {
     value_ = value;
 }
 
-Element* Number::eval(map<string,Element*> NT, map<string,Proc*> FT) const
+Element* Number:: eval(map<string,Element*> &NT, map<string,Proc*> &FT,vector<ConsCell> &listMemory, int &avail) const
 {
     return new Number(value_);
 }

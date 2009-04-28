@@ -8,7 +8,8 @@
 #include "Expr.h"
 #include "Element.h"
 #include <map>
-
+#include "ConsCell.h"
+#include<vector>
 #include "Number.h"
 
 Intp::Intp(Expr* op1)
@@ -16,8 +17,8 @@ Intp::Intp(Expr* op1)
     op1_ = op1;
 }
 
-Element* Intp::eval(map<string,Element*> NT, map<string,Proc*> FT) const
+Element* Intp::eval(map<string,Element*> &NT, map<string,Proc*> &FT,vector<ConsCell> &listMemory, int &avail) const
 {
 		// Calls the intp() function from integer
-    return new Number(((Element*)op1_->eval(NT, FT))->intp());
+    return new Number(((Element*)op1_->eval(NT, FT,listMemory,avail))->intp());
 }

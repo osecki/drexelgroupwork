@@ -6,6 +6,9 @@
 #include "StmtList.h"
 #include "Stmt.h"
 #include "Expr.h"
+#include "ConsCell.h"
+#include<vector>
+
 
 class Proc;
 
@@ -19,7 +22,7 @@ public:
     ~WhileStmt();
 
 		// Changed environment table here
-    virtual void eval(map<string,Element*> &NT, map<string,Proc*> &FT) const;
+    virtual void eval(map<string,Element*> &NT, map<string,Proc*> &FT,vector<ConsCell> &listMemory, int &avail) const;
 
 private:
     Expr* E_;

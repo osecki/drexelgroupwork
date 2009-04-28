@@ -6,8 +6,13 @@
 #include "StmtList.h"
 #include "Stmt.h"
 #include "Expr.h"
+#include "ConsCell.h"
 
 class Proc;
+//class Expr;
+//class StmtList;
+//class ConsCell;
+
 
 using namespace std;
 
@@ -17,11 +22,11 @@ public:
     IfStmt(Expr *E,StmtList *S1, StmtList *S2);
     ~IfStmt();
 		// Changed environment table here
-		void eval(map<string,Element*> &NT, map<string,Proc*> &FT) const;
+    void eval(map<string,Element*> &NT, map<string,Proc*> &FT,vector<ConsCell> &listMemory, int &avail) const;
 private:
     Expr* E_;
-    StmtList *S1_;
-    StmtList *S2_;
+    StmtList* S1_;
+    StmtList* S2_;
 };
 
 #endif

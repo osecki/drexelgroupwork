@@ -16,7 +16,7 @@ public:
     Proc(list<string> *PL, StmtList *SL);
     ~Proc() {delete SL_; };
 		// Changed environment table herE
-		Element* apply(map<string,Element*> &NT, map<string,Proc*> &FT, list<Expr*> *EL);
+		Element* apply(map<string,Element*> &NT, map<string,Proc*> &FT, list<Expr*> *EL,vector<ConsCell> &listMemory, int &avail);
 private:
     StmtList *SL_;
     list<string> *PL_;
