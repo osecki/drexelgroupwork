@@ -5,6 +5,9 @@
 **/
 #include "Number.h"
 #include "Element.h"
+#include "ConsCell.h"
+#include<vector>
+
 void Element::print() {
     cout<<toString()<<endl;
 }
@@ -15,4 +18,13 @@ int Element::listp() {
 
 int Element::intp() {
     return 0;
+}
+bool Element::getIntOrPtr() const
+{
+	return this->intOrPtr;
+}
+
+void Element::setIntOrPtr(bool intOrPtr)
+{
+	this->intOrPtr = intOrPtr;
 }

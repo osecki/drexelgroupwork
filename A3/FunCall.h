@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include "Expr.h"
+#include "ConsCell.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ public:
     FunCall(string name, list<Expr*> *AL);
     virtual ~FunCall();
 		// Changed environment table here
-		virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
+    Element* eval(map<string,Element*> &NT, map<string,Proc*> &FT,vector<ConsCell> &listMemory, int &avail) const;
 private:
     string name_;
     list<Expr*> *AL_;

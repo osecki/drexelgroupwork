@@ -3,7 +3,9 @@
 
 #include <map>
 #include <string>
+#include<vector>
 #include "StmtList.h"
+#include "ConsCell.h"
 
 using namespace std;
 
@@ -21,6 +23,11 @@ private:
 		// than int
     map<string, Element*> NameTable_;
     map<string, Proc*> FunctionTable_;
+    // vector of cons cells in order to corporate dynamic list and garbage collection
+    vector<ConsCell> listMemory;
+    // available pointer
+    int avail;
+    static const int SIZEOFMEMORY = 8;
 };
 
 #endif

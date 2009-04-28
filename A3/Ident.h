@@ -3,6 +3,9 @@
 
 #include <map>
 #include <string>
+#include "ConsCell.h"
+#include<vector>
+
 #include "Expr.h"
 
 using namespace std;
@@ -14,7 +17,7 @@ class Ident : public Expr
 public:
     Ident(string name = "");
 		// Changed environment table here
-		virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
+		virtual  Element* eval(map<string,Element*> &NT, map<string,Proc*> &FT,vector<ConsCell> &listMemory, int &avail) const;
 private:
     string name_;
 };

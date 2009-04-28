@@ -5,6 +5,8 @@
 #include <string>
 #include "Stmt.h"
 #include "Expr.h"
+#include "ConsCell.h"
+#include<vector>
 
 class Proc;
 
@@ -16,7 +18,7 @@ public:
     DefineStmt(string name="", Proc *P=NULL);
     virtual ~DefineStmt();
 		// Changed environment table here
-		virtual void eval(map<string,Element*> &NT, map<string,Proc*> &FT) const;
+		virtual void eval(map<string,Element*> &NT, map<string,Proc*> &FT,vector<ConsCell> &listMemory, int &avail) const;
 private:
     string name_;
     Proc* P_;

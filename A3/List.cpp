@@ -7,6 +7,9 @@
 #include "List.h"
 #include "Element.h"
 #include "Number.h"
+#include "ConsCell.h"
+#include<vector>
+
 using namespace std;
 
 // default constructor
@@ -97,16 +100,24 @@ string List::toString() const {
         s = s + (*iterator)->toString();
 
 				iterator++;
-				
+
 				if ( iterator != elements->end() )
 					s = s + ',';
     }
     return s + "]";
 }
 
-Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
+Element* List::eval(map<string,Element*> &NT, map<string,Proc*> &FT,vector<ConsCell> &listMemory, int &avail) const {
     List* newL = new List;
     newL->elements = elements;
     return newL;
+}
+
+int List::getStartAddress() {
+	return this->startAddress;
+}
+
+void List::setStartAddress(int stAddress) {
+	startAddress = stAddress;
 }
 

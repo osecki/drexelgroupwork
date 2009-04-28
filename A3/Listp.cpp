@@ -8,6 +8,8 @@
 #include "Expr.h"
 #include "Element.h"
 #include <map>
+#include "ConsCell.h"
+#include<vector>
 
 #include "Number.h"
 
@@ -16,8 +18,8 @@ Listp::Listp(Expr* op1)
     op1_ = op1;
 }
 
-Element* Listp::eval(map<string,Element*> NT, map<string,Proc*> FT) const
+Element* Listp:: eval(map<string,Element*> &NT, map<string,Proc*> &FT,vector<ConsCell> &listMemory, int &avail) const
 {
 		// Calls the listp() function from List
-    return new Number(((Element*)op1_->eval(NT, FT))->listp());
+    return new Number(((Element*)op1_->eval(NT, FT,listMemory,avail))->listp());
 }

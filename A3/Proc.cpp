@@ -13,10 +13,13 @@ Proc::Proc(list<string> *PL, StmtList *SL)
 }
 
 // Changed environment table here and in function below
-Element* Proc::apply(map<string,Element*> &NT, map<string,Proc*> &FT, list<Expr*> *EL)
+Element* Proc::apply(map<string,Element*> &NT, map<string,Proc*> &FT, list<Expr*> *EL, vector<ConsCell> &listMemory, int &avail)
 {
     map<string,Element*> NNT;
     NNT.clear();
+
+
+
 
     // bind parameters in new name table
 
@@ -27,11 +30,11 @@ Element* Proc::apply(map<string,Element*> &NT, map<string,Proc*> &FT, list<Expr*
         exit(1);
     }
     for (p = PL_->begin(), e = EL->begin(); p != PL_->end(); p++, e++)
-        NNT[*p] = (*e)->eval(NT,FT);
+        NNT[*p] = (*e)->eval(NT,FT, listMemory,avail);
 
     // evaluate function body using new name table and old function table
 
-    SL_->eval(NNT,FT);
+    SL_->eval(NNT,FT,listMemory,avail);
     if ( NNT.find("return") != NNT.end() )
         return NNT["return"];
     else {
