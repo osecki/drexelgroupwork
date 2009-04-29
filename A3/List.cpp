@@ -7,6 +7,8 @@
 #include "List.h"
 #include "Expr.h"
 #include "Number.h"
+#include "Memory.h"
+#include "Program.h"
 using namespace std;
 
 // default constructor
@@ -96,8 +98,20 @@ string List::toString() const {
 }
 
 Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
-    List* newL = new List;
-    newL->expressions = expressions;
-    return newL;
+
+    int address = NULL_POINTER;
+
+    for (list<Expr*>::reverse_iterator iterator = expressions->rbegin(); iterator != expressions->rend(); iterator++) {
+        Element* e = (*iterator)->eval(NT, FT);
+        address = memory.cons(e, address);
+        NT[TEMP_NAME] = e;
+    }
+
+    NT.erase(NT.find(TEMP_NAME));
+
+    List* l = new List();
+    l->address = address;
+
+    return l;
 }
 
