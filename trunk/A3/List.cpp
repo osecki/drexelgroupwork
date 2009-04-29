@@ -111,13 +111,16 @@ Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memor
 
     int address = NULL_POINTER;
 
-    for (list<Expr*>::reverse_iterator iterator = expressions->rbegin(); iterator != expressions->rend(); iterator++) {
-        Element* e = (*iterator)->eval(NT,FT,memory);
-        address = memory.cons(e, address, NT);
-        NT[TEMP_NAME] = e;
-    }
 
-    NT.erase(NT.find(TEMP_NAME));
+    if(expressions->size()) {
+        for (list<Expr*>::reverse_iterator iterator = expressions->rbegin(); iterator != expressions->rend(); iterator++) {
+            Element* e = (*iterator)->eval(NT,FT,memory);
+            address = memory.cons(e, address, NT);
+            NT[TEMP_NAME] = e;
+        }
+
+        NT.erase(NT.find(TEMP_NAME));
+    }
 
     List* l = new List();
     l->address = address;
