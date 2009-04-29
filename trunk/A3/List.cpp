@@ -72,8 +72,10 @@ Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memor
         }
 
         NT.erase(NT.find(TEMP_NAME));
+        // TODO I don't like how we're returning a new pointer here...
         return new List(address);
     }
 
+    // A list of nothing is a List whose address is -1
     return new List(NULL_POINTER);
 }
