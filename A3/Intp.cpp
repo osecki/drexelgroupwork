@@ -16,7 +16,7 @@ Intp::Intp(Expr* op1)
     op1_ = op1;
 }
 
-Element* Intp::eval(map<string,Element*> NT, map<string,Proc*> FT) const
+Element* Intp::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const
 {
 		// Calls the intp() function from integer
     return new Number(((Element*)op1_->eval(NT, FT))->intp());

@@ -97,7 +97,7 @@ string List::toString() const {
     return s + "]";
 }
 
-Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
+Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const {
 
     int address = NULL_POINTER;
 

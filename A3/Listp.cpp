@@ -16,7 +16,7 @@ Listp::Listp(Expr* op1)
     op1_ = op1;
 }
 
-Element* Listp::eval(map<string,Element*> NT, map<string,Proc*> FT) const
+Element* Listp::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const
 {
 		// Calls the listp() function from List
     return new Number(((Element*)op1_->eval(NT, FT))->listp());

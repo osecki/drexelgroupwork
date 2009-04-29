@@ -20,7 +20,7 @@ class Cdr : public Expr
 public:
     Cdr (Expr* op1 = NULL);
     virtual ~Cdr() {delete op1_;};
-    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
+    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const;
 private:
     Expr* op1_;
 };

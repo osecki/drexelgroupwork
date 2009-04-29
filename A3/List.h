@@ -41,7 +41,7 @@ public:
     int nullp();
 
     virtual string toString() const;
-    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
+    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory, Memory &memory) const;
 
 private:
     list<Expr*> *expressions;
