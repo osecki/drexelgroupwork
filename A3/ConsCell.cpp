@@ -10,7 +10,7 @@ ConsCell::ConsCell() {
 	inUse = false;
 }
 
-ConsCell::ConsCell(Element* aCarPtr, Element* aCdrPtr) {
+ConsCell::ConsCell(Element* aCarPtr, int aCdrPtr) {
     car = aCarPtr;
     cdr = aCdrPtr;
     inUse = true;

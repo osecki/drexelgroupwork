@@ -103,7 +103,7 @@ Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memor
 
     for (list<Expr*>::reverse_iterator iterator = expressions->rbegin(); iterator != expressions->rend(); iterator++) {
         Element* e = (*iterator)->eval(NT,FT,memory);
-        address = memory.cons(e, address);
+        address = memory.cons(e, address, NT);
         NT[TEMP_NAME] = e;
     }
 
@@ -115,3 +115,7 @@ Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memor
     return l;
 }
 
+
+int List::getAddress() {
+    return address;
+}

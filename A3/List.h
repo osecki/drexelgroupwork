@@ -43,6 +43,8 @@ public:
     virtual string toString() const;
     virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const;
 
+    int getAddress();
+
 private:
     list<Expr*> *expressions;
     int address;
