@@ -1,3 +1,9 @@
+/**
+ * Program:  Memory.cpp
+ * Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, Alimoor Reza
+ * Class:  CS550, Assignment 3, Spring 2009
+**/
+
 #include "Memory.h"
 #include "Element.h"
 #include "List.h"

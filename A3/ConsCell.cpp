@@ -1,3 +1,9 @@
+/**
+ *  Program:  ConsCell.cpp
+ *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, Alimoor Reza
+ *  Class:  CS550, Assignment 3, Spring 2009
+**/
+
 #include<iostream>
 #include<vector>
 #include "Element.h"
