@@ -6,7 +6,7 @@ using namespace std;
 
 ConsCell::ConsCell() {
 	car = NULL;
-	cdr = NULL;
+	cdr = NULL_POINTER;
 	inUse = false;
 }
 

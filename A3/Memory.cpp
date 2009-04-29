@@ -1,7 +1,11 @@
 
 #include "Memory.h"
 #include "Element.h"
+#include "List.h"
+#include "Number.h"
 #include <iostream>
+
+using namespace std;
 
 Memory::Memory() {
     heap.resize(MAX_MEMORY);
@@ -46,4 +50,20 @@ ConsCell & Memory::operator[](int index) {
 
 ConsCell Memory::operator[](int index) const {
     return heap[index];
+}
+
+void Memory::output() const {
+    int index = 0;
+    for(vector<ConsCell>::const_iterator iter = heap.begin(); iter != heap.end(); iter++) {
+        ConsCell cell = *iter;
+        cout << index++ << "\t";
+        if(cell.car == NULL) {
+            cout << "X\t";
+        } else if(cell.car->listp()) {
+            cout << "L\t" << ((List*)cell.car)->getAddress();
+        } else {
+            cout << "N\t" << ((Number*)cell.car)->getValue();
+        }
+        cout << "\t" << cell.cdr << "\t" << (cell.inUse ? "T" : "F") << endl;
+    }
 }
