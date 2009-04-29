@@ -6,14 +6,17 @@
 #include <string>
 #include "StmtList.h"
 #include "ConsCell.h"
+#include "Memory.h"
 
-#define MAX_MEMORY 8
+
+#define TEMP_NAME string("!R*@^$@!(*$^")
+
 
 using namespace std;
 
 
 // TODO Maybe make a parameter to eval
-static vector<ConsCell> memory;
+
 
 
 class Program
@@ -24,13 +27,13 @@ public:
     void dump();
     void eval();
 
-    Element* cons(Element* e, int address);
+
 
 private:
 
-    int getAvail();
-    void markGarbage();
 
+
+    Memory memory;
     StmtList *SL_;
 		// Changed the environmental table in order to bind to Element* rather
 		// than int

@@ -26,12 +26,15 @@
 #include "Nullp.h"
 #include "Listp.h"
 #include "Intp.h"
+#include "Memory.h"
 
 using namespace std;
 void yyerror (const char *error);
 
+
 extern "C"
 {
+
 
 /**
  *  Program:  ML-interpreterBody.ypp
