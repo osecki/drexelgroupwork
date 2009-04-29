@@ -25,6 +25,8 @@ void Program::dump()
   cout << "Function Table" << endl;
   for (f = FunctionTable_.begin();f != FunctionTable_.end();f++)
     cout << f->first << endl;
+    cout << "Memory Table" <<endl;
+    memory.output();
 }
 
 void Program::eval()
