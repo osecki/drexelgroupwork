@@ -15,9 +15,3 @@ ConsCell::ConsCell() {
 	cdr = NULL_POINTER;
 	inUse = false;
 }
-
-ConsCell::ConsCell(Element* aCarPtr, int aCdrPtr) {
-    car = aCarPtr;
-    cdr = aCdrPtr;
-    inUse = true;
-}

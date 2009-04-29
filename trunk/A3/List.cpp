@@ -13,17 +13,20 @@ using namespace std;
 
 // default constructor
 List::List() {
+    address = NULL_POINTER;
     expressions = new list<Expr*>;
 }
 
 // constructor with sequence
 List::List (list<Expr*> *s) {
+    address = NULL_POINTER;
     expressions = new list<Expr*>;
     expressions->insert(expressions->begin(), s->begin(), s->end());
 }
 
 // copy constructor
 List::List(List* other) {
+    address = NULL_POINTER;
     expressions = new list<Expr*>;
     expressions->insert(expressions->begin(), other->expressions->begin(), other->expressions->end());
 }
@@ -63,12 +66,14 @@ Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memor
 
     if(expressions->size()) {
         int address = NULL_POINTER;
-        Element* e ;
+        Element* e = new List(NULL_POINTER);
         for (list<Expr*>::reverse_iterator iterator = expressions->rbegin(); iterator != expressions->rend(); iterator++) {
             e = (*iterator)->eval(NT,FT,memory);
-            address = memory.cons(e, address, NT);
-            e->setAddress(address);
             NT[TEMP_NAME] = e;
+            address = memory.cons(e, address, NT);
+            cout << "got address " << address << endl;
+            cout << "sending address " << e->getAddress() << endl;
+            //e->setAddress(address);
         }
 
         NT.erase(NT.find(TEMP_NAME));

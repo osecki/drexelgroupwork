@@ -9,7 +9,7 @@
 #include "Memory.h"
 
 // An invalid variable name to use to protect ConsCells as they are created
-#define TEMP_NAME string("!R*@^$@!(*$^")
+#define TEMP_NAME string("+*TEMP*+")
 #define DEBUG true
 
 using namespace std;
