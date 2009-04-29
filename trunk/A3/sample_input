@@ -1,86 +1,104 @@
-aa := 5;
-ab := 10;
-ac := [];
-ad := [4,5, 6];
-ae := [[4,[5]], 6, [7, 8]];
+a := 5;
+b := [];
+c := [15];
+d := [4,5, 6];
+e := [[],[4,5],5,[[]]];
+f := [[4,[5]], 6, [7, 8]];
 
 define len
 proc(n)
   count := 0;
   bool := 1;
-  ltemp := n;
-  while bool do if nullp(ltemp) then bool := 0 else count := count + 1;
-ltemp := cdr(ltemp) fi od;
+  while bool do if nullp(n) then bool := 0 else count := count + 1;n:=cdr(n) fi od;
   return := count
 end;
-none := [];
-lenone := len(none);
-ntwo := [15];
-lentwo := len(ntwo);
-nthree := [5,10,15];
-lenthree := len(nthree);
-nfour := [[],[4,5],5,[[]]];
-lenfour := len(nfour);
+lenone := len();
+lentwo := len(b);
+lenthree := len(c);
+lenfour := len(d);
+lenfive := len(e);
+lensix := len(f);
 
 define lenr
 proc(m)
   if nullp(m) then return := 0 else return := 1 + lenr(cdr(m)) fi
 end;
-mone := [];
-lenfive := lenr(mone);
-mtwo := [15];
-lensix := lenr(mtwo);
-mthree := [5,10,15];
-lenseven := lenr(mthree);
-mfour := [[],[4,5],5,[[]]];
-leneight := lenr(mfour);
+lenseven := lenr(a);
+leneight := lenr(b);
+lennine := lenr(c);
+lenten := lenr(d);
+leneleven := lenr(e);
+lentwelve := lenr(f);
 
-ba := car([4,5,6]);
-bb := car(ad);
-bc := car([[4,[5]],6,[7,8]]);
-bd := car(ae);
-be := car(car(ae));
+a := car(c);
+b := car(d);
+c := car(e);
+d := car(f);
+e := car(car(f));
 
-ca := cdr([4,5,6]);
-cb := cdr(ad);
-cc := cdr([[4,[5]],6,[7,8]]);
-cd := cdr(ae);
-ce := cdr(cdr(ae));
-cf := (cdr(car(cdr(cdr(ae)))));
+a := 5;
+b := [];
+c := [15];
+d := [4,5, 6];
+e := [[],[4,5],5,[[]]];
+f := [[4,[5]], 6, [7, 8]];
 
-da := cons (4, ac);
-db := cons (4, []);
-dc := cons (3, ad);
-dd := cons (3, [4,5,6]);
-de := cons ([4,[5]], [6]);
-df := cons ([3], ce);
-dg := cons (car(ad), ac);
-dh := cons (4, (cdr(ad)));
+a := cdr(c);
+b := cdr(d);
+c := cdr(e);
+d := cdr(f);
+e := cdr(cdr(e);
+f := car(cdr(cdr(f)));
 
-ea := [1, 2] || [3, 4];
-eb := ad || ad;
-ec := ad || [1];
-ed := [1] || ad;
-ee := [] || [1,2,3];
-ef := [1,2,3] || [];
-eg := cdr (ad) || [4];
-eh := [4] || (cdr(ad));
+a := 5;
+b := [];
+c := [15];
+d := [4,5, 6];
+e := [[],[4,5],5,[[]]];
+f := [[4,[5]], 6, [7, 8]];
 
-fa := nullp([]);
-fb := nullp(ac);
-fc := nullp(ad);
-fd := nullp([1,2]);
+a := cons (a, b);
+b := cons (a, c);
+c := cons (3, d);
+d := cons (3, [4,5,6]);
+e := cons (d, e);
+f := cons ([3], f);
 
-ga := intp(aa);
-gb := intp(5);
-gc := intp(ac);
-gd := intp([]);
-ge := intp(ad);
-gf := intp([4,5]);
+a := 5;
+b := [];
+c := [15];
+d := [4,5, 6];
+e := [[],[4,5],5,[[]]];
+f := [[4,[5]], 6, [7, 8]];
 
-ha := listp(ac);
-hb := listp([]);
-hc := listp(ad);
-hd := listp([4,5]);
-he := listp(aa);
-hf := listp(5)
+a := [1, 2] || [3, 4];
+b := a || c;
+c := e || [1];
+d := f || (cdr(f));
+
+a := 5;
+b := [];
+c := [15];
+d := [4,5, 6];
+e := [[],[4,5],5,[[]]];
+f := [[4,[5]], 6, [7, 8]];
+
+ia := nullp(b);
+ib := nullp(c);
+ic := nullp(d);
+id := nullp(e);
+ie := nullp(f);
+
+ia := intp(a);
+ib := intp(b);
+ic := intp(c);
+id := intp(d);
+ie := intp(e);
+if := intp(f);
+
+ia := listp(a);
+ib := listp(b);
+ic := listp(c);
+id := listp(d);
+ie := listp(e);
+if := listp(f)
