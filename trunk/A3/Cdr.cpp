@@ -16,6 +16,7 @@ Cdr::Cdr(Expr* op1)
 
 Element* Cdr::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const
 {
-    // Calls the getRest() function from List
-    return ((List*)op1_->eval(NT,FT,memory))->getRest()->eval(NT,FT,memory);
+    Element* e = op1_->eval(NT,FT,memory);
+    int cdr = memory[((List*)e)->getAddress()].cdr;
+    return new List(cdr);
 }

@@ -28,6 +28,10 @@ List::List(List* other) {
     expressions->insert(expressions->begin(), other->expressions->begin(), other->expressions->end());
 }
 
+List::List(int address) {
+    this->address = address;
+}
+
 // destructor
 List::~List() {
     for (list<Expr*>::iterator iterator = expressions->begin(); iterator != expressions->end(); iterator++) {

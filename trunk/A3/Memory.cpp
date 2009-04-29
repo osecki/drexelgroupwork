@@ -8,13 +8,13 @@ Memory::Memory() {
 }
 
 int Memory::getAvail(map<string,Element*> NT) {
-    for(bool mark = true; mark; mark = !mark) {
+    for(bool doMark = true; doMark; doMark = !doMark) {
         for(int index = 0; index < MAX_MEMORY; index++) {
             if(!heap[index].inUse) {
                 return index;
             }
         }
-        if(mark) {
+        if(doMark) {
             markGarbage(NT);
         }
     }
@@ -37,4 +37,8 @@ int Memory::cons(Element* e, int address, map<string,Element*> NT) {
     heap[newAddress].inUse = true;
 
     return newAddress;
+}
+
+ConsCell & Memory::operator[](int index) {
+    return heap[index];
 }

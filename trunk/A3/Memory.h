@@ -16,11 +16,14 @@ class Memory
     public:
         Memory();
         int cons(Element* e, int address, map<string,Element*> NT);
+        ConsCell & operator[](int index);
+
 
     private:
         int getAvail(map<string,Element*> NT);
         void markGarbage(map<string,Element*> NT);
         vector<ConsCell> heap;
 };
+
 
 #endif

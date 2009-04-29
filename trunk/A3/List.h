@@ -29,6 +29,8 @@ public:
     // copy constructor
     List (List* other);
 
+    List (int address);
+
     // destructor
     virtual ~List();
 
