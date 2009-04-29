@@ -16,7 +16,7 @@ public:
     DefineStmt(string name="", Proc *P=NULL);
     virtual ~DefineStmt();
 		// Changed environment table here
-		virtual void eval(map<string,Element*> &NT, map<string,Proc*> &FT) const;
+		virtual void eval(map<string,Element*> &NT, map<string,Proc*> &FT, Memory &memory) const;
 private:
     string name_;
     Proc* P_;
