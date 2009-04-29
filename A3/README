@@ -1,0 +1,95 @@
+Assignment 2
+CS550 Programming Languages
+Spring 2009, 4/22/2009
+Team: (Group 7) Jordan Osecki, Geoff Oxholm, Rich Price, and Alimore Reza
+Team Lead on this Assignment:  Jordan Osecki and Geoff Oxholm
+
+Implemented successfully is the following parts:
+
+Part 1:  Extended the mini-language to support lists
+Part 2:  Variables now may be assigned lists
+Part 3:  Lists may be returns by functions
+Part 4:  Lists can occur in expressions
+Part 5:  Symbol table changed so that variables can be integers or lists,
+by creating the class Element and using List grammar from A1, except with
+[..] used for lsits instead.
+Part 6:  Supported the following functions:  cons(e,L), car(L), cdr(L),
+nullp(L), intp(e), listp(e), and ||.
+Part 7:  Error checking performed to crash if wrong inputs are given.
+Part 8:  Created a sample_input file that tests all of this and also files
+that have the two functions to compute the length of a list
+iteratively and recursively.
+
+Files Included:
+
+-makefile:  The makefile which can be used to compile and rune everything
+-README:  This readme file with all required information
+-sample_input:  Input file used to test all program parts, also has
+iterative and recursive length functions
+-sample_len:  Input file with iterative length function
+-sample_lenr:  Input file with recursive length function
+
+-Program.h/.cpp - Mini-compiler File
+-StmtList.h/.cpp - Mini-compiler File
+-Stmt.h - Mini-compiler File
+-AssignStmt.h/.cpp - Mini-compiler File
+-DefineStmt.h/.cpp - Mini-compiler File
+-IfStmt.h/.cpp - Mini-compiler File
+-WhileStmt.h/.cpp - Mini-compiler File
+-Expr.h - Mini-compiler File
+-Plus.h/.cpp - Mini-compiler File
+-Times.h/.cpp - Mini-compiler File
+-Minus.h/.cpp - Mini-compiler File
+-Funcall.h/.cpp - Mini-compiler File
+-Proc.h/.cpp - Mini-compiler File
+-Ident.h/.cpp - Mini-compiler File
+*All of these mainly had their environment tables tweaked
+
+-Element.h/.cpp - New MC File which can be List or Number
+-Number.h/.cpp - MC Files which had functions added to them
+-List.h/.cpp - New MC Files which support lists and their functions
+-Car.h/.cpp - Handles Car function
+-Cdr.h/.cpp - Handles Cdr function
+-Cons.h/.cpp - Handles Cons function
+-Concat.h/.cpp - Handles Concat function
+-Nullp.h/.cpp - Handles Nullp function
+-Listp.h/.cpp - Handles Listp function
+-Intp.h/.cpp - Handles Intp function
+
+-ML-interpreterBody.ypp - ML Interpreter ypp
+-ML-interpreterHead.y - ML Interpreter y
+-ML-lex.l - ML Interpreter lex
+
+Running the code:
+
+-To run the code, run make flex, parse, and compile to build it. Then run
+either "./Compiler < inputFile" or "make run < inputFile". There is an
+included file sample_input which exercises assignment with lists, all 7
+functions. There is also sample_len and sample_lenr, which have the two
+length functions, one iterative and one recursive.
+
+How the code works:
+-The code works mainly by changing the environment table throughout to a map
+of String->Element* rather than String->int. Then Element was created, which
+is an abstract class that has descendents Number and List. Number remained
+unchanged other than the addition of a helper function and Listp(). List has
+been brought in from A1 and has the 6 functions necessary to perform the new
+actions. There have been 7 new .h/.cpp's created similar to Plus/Times/Minus
+to handle the 7 new functions in exactly the same way, calling these
+functions from List and Number. The grammar has been modified to accept
+tokens of these function names and they have been added on the same level as
++ and - in Expr rule. A Factor can now become an element, which is a list or
+number. The grammar to build a list is the same from assignment 1.
+-The code is working completely. It is possible that better error checking
+conditions should have been put in, but otherwise it is working perfectly.
+All functions evalute and lists can be assigned. All requirements of the
+assignment have been fulfilled.
+
+Testing:i
+-Testing was done using sample_input. It tests against assigning variables
+to list and testing all 7 functions, as well as those two compute length of
+a list functions required. Each function was tested by rigorously giving it
+all possible input (list or number, IDENT representing a list or number) and
+by trying different lists, such as [], simple lists like [4,5,6], and more
+complex lists like [[], [[4]], [4,5]].
+
