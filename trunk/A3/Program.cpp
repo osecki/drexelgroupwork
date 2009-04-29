@@ -3,8 +3,6 @@
 #include "Program.h"
 #include "Element.h"
 
-
-
 Program::Program(StmtList *SL)
 {
     NameTable_.clear();
@@ -33,6 +31,4 @@ void Program::eval()
 {
     SL_->eval(NameTable_, FunctionTable_, memory);
 }
-
-
 

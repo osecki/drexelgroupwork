@@ -1,4 +1,3 @@
-
 #include "Memory.h"
 #include "Element.h"
 #include "List.h"
@@ -26,7 +25,28 @@ int Memory::getAvail(map<string,Element*> NT) {
 }
 
 void Memory::markGarbage(map<string,Element*> NT) {
-    // TODO
+/*   	// Iterate name table, if list, mark Concells it reaches
+		map<string,Element*>::iterator p;
+		for (p = NT_.begin();p != NT_.end();p++) {
+			  Element* tempElem = ((Element*)p->second);
+				if ( tempElem->listp() ) {
+						// Mark main ConsCell
+						heap[tempElem->getAddress()].mark = 1;
+
+						// Mark down car path
+
+						// Mark down cdr path
+				}
+		}
+
+		// Iterate memory table, if unmarked, inUse = false
+		for(int index = 0; index < MAX_MEMORY; index++) {
+				if ( ! heap[index].mark )
+					inUse = false;
+
+				// Unmark all in table
+				heap[index].mark = 0;
+		}*/
 }
 
 int Memory::cons(Element* e, int address, map<string,Element*> NT) {
@@ -47,7 +67,6 @@ ConsCell & Memory::operator[](int index) {
     return heap[index];
 }
 
-
 ConsCell Memory::operator[](int index) const {
     return heap[index];
 }
@@ -67,3 +86,4 @@ void Memory::output() const {
         cout << "\t" << cell.cdr << "\t" << (cell.inUse ? "T" : "F") << endl;
     }
 }
+

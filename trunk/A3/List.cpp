@@ -128,7 +128,6 @@ Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memor
     return l;
 }
 
-
 int List::getAddress() {
     return address;
 }
