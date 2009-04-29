@@ -34,6 +34,9 @@ public:
     // destructor
     virtual ~List();
 
+    // Functions for A2
+    virtual int listp();
+
     virtual string toString(const Memory &memory) const;
     virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const;
 
