@@ -15,7 +15,7 @@ public:
 		int getValue();
 		// Needed for A2
     virtual int intp();
-    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
+    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const;
     virtual string toString() const;
 private:
     int value_;
