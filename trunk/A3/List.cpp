@@ -93,10 +93,16 @@ void List::concatenate(List* other) {
 }
 
 // general functions
-string List::toString() const {
+string List::toString(const Memory &memory) const {
     string s = "[";
 
-    // TODO look at memory
+    int current = address;
+    while(current != NULL_POINTER) {
+        s = s + memory[current].car->toString(memory);
+        current = memory[current].cdr;
+        if(current != NULL_POINTER)
+            s = s + ",";
+    }
 
     return s + "]";
 }

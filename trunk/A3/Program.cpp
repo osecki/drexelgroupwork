@@ -21,7 +21,7 @@ void Program::dump()
   cout << "Dump of Symbol Table" << endl;
   cout << "Name Table" << endl;
   for (p = NameTable_.begin();p != NameTable_.end();p++)
-    cout << p->first << " -> " << p->second->toString() << endl;
+    cout << p->first << " -> " << p->second->toString(memory) << endl;
   cout << "Function Table" << endl;
   for (f = FunctionTable_.begin();f != FunctionTable_.end();f++)
     cout << f->first << endl;

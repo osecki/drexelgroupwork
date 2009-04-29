@@ -42,7 +42,7 @@ public:
     virtual int listp();
     int nullp();
 
-    virtual string toString() const;
+    virtual string toString(const Memory &memory) const;
     virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const;
 
     int getAddress();

@@ -16,7 +16,7 @@ public:
 		// Needed for A2
     virtual int intp();
     virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const;
-    virtual string toString() const;
+    virtual string toString(const Memory &memory ) const;
 private:
     int value_;
 };

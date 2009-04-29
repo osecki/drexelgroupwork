@@ -13,7 +13,7 @@ Element* Number::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &mem
     return new Number(value_);
 }
 
-string Number::toString() const {
+string Number::toString(const Memory &memory) const {
     std::stringstream s;
     s << value_;
     return s.str();

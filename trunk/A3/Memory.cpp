@@ -42,3 +42,8 @@ int Memory::cons(Element* e, int address, map<string,Element*> NT) {
 ConsCell & Memory::operator[](int index) {
     return heap[index];
 }
+
+
+ConsCell Memory::operator[](int index) const {
+    return heap[index];
+}
