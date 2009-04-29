@@ -4,6 +4,37 @@ ac := [];
 ad := [4,5, 6];
 ae := [[4,[5]], 6, [7, 8]];
 
+define len
+proc(n)
+  count := 0;
+  bool := 1;
+  ltemp := n;
+  while bool do if nullp(ltemp) then bool := 0 else count := count + 1;
+ltemp := cdr(ltemp) fi od;
+  return := count
+end;
+none := [];
+lenone := len(none);
+ntwo := [15];
+lentwo := len(ntwo);
+nthree := [5,10,15];
+lenthree := len(nthree);
+nfour := [[],[4,5],5,[[]]];
+lenfour := len(nfour);
+
+define lenr
+proc(m)
+  if nullp(m) then return := 0 else return := 1 + lenr(cdr(m)) fi
+end;
+mone := [];
+lenfive := lenr(mone);
+mtwo := [15];
+lensix := lenr(mtwo);
+mthree := [5,10,15];
+lenseven := lenr(mthree);
+mfour := [[],[4,5],5,[[]]];
+leneight := lenr(mfour);
+
 ba := car([4,5,6]);
 bb := car(ad);
 bc := car([[4,[5]],6,[7,8]]);
