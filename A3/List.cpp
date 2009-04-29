@@ -72,7 +72,7 @@ Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memor
         }
 
         NT.erase(NT.find(TEMP_NAME));
-        return e;
+        return new List(address);
     }
 
     return new List(NULL_POINTER);
