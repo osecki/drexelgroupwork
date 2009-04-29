@@ -27,7 +27,7 @@ Element* Proc::apply(map<string,Element*> &NT, map<string,Proc*> &FT, list<Expr*
         exit(1);
     }
     for (p = PL_->begin(), e = EL->begin(); p != PL_->end(); p++, e++)
-        NNT[*p] = (*e)->eval(NT,FT);
+        NNT[*p] = (*e)->eval(NT,FT,memory);
 
     // evaluate function body using new name table and old function table
 

@@ -17,8 +17,8 @@ IfStmt::~IfStmt() { delete E_; delete S1_; delete S2_; }
 // Changed environment table here
 void IfStmt::eval(map<string,Element*> &NT, map<string,Proc*> &FT, Memory &memory) const
 {
-    if (((Number*)E_->eval(NT,FT))->getValue() > 0)
-        S1_->eval(NT,FT);
+    if (((Number*)E_->eval(NT,FT,memory))->getValue() > 0)
+        S1_->eval(NT,FT,memory);
     else
-        S2_->eval(NT,FT);
+        S2_->eval(NT,FT,memory);
 }
