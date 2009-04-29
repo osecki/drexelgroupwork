@@ -6,7 +6,7 @@
 
 #ifndef LIST_H_
 #define LIST_H_
-#include<iostream>
+#include <iostream>
 #include <list>
 #include <iostream>
 #include <map>
@@ -15,35 +15,37 @@
 using namespace std;
 
 class Proc;
+class Expr;
 
 class List : public Element {
 
 public:
-	// default constructor
-	List();
+    // default constructor
+    List();
 
-	// constructor with sequence
-	List (list<Element*> *s);
-  
-  // copy constructor	
-	List (List* other);
+    // constructor with sequence
+    List (list<Expr*> *s);
 
-	// destructor
-  virtual ~List();
+    // copy constructor
+    List (List* other);
 
-	// Functions for A2
-  Element* getFirst();
-  Element* getRest();
-  void concatenate(List* other);
-  void cons (Element* e);
-  virtual int listp();
-  int nullp();
+    // destructor
+    virtual ~List();
 
-  virtual string toString() const;
-  virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
+    // Functions for A2
+    Expr* getFirst();
+    Expr* getRest();
+    void concatenate(List* other);
+    void cons (Expr* e);
+    virtual int listp();
+    int nullp();
+
+    virtual string toString() const;
+    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
 
 private:
-	list<Element*> *elements;
+    list<Expr*> *expressions;
+    int address;
 };
 
 #endif

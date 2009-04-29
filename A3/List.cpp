@@ -5,40 +5,40 @@
 **/
 
 #include "List.h"
-#include "Element.h"
+#include "Expr.h"
 #include "Number.h"
 using namespace std;
 
 // default constructor
 List::List() {
-    elements = new list<Element*>;
+    expressions = new list<Expr*>;
 }
 
 // constructor with sequence
-List::List (list<Element*> *s) {
-    elements = new list<Element*>;
-    elements->insert(elements->begin(), s->begin(), s->end());
+List::List (list<Expr*> *s) {
+    expressions = new list<Expr*>;
+    expressions->insert(expressions->begin(), s->begin(), s->end());
 }
 
 // copy constructor
 List::List(List* other) {
-    elements = new list<Element*>;
-    elements->insert(elements->begin(), other->elements->begin(), other->elements->end());
+    expressions = new list<Expr*>;
+    expressions->insert(expressions->begin(), other->expressions->begin(), other->expressions->end());
 }
 
 // destructor
 List::~List() {
-	    for (list<Element*>::iterator iterator = elements->begin(); iterator != elements->end(); iterator++) {
-				        delete (*iterator);
-								    }
-			    delete elements;
+    for (list<Expr*>::iterator iterator = expressions->begin(); iterator != expressions->end(); iterator++) {
+        delete (*iterator);
+    }
+    delete expressions;
 }
 
 // functions for A2
-Element* List::getFirst() {
+Expr* List::getFirst() {
 	  // If list size >= 1, then return first element, otherwise crash
-    if(elements->size()) {
-        return elements->front();
+    if(expressions->size()) {
+        return expressions->front();
     } else {
         // Error out
 				cout << "ERROR:  Cannot do a Car(list) on an empty list or other object." << endl;
@@ -47,14 +47,14 @@ Element* List::getFirst() {
     }
 }
 
-Element* List::getRest() {
+Expr* List::getRest() {
 	 // If list size >= 2, return all but the first element, otherwise crash
-	 if (elements->size() + 1) {
-		   list<Element*> * temp = new list<Element*>;
-			 list<Element*>::iterator iterator = elements->begin();
+	 if (expressions->size() + 1) {
+		   list<Expr*> * temp = new list<Expr*>;
+			 list<Expr*>::iterator iterator = expressions->begin();
 			 iterator++;
 
-			 while ( iterator != elements->end() )
+			 while ( iterator != expressions->end() )
 			 {
 				 temp->push_back((*iterator));
 				 iterator++;
@@ -70,43 +70,34 @@ Element* List::getRest() {
 
 int List::nullp()
 {
-	return elements->size() == 0;
+	return expressions->size() == 0;
 }
 
 int List::listp() {
 	    return 1;
 }
 
-void List::cons (Element* e)
+void List::cons (Expr* e)
 {
-	elements->push_front(e);
+	expressions->push_front(e);
 }
 
 void List::concatenate(List* other) {
-    elements->insert(elements->end(), other->elements->begin(), other->elements->end());
+    expressions->insert(expressions->end(), other->expressions->begin(), other->expressions->end());
 }
 
 // general functions
 string List::toString() const {
     string s = "[";
 
-    // Iterate over elements and print out each one and commas
-    list<Element*>::iterator iterator = elements->begin();
-		while ( iterator != elements->end() )
-		{
-        s = s + (*iterator)->toString();
+    // TODO look at memory
 
-				iterator++;
-				
-				if ( iterator != elements->end() )
-					s = s + ',';
-    }
     return s + "]";
 }
 
 Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
     List* newL = new List;
-    newL->elements = elements;
+    newL->expressions = expressions;
     return newL;
 }
 
