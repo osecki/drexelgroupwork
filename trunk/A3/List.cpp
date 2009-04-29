@@ -40,58 +40,6 @@ List::~List() {
     delete expressions;
 }
 
-// functions for A2
-Expr* List::getFirst() {
-	  // If list size >= 1, then return first element, otherwise crash
-    if(expressions->size()) {
-        return expressions->front();
-    } else {
-        // Error out
-				cout << "ERROR:  Cannot do a Car(list) on an empty list or other object." << endl;
-				exit(1);
-        return new List;
-    }
-}
-
-Expr* List::getRest() {
-	 // If list size >= 2, return all but the first element, otherwise crash
-	 if (expressions->size() + 1) {
-		   list<Expr*> * temp = new list<Expr*>;
-			 list<Expr*>::iterator iterator = expressions->begin();
-			 iterator++;
-
-			 while ( iterator != expressions->end() )
-			 {
-				 temp->push_back((*iterator));
-				 iterator++;
-			 }
-			 return new List (temp);
-	 } else {
-		   // Error out
-			 cout << "ERROR:  Cannot do a Cdr(list) on an empty list or other object." << endl;
-			 exit(1);
-			 return new List;
-	 }
-}
-
-int List::nullp()
-{
-	return expressions->size() == 0;
-}
-
-int List::listp() {
-	    return 1;
-}
-
-void List::cons (Expr* e)
-{
-	expressions->push_front(e);
-}
-
-void List::concatenate(List* other) {
-    expressions->insert(expressions->end(), other->expressions->begin(), other->expressions->end());
-}
-
 // general functions
 string List::toString(const Memory &memory) const {
     string s = "[";
@@ -109,25 +57,19 @@ string List::toString(const Memory &memory) const {
 
 Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const {
 
-    int address = NULL_POINTER;
-
-
     if(expressions->size()) {
+        int address = NULL_POINTER;
+        Element* e ;
         for (list<Expr*>::reverse_iterator iterator = expressions->rbegin(); iterator != expressions->rend(); iterator++) {
-            Element* e = (*iterator)->eval(NT,FT,memory);
+            e = (*iterator)->eval(NT,FT,memory);
             address = memory.cons(e, address, NT);
+            e->setAddress(address);
             NT[TEMP_NAME] = e;
         }
 
         NT.erase(NT.find(TEMP_NAME));
+        return e;
     }
 
-    List* l = new List();
-    l->address = address;
-
-    return l;
-}
-
-int List::getAddress() {
-    return address;
+    return new List(NULL_POINTER);
 }

@@ -5,6 +5,7 @@
 
 Number::Number(int value)
 {
+    address = NULL_POINTER;
     value_ = value;
 }
 
