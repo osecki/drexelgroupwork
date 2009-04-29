@@ -17,6 +17,7 @@ class Memory
         Memory();
         int cons(Element* e, int address, map<string,Element*> NT);
         ConsCell & operator[](int index);
+        ConsCell operator[](int index) const;
 
 
     private:

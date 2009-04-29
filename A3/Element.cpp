@@ -5,8 +5,9 @@
 **/
 #include "Number.h"
 #include "Element.h"
-void Element::print() {
-    cout<<toString()<<endl;
+
+void Element::print(const Memory &memory) {
+    cout<<toString(memory)<<endl;
 }
 
 int Element::listp() {
