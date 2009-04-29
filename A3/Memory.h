@@ -1,7 +1,7 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-#define MAX_MEMORY 8
+#define MAX_MEMORY 4
 #define NULL_POINTER -1
 
 #include <vector>
@@ -22,6 +22,8 @@ class Memory
     private:
         int getAvail(map<string,Element*> NT);
         void markGarbage(map<string,Element*> NT);
+        void inUse(Element*);
+        void inUse(int address, bool isNumber = false);
         vector<ConsCell> heap;
 };
 

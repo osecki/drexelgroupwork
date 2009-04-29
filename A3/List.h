@@ -34,22 +34,12 @@ public:
     // destructor
     virtual ~List();
 
-    // Functions for A2
-    Expr* getFirst();
-    Expr* getRest();
-    void concatenate(List* other);
-    void cons (Expr* e);
-    virtual int listp();
-    int nullp();
-
     virtual string toString(const Memory &memory) const;
     virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const;
 
-    int getAddress();
 
 private:
     list<Expr*> *expressions;
-    int address;
 };
 
 #endif

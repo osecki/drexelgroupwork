@@ -8,7 +8,9 @@
 #include "ConsCell.h"
 #include "Memory.h"
 
+// An invalid variable name to use to protect ConsCells as they are created
 #define TEMP_NAME string("!R*@^$@!(*$^")
+#define DEBUG true
 
 using namespace std;
 
@@ -16,13 +18,13 @@ class Program
 {
 public:
     Program(StmtList *SL);
-    ~Program() {delete SL_; };
+    ~Program();
     void dump();
     void eval();
 
 private:
     StmtList *SL_;
-		Memory memory;
+    Memory memory;
     map<string, Element*> NameTable_;
     map<string, Proc*> FunctionTable_;
 };

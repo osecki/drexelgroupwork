@@ -17,3 +17,13 @@ int Element::listp() {
 int Element::intp() {
     return 0;
 }
+
+
+
+int Element::getAddress() {
+    return address;
+}
+
+void Element::setAddress(int address) {
+    this->address = address;
+}
