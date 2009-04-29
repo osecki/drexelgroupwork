@@ -13,7 +13,7 @@ WhileStmt::WhileStmt(Expr *E, StmtList *S)
 WhileStmt::~WhileStmt() { delete E_; delete S_; }
 
 // Changed environment table here
-void WhileStmt::eval(map<string,Element*> &NT, map<string,Proc*> &FT) const
+void WhileStmt::eval(map<string,Element*> &NT, map<string,Proc*> &FT, Memory &memory) const
 {
     while (((Number*)E_->eval(NT,FT))->getValue() > 0)
         S_->eval(NT,FT);

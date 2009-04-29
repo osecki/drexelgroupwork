@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include "Memory.h"
 using namespace std;
 
 class Proc;
