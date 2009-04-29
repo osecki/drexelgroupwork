@@ -14,10 +14,10 @@ class ConsCell{
 
 public:
 	ConsCell();
-    ConsCell(Element*, Element*);
+    ConsCell(Element*, int);
 
 	Element* car;
-	Element* cdr;
+	int cdr;
 	bool inUse;
 
 };

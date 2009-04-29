@@ -9,15 +9,17 @@
 #include "ConsCell.h"
 using namespace std;
 
+class Element;
+
 class Memory
 {
     public:
         Memory();
-        int cons(Element* e, int address);
+        int cons(Element* e, int address, map<string,Element*> NT);
 
     private:
-        int getAvail();
-        void markGarbage();
+        int getAvail(map<string,Element*> NT);
+        void markGarbage(map<string,Element*> NT);
         vector<ConsCell> heap;
 };
 
