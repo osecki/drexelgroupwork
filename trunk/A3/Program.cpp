@@ -1,5 +1,6 @@
 #include <map>
 #include <iostream>
+#include <iomanip>
 #include "Program.h"
 #include "Element.h"
 
@@ -21,9 +22,15 @@ void Program::dump()
     map<string,Proc*>::iterator f;
     cout << "Dump of Symbol Table" << endl;
     cout << "Name Table" << endl;
-    for (p = NameTable_.begin();p != NameTable_.end();p++)
-        cout << p->first << " -> " << p->second->toString(memory) << endl;
-        cout << "Function Table" << endl;
+    cout << right << setw(10) << "Name" << setw(14) << "Value" << setw(14) << "List Value" << endl;
+    for (p = NameTable_.begin();p != NameTable_.end();p++) {
+        cout << setw(10) << p->first;
+        if(p->second->listp()) {
+            cout << setw(13) <<  p->second->getAddress() << setw(1) << "*";
+        }
+        cout << setw(14) << p->second->toString(memory) << endl;
+    }
+    cout << "Function Table" << endl;
     for (f = FunctionTable_.begin();f != FunctionTable_.end();f++)
         cout << f->first << endl;
 }

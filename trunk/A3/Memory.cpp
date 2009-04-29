@@ -86,18 +86,18 @@ ConsCell Memory::operator[](int index) const {
 // Dumps the memory table to standard out
 void Memory::output() const {
     int index = 0;
-    cout << "index\ttype\tcar\tcdr\tinuse"<<endl;
+    cout << "index\tcar\tcdr\tinUse"<<endl;
     for(vector<ConsCell>::const_iterator iter = heap.begin(); iter != heap.end(); iter++) {
         ConsCell cell = *iter;
         cout << index++ << "\t";
         if(cell.car == NULL) {
-            cout << "X\tX";
+            cout << "X";
         } else if(cell.car->listp()) {
-            cout << "L\t" << ((List*)cell.car)->getAddress();
+            cout << ((List*)cell.car)->getAddress() << "*";
         } else {
-            cout << "N\t" << ((Number*)cell.car)->getValue();
+            cout << ((Number*)cell.car)->getValue();
         }
-        cout << "\t" << cell.cdr << "\t" << (cell.inUse ? "T" : "F") << endl;
+        cout << "\t" << cell.cdr << "*\t" << (cell.inUse ? "T" : "F") << endl;
     }
 }
 
