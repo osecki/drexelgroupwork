@@ -40,6 +40,10 @@ List::~List() {
     delete expressions;
 }
 
+int List::listp() {
+	    return 1;
+}
+
 // general functions
 string List::toString(const Memory &memory) const {
     string s = "[";
