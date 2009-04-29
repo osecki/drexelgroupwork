@@ -21,6 +21,6 @@ Element* Cons::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memor
     List* newL = (List*)op1_->eval(NT,FT,memory);
     Element* two = (Element*)op2_->eval(NT,FT,memory);
 
-    memory.cons(two, newL->getAddress(), NT);
-    return newL;
+    int address = memory.cons(two, newL->getAddress(), NT);
+    return new List(address);
 }
