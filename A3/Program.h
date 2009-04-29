@@ -8,16 +8,9 @@
 #include "ConsCell.h"
 #include "Memory.h"
 
-
 #define TEMP_NAME string("!R*@^$@!(*$^")
 
-
 using namespace std;
-
-
-// TODO Maybe make a parameter to eval
-
-
 
 class Program
 {
@@ -27,16 +20,9 @@ public:
     void dump();
     void eval();
 
-
-
 private:
-
-
-
-    Memory memory;
     StmtList *SL_;
-		// Changed the environmental table in order to bind to Element* rather
-		// than int
+		Memory memory;
     map<string, Element*> NameTable_;
     map<string, Proc*> FunctionTable_;
 };

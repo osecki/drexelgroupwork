@@ -1,4 +1,3 @@
-
 #ifndef MEMORY_H
 #define MEMORY_H
 
@@ -20,7 +19,6 @@ class Memory
         ConsCell operator[](int index) const;
         void output() const;
 
-
     private:
         int getAvail(map<string,Element*> NT);
         void markGarbage(map<string,Element*> NT);
@@ -29,3 +27,4 @@ class Memory
 
 
 #endif
+
