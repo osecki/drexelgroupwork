@@ -13,5 +13,7 @@ void StmtList::eval(map<string,Element*> &NT, map<string,Proc*> &FT, Memory &mem
   list<Stmt*>::iterator Sp;
   for (Sp = SL_.begin();Sp != SL_.end();Sp++) {
     (*Sp)->eval(NT,FT,memory);
+        // cout << "after statement" << index++ << endl;
+        //memory.output();
     }
 }
