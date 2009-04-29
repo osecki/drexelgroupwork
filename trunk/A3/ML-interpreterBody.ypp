@@ -45,13 +45,13 @@ extern "C"
         {
                 return 1;
         }
-
 }
+
 
 StmtList *SL;
 list<string> *PL;
 list<Expr*> *EL;
-list<Element*> *SQ;
+list<Expr*> *SQ;
 Program *P;
 
 %}
@@ -65,7 +65,7 @@ Program *P;
   list<string> *paramlistptr;
   list<Expr*> *exprlistptr;
   List* listptr;
-  list<Element*> *listsequenceptr;
+  list<Expr*> *listsequenceptr;
   Element  *elementptr;
 }
 
@@ -188,6 +188,35 @@ expr:
         cout << "Expr -> term" << endl;
         $$ = $1;
     }
+    ;
+
+term: term '*' factor   { cout << "Term -> Term * Factor" << endl;
+                          $$ = new Times($1,$3); }
+    | factor            { cout << "Term -> Factor" << endl;
+                          $$ = $1; }
+    ;
+
+// Types of values
+factor:
+    '(' expr ')'  {
+        cout << "Factor -> (expr)" << endl;
+        $$ = $2;
+    }
+    |
+    element {
+        cout << "Factor -> element" << endl;
+        $$ = $1;
+    }
+    |
+    IDENT {
+        cout << "Factor -> IDENT" << endl;
+        $$ = new Ident(string($1));
+    }
+    |
+    funcall {
+        cout << "Factor -> funcall" << endl;
+        $$ = $1;
+    }
     |
     CAR '(' expr ')' {
         cout << "Expr -> car (expr)" << endl;
@@ -220,23 +249,6 @@ expr:
     }
     ;
 
-term: term '*' factor   { cout << "Term -> Term * Factor" << endl;
-                          $$ = new Times($1,$3); }
-    | factor            { cout << "Term -> Factor" << endl;
-                          $$ = $1; }
-    ;
-
-// Types of values
-factor:     '(' expr ')'  { cout << "Factor -> (expr)" << endl;
-                            $$ = $2; }
-    |       element       { cout << "Factor -> element" << endl;
-                            $$ = $1; }
-    |       IDENT         { cout << "Factor -> IDENT" << endl;
-                            $$ = new Ident(string($1)); }
-    |       funcall       { cout << "Factor -> funcall" << endl;
-                            $$ = $1; }
-    ;
-
 list:       '[' sequence ']' { cout << "List -> [ sequence ]" << endl;
                                $$ = new List($2); }
     |       '[' ']'          { cout << "List  -> []" << endl;
@@ -244,11 +256,11 @@ list:       '[' sequence ']' { cout << "List -> [ sequence ]" << endl;
     ;
 
 sequence:
-    element ',' sequence { cout << "Seq -> element, seq" << endl;
+    expr ',' sequence { cout << "Seq -> element, seq" << endl;
                            $3->push_front($1); $$ = $3; }
     |
-    element { cout << "seq -> element" << endl;
-              SQ = new list<Element*>;
+    expr { cout << "seq -> element" << endl;
+              SQ = new list<Expr*>;
               SQ->push_front($1);
               $$ = SQ; }
     ;
