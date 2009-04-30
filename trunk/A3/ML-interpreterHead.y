@@ -68,7 +68,7 @@ param_list: IDENT ',' param_list { printf("param_list -> IDENT, param_list\n"); 
 
 expr: expr '+' term                { printf("expr -> expr + term\n"); }
     | expr '-' term                { printf("expr -> expr - term\n"); }
-    | expr '||' factor               { printf("expr -> expr || expr\n"); }
+    | expr '||' factor             { printf("expr -> expr || factor\n"); }
     | term            						 { printf("expr -> term\n"); }
     ;
 
@@ -76,20 +76,16 @@ term: term '*' factor   { printf("term -> term * factor\n"); }
     | factor            { printf("term -> factor\n"); }
     ;
 
-factor:     '(' expr ')'  { printf("factor -> ( expr ) \n"); }
-    |       element { printf("factor -> element\n"); }
-    |       IDENT { printf("factor -> identifier\n"); }
-    |       funcall { printf("factor -> funcall\n"); }
-    | CAR '(' expr ')'             { printf("expr -> car (expr)\n"); }
-    | CDR '(' expr ')'             { printf("expr -> cdr (expr)\n"); }
-    | NULLP '(' expr ')'           { printf("expr -> nullp(expr)\n"); }
-    | INTP '(' expr ')'            { printf("expr -> intp(expr)\n"); }
-    | LISTP '(' expr ')'           { printf("expr -> listp(expr)\n"); }
-    | CONS '(' expr ',' factor ')'   { printf("expr -> cons(expr, expr)\n"); }
-    ;
-
-element:		list { printf("element -> list\n"); }
-	  |				NUMBER { printf("element -> NUMBER\n"); }
+factor: '(' expr ')'                { printf("factor -> ( expr ) \n"); }
+    |   element                     { printf("factor -> element\n"); }
+    |   IDENT                       { printf("factor -> identifier\n"); }
+    |   funcall                     { printf("factor -> funcall\n"); }
+    |   CAR '(' expr ')'            { printf("factor -> car (expr)\n"); }
+    |   CDR '(' expr ')'            { printf("factor -> cdr (expr)\n"); }
+    |   NULLP '(' expr ')'          { printf("factor -> nullp(expr)\n"); }
+    |   INTP '(' expr ')'           { printf("factor -> intp(expr)\n"); }
+    |   LISTP '(' expr ')'          { printf("factor -> listp(expr)\n"); }
+    |   CONS '(' expr ',' expr ')'  { printf("factor -> cons(expr, expr)\n"); }
     ;
 
 list:				'[' sequence ']' { printf("list -> sequence\n"); }
@@ -98,6 +94,10 @@ list:				'[' sequence ']' { printf("list -> sequence\n"); }
 
 sequence:   element ',' sequence { printf("sequence -> element, seq\n"); }
     |       element { printf("sequence -> element\n"); }
+    ;
+
+element:   list { printf("element -> list\n"); }
+	  |      NUMBER { printf("element -> NUMBER\n"); }
     ;
 
 funcall:  IDENT '(' expr_list ')'

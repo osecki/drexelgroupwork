@@ -222,32 +222,32 @@ factor:
     }
     |
     CAR '(' expr ')' {
-        cout << "Expr -> car (expr)" << endl;
+        cout << "Factor -> car (expr)" << endl;
         $$ = new Car ($3);
     }
     |
     CDR '(' expr ')' {
-        cout << "Expr -> cdr (expr)" << endl;
+        cout << "Factor -> cdr (expr)" << endl;
         $$ = new Cdr ($3);
     }
     |
     NULLP '(' expr ')' {
-        cout << "Expr -> nullp (expr)" << endl;
+        cout << "Factor -> nullp (expr)" << endl;
         $$ = new Nullp ($3);
     }
     |
     INTP '(' expr ')' {
-        cout << "Expr -> intp (expr)" << endl;
+        cout << "Factor -> intp (expr)" << endl;
         $$ = new Intp ($3);
     }
     |
     LISTP '(' expr ')' {
-        cout << "Expr -> listp (expr)" << endl;
+        cout << "Factor -> listp (expr)" << endl;
         $$ = new Listp ($3);
     }
     |
-    CONS '(' expr ',' factor ')' {
-        cout << "Expr -> cons (expr, expr)" << endl;
+    CONS '(' expr ',' expr ')' {
+        cout << "Factor -> cons (expr, expr)" << endl;
         $$ = new Cons ($5, $3);
     }
     ;

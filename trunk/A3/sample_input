@@ -12,23 +12,21 @@ proc(n)
   while bool do if nullp(n) then bool := 0 else count := count + 1;n:=cdr(n) fi od;
   return := count
 end;
-lenone := len();
-lentwo := len(b);
-lenthree := len(c);
-lenfour := len(d);
-lenfive := len(e);
-lensix := len(f);
+lenones := len(b);
+lentwo := len(c);
+lenthree := len(d);
+lenfour := len(e);
+lenfive := len(f);
 
 define lenr
 proc(m)
   if nullp(m) then return := 0 else return := 1 + lenr(cdr(m)) fi
 end;
-lenseven := lenr(a);
-leneight := lenr(b);
-lennine := lenr(c);
-lenten := lenr(d);
-leneleven := lenr(e);
-lentwelve := lenr(f);
+lensix := lenr(b);
+lenseven := lenr(c);
+leneight := lenr(d);
+lennine := lenr(e);
+lenten := lenr(f);
 
 a := car(c);
 b := car(d);
@@ -47,7 +45,7 @@ a := cdr(c);
 b := cdr(d);
 c := cdr(e);
 d := cdr(f);
-e := cdr(cdr(e);
+e := cdr(cdr(e));
 f := car(cdr(cdr(f)));
 
 a := 5;
@@ -94,11 +92,10 @@ ib := intp(b);
 ic := intp(c);
 id := intp(d);
 ie := intp(e);
-if := intp(f);
 
 ia := listp(a);
 ib := listp(b);
 ic := listp(c);
 id := listp(d);
-ie := listp(e);
-if := listp(f)
+ie := listp(e)
+
