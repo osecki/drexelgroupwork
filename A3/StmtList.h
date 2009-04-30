@@ -5,6 +5,7 @@
 #include <string>
 #include <list>
 #include "Stmt.h"
+#include "Memory.h"
 
 using namespace std;
 
@@ -17,6 +18,8 @@ public:
 		// Changed environment table here
     void eval(map<string,Element*> &NT, map<string,Proc*> &FT, Memory &memory);
     void insert(Stmt *T);
+
+    void dumpNameTable(map<string,Element*> &NT, Memory &memory);
 
 private:
     list<Stmt*> SL_;
