@@ -1,0 +1,20 @@
+a := 5;
+b := [];
+c := [15];
+d := [4,5, 6];
+e := [[],[4,5],5,[[]]];
+f := [[4,[5]], 6, [7, 8]];
+
+define len
+proc(n)
+  count := 0;
+  bool := 1;
+  while bool do if nullp(n) then bool := 0 else count := count + 1;n:=cdr(n)
+fi od;
+  return := count
+end;
+lenones := len(b);
+lentwo := len(c);
+lenthree := len(d);
+lenfour := len(e);
+lenfive := len(f)

@@ -24,16 +24,18 @@ side effects with the original lists and with cyclic lists, but this
 assignment does not require a deep copy and Johnson said these side effects
 are okay.
 -Another issue on the message board was what to do if you have a full heap
-and you reassign something already in the list. Our program will remove the
-thing attached to that Ident in memory so that it can attempt to reassign
-the Ident to something else. It will fail if the newer thing requires more
-memory than the old, but will pass otherwise.
+and you reassign something already in the list. Our program was going to 
+remove the thing attached to that Ident in memory so that it can attempt to 
+reassign the Ident to something else, but we had issues with statements such
+as a := a + 1 then, so we decided to not do this. So we do not remove it, so
+operations take up more space that of the form just described.
 
 Files Included:
 
 -makefile:  The makefile which can be used to compile and run everything
 -README:  This readme file with all required information
--sample_input:  Input file used to test program parts
+-sample_in_*:  Input files used to test program parts
+-sample_out_*: Output files corresponding with the input files
 
 -Program.h/.cpp - Mini-compiler File
 -StmtList.h/.cpp - Mini-compiler File
@@ -75,13 +77,14 @@ Files Included:
 Running the code:
 
 -To run the code, run make flex, parse, and compile to build it. Then run
-either "./Compiler < inputFile" or "make run < inputFile". There is an
-included file sample_input which exercises everything using the new memory
+either "./Compiler < inputFile" or "make run < inputFile". There are some
+included file sample_in_* which exercises everything using the new memory
 management and also garbage collection.
 -The memory heap is printed out to show it's progression after each
 statement is executed and the environment table has been tweaked too. There
 is a DEBUG flag in Program.h to control if you see this or not. There is
-also a global in there that controls how many blocks the memory table has.
+also a global in Memory.h (MAX_MEMORY) that controls how many blocks the
+memory table has. This can simply be changed to update the # of blocks.
 
 How the code works:
 -The code works from A2 and first there is a Memory component which has a
