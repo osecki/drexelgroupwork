@@ -29,6 +29,8 @@ remove the thing attached to that Ident in memory so that it can attempt to
 reassign the Ident to something else, but we had issues with statements such
 as a := a + 1 then, so we decided to not do this. So we do not remove it, so
 operations take up more space that of the form just described.
+-There is a TEMP variable used which no variables can be named because it is
+used to hold on to a partially made list during garbage collection.
 
 Files Included:
 
@@ -85,6 +87,8 @@ statement is executed and the environment table has been tweaked too. There
 is a DEBUG flag in Program.h to control if you see this or not. There is
 also a global in Memory.h (MAX_MEMORY) that controls how many blocks the
 memory table has. This can simply be changed to update the # of blocks.
+-All of the sample_input_* files use a MAX_MEMORY = 25, except for
+sample_in_gc2, which uses = 4.
 
 How the code works:
 -The code works from A2 and first there is a Memory component which has a

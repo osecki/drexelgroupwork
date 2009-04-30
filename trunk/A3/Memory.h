@@ -7,7 +7,7 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-#define MAX_MEMORY 25
+#define MAX_MEMORY 4
 #define NULL_POINTER -1
 
 #include <vector>
