@@ -71,8 +71,8 @@ Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memor
             e = (*iterator)->eval(NT,FT,memory);
             NT[TEMP_NAME] = e;
             address = memory.cons(e, address, NT);
-            cout << "got address " << address << endl;
-            cout << "sending address " << e->getAddress() << endl;
+            //cout << "got address " << address << endl;
+            //cout << "sending address " << e->getAddress() << endl;
             //e->setAddress(address);
         }
 
