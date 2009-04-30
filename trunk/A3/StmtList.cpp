@@ -21,18 +21,20 @@ void StmtList::eval(map<string,Element*> &NT, map<string,Proc*> &FT, Memory &mem
 					  // Print out Memory table after current statement
             cout << "Memory table after statement " << statement++ << endl;
             memory.output();
-						
-						// Print out Name table after current statement
-						map<string,Element*>::iterator p;
-						cout << "Name Table" << endl;
-						cout << right << setw(10) << "Name" << setw(14) << "Value" << setw(14) << "List Value" << endl;
-					  for (p = NT.begin();p != NT.end();p++) {
-								cout << setw(10) << p->first;
-								if(p->second->listp()) {
-										cout << setw(13) <<  p->second->getAddress() << setw(1) << "*";
-								}
-										cout << setw(14) << p->second->toString(memory) << endl;
-						}
+
+            dumpNameTable(NT, memory);
         }
+    }
+}
+
+void StmtList::dumpNameTable(map<string,Element*> &NameTable_, Memory &memory) {
+    cout << "Name Table" << endl;
+    cout << right << setw(10) << "Name" << setw(10) << "Value" << setw(10) << "    List Value" << endl;
+    for (map<string,Element*>::iterator p = NameTable_.begin();p != NameTable_.end();p++) {
+        cout << setw(10) << p->first << setw(10) << right;
+        if(p->second->listp()) {
+            cout << setw(10) << right << p->second->getAddress() << setw(4) << left << "*" << setw(31) << left;
+        }
+        cout << p->second->toString(memory) << endl << right;
     }
 }

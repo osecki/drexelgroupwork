@@ -92,7 +92,7 @@ ConsCell Memory::operator[](int index) const {
 // Dumps the memory table to standard out
 void Memory::output() const {
     int index = 0;
-    cout << "index\tcar\tcdr\tinUse"<<endl;
+    cout << "Memory Table" << endl << "index\tcar\tcdr\tinUse"<<endl;
     for(vector<ConsCell>::const_iterator iter = heap.begin(); iter != heap.end(); iter++) {
         ConsCell cell = *iter;
         cout << index++ << "\t";
