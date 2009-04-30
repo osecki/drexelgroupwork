@@ -1,0 +1,16 @@
+a := 5;
+b := [];
+c := [15];
+d := [4,5, 6];
+e := [[],[4,5],5,[[]]];
+f := [[4,[5]], 6, [7, 8]];
+
+define lenr
+proc(m)
+  if nullp(m) then return := 0 else return := 1 + lenr(cdr(m)) fi
+end;
+lensix := lenr(b);
+lenseven := lenr(c);
+leneight := lenr(d);
+lennine := lenr(e);
+lenten := lenr(f)
