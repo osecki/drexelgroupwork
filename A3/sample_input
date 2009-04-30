@@ -28,74 +28,52 @@ leneight := lenr(d);
 lennine := lenr(e);
 lenten := lenr(f);
 
-a := car(c);
-b := car(d);
-c := car(e);
-d := car(f);
-e := car(car(f));
+g := car(c);
+h := car(d);
+i := car(e);
+j := car(f);
+k := car(car(f));
 
-a := 5;
-b := [];
-c := [15];
-d := [4,5, 6];
-e := [[],[4,5],5,[[]]];
-f := [[4,[5]], 6, [7, 8]];
+g := cdr(c);
+h := cdr(d);
+i := cdr(e);
+j := cdr(f);
+k := cdr(cdr(e));
+l := car(cdr(cdr(f)));
 
-a := cdr(c);
-b := cdr(d);
-c := cdr(e);
-d := cdr(f);
-e := cdr(cdr(e));
-f := car(cdr(cdr(f)));
+g := cons (a, b);
+h := cons (a, c);
+i := cons (3, d);
+j := cons (d, e);
+k := cons ([3], f);
 
-a := 5;
-b := [];
-c := [15];
-d := [4,5, 6];
-e := [[],[4,5],5,[[]]];
-f := [[4,[5]], 6, [7, 8]];
+g := [1, 2] || [3, 4];
+h := c || d;
+i := e || [1];
 
-a := cons (a, b);
-b := cons (a, c);
-c := cons (3, d);
-d := cons (3, [4,5,6]);
-e := cons (d, e);
-f := cons ([3], f);
+g := nullp(b);
+h := nullp(c);
+i := nullp(d);
+j := nullp(e);
+k := nullp(f);
 
-a := 5;
-b := [];
-c := [15];
-d := [4,5, 6];
-e := [[],[4,5],5,[[]]];
-f := [[4,[5]], 6, [7, 8]];
+g := intp(a);
+h := intp(b);
+i := intp(c);
+j := intp(d);
+k := intp(e);
+l := intp(f);
 
-a := [1, 2] || [3, 4];
-b := a || c;
-c := e || [1];
-d := f || (cdr(f));
+g := listp(a);
+h := listp(b);
+i := listp(c);
+j := listp(d);
+k := listp(e);
+l := listp(f);
 
-a := 5;
-b := [];
-c := [15];
-d := [4,5, 6];
-e := [[],[4,5],5,[[]]];
-f := [[4,[5]], 6, [7, 8]];
-
-ia := nullp(b);
-ib := nullp(c);
-ic := nullp(d);
-id := nullp(e);
-ie := nullp(f);
-
-ia := intp(a);
-ib := intp(b);
-ic := intp(c);
-id := intp(d);
-ie := intp(e);
-
-ia := listp(a);
-ib := listp(b);
-ic := listp(c);
-id := listp(d);
-ie := listp(e)
-
+z := [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25];
+z := 1;
+y := [1,2,3];
+x := [4,5];
+y := 2;
+w := [11, 12, 13, 14, 15]
