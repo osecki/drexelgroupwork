@@ -31,6 +31,7 @@ class Memory
         void inUse(Element*);
         void inUse(int address, bool isNumber = false);
         vector<ConsCell> heap;
+        int avail;
 };
 
 

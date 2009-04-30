@@ -13,16 +13,18 @@
 using namespace std;
 
 Memory::Memory() {
+    avail = 0;
     heap.resize(MAX_MEMORY);
 }
 
 // Returns the next available index in the heap
 int Memory::getAvail(map<string,Element*> NT) {
     for(int doMark = 0; doMark <= 1; doMark++) {
-        for(int index = 0; index < MAX_MEMORY; index++) {
-            if(!heap[index].inUse) {
-                return index;
+        for(int increment = 0; increment < MAX_MEMORY; increment++) {
+            if(!heap[avail].inUse) {
+                return avail;
             }
+            avail = (avail + 1) % MAX_MEMORY;
         }
         if(0 == doMark) {
             markGarbage(NT);

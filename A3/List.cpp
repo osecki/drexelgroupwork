@@ -32,13 +32,15 @@ List::List(List* other) {
 }
 
 List::List(int address) {
+    expressions = new list<Expr*>;
     this->address = address;
 }
 
 // destructor
 List::~List() {
     for (list<Expr*>::iterator iterator = expressions->begin(); iterator != expressions->end(); iterator++) {
-        delete (*iterator);
+        if(*iterator != NULL)
+            delete (*iterator);
     }
     delete expressions;
 }
@@ -68,15 +70,22 @@ Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memor
         int address = NULL_POINTER;
         Element* e = new List(NULL_POINTER);
         for (list<Expr*>::reverse_iterator iterator = expressions->rbegin(); iterator != expressions->rend(); iterator++) {
+            // Get Element
             e = (*iterator)->eval(NT,FT,memory);
-            NT[TEMP_NAME] = e;
+
+            // Protect address
+            NT[TEMP_NAME] = new List(address);
+
+            // Allocate new memory for cons
             address = memory.cons(e, address, NT);
-            //cout << "got address " << address << endl;
-            //cout << "sending address " << e->getAddress() << endl;
-            //e->setAddress(address);
+
+            // Remove protection
+            map<string,Element*>::iterator location = NT.find(TEMP_NAME);
+            Element * element = location->second;
+            NT.erase(location);
+            delete element;
         }
 
-        NT.erase(NT.find(TEMP_NAME));
         // TODO I don't like how we're returning a new pointer here...
         return new List(address);
     }
