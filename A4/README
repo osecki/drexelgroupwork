@@ -1,0 +1,107 @@
+Assignment 3
+CS550 Programming Languages
+Spring 2009, 4/29/2009
+Team: (Group 7) Jordan Osecki, Geoff Oxholm, Rich Price, and Alimore Reza
+Team Lead on this Assignment:  Alimore Reza, Jordan Osecki, and Geoff Oxholm
+
+Implemented successfully is the following parts:
+
+Part 1:  Modified A2 to implement underlying memory management for lists
+Part 2:  Implemented garbage collection with mark and sweep (Memory.h/.cpp)
+Part 3:  Implemented so that blocks are same size, holding int or list ptr
+Part 4:  Use vector of ConsCells with appropriate fields in each cell
+Part 5:  Re-implemented car, cdr, nullp, and cons to work with new system
+
+Notes:
+-Our vector<ConsCells> heap uses an inUse and getAvail() routine to
+determine the list of available cells, rather than keeping and updating an
+actual list. The boolean inUse is true or false for each cell, depending on
+if it is in use. This is the same mark that is changed in garbage collection
+routines. getAvail() simply grabs a cell with inUse = false.
+-Our concatenation function uses shallow copy, simply assigning the last
+pointer of the first list to the first one of the second. This has some
+side effects with the original lists and with cyclic lists, but this
+assignment does not require a deep copy and Johnson said these side effects
+are okay.
+-Another issue on the message board was what to do if you have a full heap
+and you reassign something already in the list. Our program was going to 
+remove the thing attached to that Ident in memory so that it can attempt to 
+reassign the Ident to something else, but we had issues with statements such
+as a := a + 1 then, so we decided to not do this. So we do not remove it, so
+operations take up more space that of the form just described.
+-There is a TEMP variable used which no variables can be named because it is
+used to hold on to a partially made list during garbage collection.
+
+Files Included:
+
+-makefile:  The makefile which can be used to compile and run everything
+-README:  This readme file with all required information
+-sample_in_*:  Input files used to test program parts
+-sample_out_*: Output files corresponding with the input files
+
+-Program.h/.cpp - Mini-compiler File
+-StmtList.h/.cpp - Mini-compiler File
+-Stmt.h - Mini-compiler File
+-AssignStmt.h/.cpp - Mini-compiler File
+-DefineStmt.h/.cpp - Mini-compiler File
+-IfStmt.h/.cpp - Mini-compiler File
+-WhileStmt.h/.cpp - Mini-compiler File
+-Expr.h - Mini-compiler File
+-Plus.h/.cpp - Mini-compiler File
+-Times.h/.cpp - Mini-compiler File
+-Minus.h/.cpp - Mini-compiler File
+-Funcall.h/.cpp - Mini-compiler File
+-Proc.h/.cpp - Mini-compiler File
+-Ident.h/.cpp - Mini-compiler File
+*All of these mainly had their environment tables tweaked for A2
+*Many of these had their eval functions tweaked for A3
+
+-Element.h/.cpp - New MC File which can be List or Number
+-Number.h/.cpp - MC Files which had functions added to them
+-List.h/.cpp - New MC Files which support lists and their functions
+-Car.h/.cpp - Handles Car function
+-Cdr.h/.cpp - Handles Cdr function
+-Cons.h/.cpp - Handles Cons function
+-Concat.h/.cpp - Handles Concat function
+-Nullp.h/.cpp - Handles Nullp function
+-Listp.h/.cpp - Handles Listp function
+-Intp.h/.cpp - Handles Intp function
+*Many of these were edited to use the new memory management
+
+-Memory.h/.cpp - Added for A3, handle the garbage collection
+-ConsCell.h/.cpp - Cell used in memory heap
+
+-ML-interpreterBody.ypp - ML Interpreter ypp
+-ML-interpreterHead.y - ML Interpreter y
+-ML-lex.l - ML Interpreter lex
+*Tweaked to only fix minor issues moving to A3
+
+Running the code:
+
+-To run the code, run make flex, parse, and compile to build it. Then run
+either "./Compiler < inputFile" or "make run < inputFile". There are some
+included file sample_in_* which exercises everything using the new memory
+management and also garbage collection.
+-The memory heap is printed out to show it's progression after each
+statement is executed and the environment table has been tweaked too. There
+is a DEBUG flag in Program.h to control if you see this or not. There is
+also a global in Memory.h (MAX_MEMORY) that controls how many blocks the
+memory table has. This can simply be changed to update the # of blocks.
+-All of the sample_input_* files use a MAX_MEMORY = 25, except for
+sample_in_gc2, which uses = 4.
+
+How the code works:
+-The code works from A2 and first there is a Memory component which has a
+vector<ConsCells>. The ConsCell has the components it should. This class
+manages the heap and has the garbage collection and cons function which
+allocates. This heap is passed to everything using eval(). The functions
+have all been changed so that in eval it accesses this heap rather than
+calling functions from the List class. Lists are stored in the C++ datatype
+at parse time and evaluated at runtime in eval() into memory management.
+
+Testing:
+-Testing was done using sample_input. The file contains a series of test to
+exercise assignment, lists in functions, the list functions, and also
+garbage collection. A sample output is included which shows the results of
+this. As far as we know, there is nothing wrong with our code.
+
