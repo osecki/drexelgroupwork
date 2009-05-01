@@ -9,6 +9,10 @@ compile: lex.yy.c ML-interpreterBody.tab.cpp
 	gcc -c lex.yy.c
 	g++-4.2 *.cpp lex.yy.o -o Compiler
 
+debug: lex.yy.c
+	bison -d *.y
+	gcc-4.2 *.c -ly -lfl -o Debugger
+
 run: Compiler
 	./Compiler
 
