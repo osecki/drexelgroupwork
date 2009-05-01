@@ -6,7 +6,7 @@
  *  Class:    CS550, Assignment 2, Spring 2009
 **/
 
-#include "ML-interpreterHead.tab.h"
+#include "interpreter.tab.h"
 #include "string.h"
 %}
 
