@@ -9,9 +9,9 @@ compile: lex.yy.c interpreter.tab.cpp
 	gcc -c lex.yy.c
 	g++-4.2 *.cpp lex.yy.o -o Compiler
 
-debug: lex.yy.c
+parserOnly: lex.yy.c
 	bison -d *.y
-	gcc-4.2 *.c -ly -lfl -o Debugger
+	gcc-4.2 *.c -ly -lfl -o Parser
 
 run: Compiler
 	./Compiler
