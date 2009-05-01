@@ -77,7 +77,13 @@ assign_stmt:
 
 
 define_stmt:
-    DEFINE IDENT PROC '(' param_list ')' stmt_list END {
+    DEFINE IDENT proc_stmt {
+        printf("define_stmt -> proc");
+    }
+    ;
+
+proc_stmt:
+    PROC '(' param_list ')' stmt_list END {
         printf("define_stmt -> define identifier proc");
         printf("( param_list ) stmt_list end\n");
     }
@@ -119,6 +125,10 @@ expr:
     |
     term {
         printf("expr -> term\n");
+    }
+    |
+    proc_stmt {
+        printf("expr->proc\n");
     }
     ;
 
@@ -208,6 +218,7 @@ funcall:
     IDENT '(' expr_list ')' {
         printf("funcall -> identifier ( expr_list )\n");
     }
+    ;
 
 expr_list:
     expr ',' expr_list {
