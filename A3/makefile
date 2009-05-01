@@ -1,11 +1,11 @@
 flex: ML-lex.l
 	flex ML-lex.l
 
-parse: ML-interpreterBody.ypp ML-interpreterHead.y
-	bison ML-interpreterBody.ypp
-	bison -d ML-interpreterHead.y
+parse: *.ypp *.y
+	bison *.ypp
+	bison -d *.y
 
-compile: lex.yy.c ML-interpreterBody.tab.cpp
+compile: lex.yy.c interpreter.tab.cpp
 	gcc -c lex.yy.c
 	g++-4.2 *.cpp lex.yy.o -o Compiler
 
