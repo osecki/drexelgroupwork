@@ -7,8 +7,8 @@
 
 /**
  *  Program:  ML-interpreterHead.y
- *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Rich Price, and Alimoor Reza
- *  Class:    CS550, Assignment 2, Spring 2009
+ *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Alimoor Reza
+ *  Class:    CS550, Assignment 4, Spring 2009
 **/
 
    int value;
