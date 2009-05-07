@@ -16,7 +16,7 @@ public:
     AssignStmt(string name="", Expr *E=NULL);
     ~AssignStmt() {delete E_;};
 		// Changed environment table here
-		void eval(map<string,Element*> &NT, map<string,Proc*> &FT, Memory &memory) const;
+		void eval(map<string,Element*> &NT, map<string,Proc*> &FT) const;
 private:
     string name_;
     Expr* E_;

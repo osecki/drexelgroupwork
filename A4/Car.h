@@ -20,7 +20,7 @@ class Car : public Expr
 public:
     Car (Expr* op1 = NULL);
     virtual ~Car() {delete op1_;};
-    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const;
+    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
 private:
     Expr* op1_;
 };

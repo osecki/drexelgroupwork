@@ -5,91 +5,108 @@
 **/
 
 #include "List.h"
-#include "Expr.h"
+#include "Element.h"
 #include "Number.h"
-#include "Memory.h"
-#include "Program.h"
 using namespace std;
 
 // default constructor
 List::List() {
-    address = NULL_POINTER;
-    expressions = new list<Expr*>;
+    elements = new list<Element*>;
 }
 
 // constructor with sequence
-List::List (list<Expr*> *s) {
-    address = NULL_POINTER;
-    expressions = new list<Expr*>;
-    expressions->insert(expressions->begin(), s->begin(), s->end());
+List::List (list<Element*> *s) {
+    elements = new list<Element*>;
+    elements->insert(elements->begin(), s->begin(), s->end());
 }
 
 // copy constructor
 List::List(List* other) {
-    address = NULL_POINTER;
-    expressions = new list<Expr*>;
-    expressions->insert(expressions->begin(), other->expressions->begin(), other->expressions->end());
-}
-
-List::List(int address) {
-    expressions = new list<Expr*>;
-    this->address = address;
+    elements = new list<Element*>;
+    elements->insert(elements->begin(), other->elements->begin(), other->elements->end());
 }
 
 // destructor
 List::~List() {
-    for (list<Expr*>::iterator iterator = expressions->begin(); iterator != expressions->end(); iterator++) {
-        if(*iterator != NULL)
-            delete (*iterator);
+	    for (list<Element*>::iterator iterator = elements->begin(); iterator != elements->end(); iterator++) {
+				        delete (*iterator);
+								    }
+			    delete elements;
+}
+
+// functions for A2
+Element* List::getFirst() {
+	  // If list size >= 1, then return first element, otherwise crash
+    if(elements->size()) {
+        return elements->front();
+    } else {
+        // Error out
+				cout << "ERROR:  Cannot do a Car(list) on an empty list or other object." << endl;
+				exit(1);
+        return new List;
     }
-    delete expressions;
+}
+
+Element* List::getRest() {
+	 // If list size >= 2, return all but the first element, otherwise crash
+	 if (elements->size() + 1) {
+		   list<Element*> * temp = new list<Element*>;
+			 list<Element*>::iterator iterator = elements->begin();
+			 iterator++;
+
+			 while ( iterator != elements->end() )
+			 {
+				 temp->push_back((*iterator));
+				 iterator++;
+			 }
+			 return new List (temp);
+	 } else {
+		   // Error out
+			 cout << "ERROR:  Cannot do a Cdr(list) on an empty list or other object." << endl;
+			 exit(1);
+			 return new List;
+	 }
+}
+
+int List::nullp()
+{
+	return elements->size() == 0;
 }
 
 int List::listp() {
 	    return 1;
 }
 
+void List::cons (Element* e)
+{
+	elements->push_front(e);
+}
+
+void List::concatenate(List* other) {
+    elements->insert(elements->end(), other->elements->begin(), other->elements->end());
+}
+
 // general functions
-string List::toString(const Memory &memory) const {
+string List::toString() const {
     string s = "[";
 
-    int current = address;
-    while(current != NULL_POINTER) {
-        s = s + memory[current].car->toString(memory);
-        current = memory[current].cdr;
-        if(current != NULL_POINTER)
-            s = s + ",";
-    }
+    // Iterate over elements and print out each one and commas
+    list<Element*>::iterator iterator = elements->begin();
+		while ( iterator != elements->end() )
+		{
+        s = s + (*iterator)->toString();
 
+				iterator++;
+				
+				if ( iterator != elements->end() )
+					s = s + ',';
+    }
     return s + "]";
 }
 
-Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const {
-
-    if(expressions->size()) {
-        int address = NULL_POINTER;
-        Element* e = new List(NULL_POINTER);
-        for (list<Expr*>::reverse_iterator iterator = expressions->rbegin(); iterator != expressions->rend(); iterator++) {
-            // Get Element
-            e = (*iterator)->eval(NT,FT,memory);
-
-            // Protect address
-            NT[TEMP_NAME] = new List(address);
-
-            // Allocate new memory for cons
-            address = memory.cons(e, address, NT);
-
-            // Remove protection
-            map<string,Element*>::iterator location = NT.find(TEMP_NAME);
-            Element * element = location->second;
-            NT.erase(location);
-            delete element;
-        }
-
-        // TODO I don't like how we're returning a new pointer here...
-        return new List(address);
-    }
-
-    // A list of nothing is a List whose address is -1
-    return new List(NULL_POINTER);
+Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
+    List* newL = new List;
+    newL->elements = elements;
+    return newL;
 }
+

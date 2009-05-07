@@ -15,12 +15,11 @@ Cons::Cons(Expr* op1, Expr* op2)
     op2_ = op2;
 }
 
-Element* Cons::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const
+Element* Cons::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
-    // Calls the cons() function from List
-    List* newL = (List*)op1_->eval(NT,FT,memory);
-    Element* two = (Element*)op2_->eval(NT,FT,memory);
-
-    int address = memory.cons(two, newL->getAddress(), NT);
-    return new List(address);
+		// Calls the cons() function from List
+    List* newL = new List((List*)op1_->eval(NT, FT));
+    Element* two = (Element*)op2_->eval(NT, FT);
+    newL->cons(two);
+    return newL;
 }

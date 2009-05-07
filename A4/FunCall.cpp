@@ -11,7 +11,7 @@ FunCall::FunCall(string name, list<Expr*> *AL)
 FunCall::~FunCall() { delete AL_; }
 
 // Changed environment table here
-Element* FunCall::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const
+Element* FunCall::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
-    return FT[name_]->apply(NT, FT, AL_, memory);
+    return FT[name_]->apply(NT, FT, AL_);
 }

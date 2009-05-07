@@ -3,7 +3,6 @@
 
 #include <map>
 #include <string>
-#include "Memory.h"
 using namespace std;
 
 class Proc;
@@ -14,7 +13,7 @@ class Expr
 public:
     virtual ~Expr() {};
 		// Changed environment table here
-		virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const = 0;
+		virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const = 0;
 private:
 };
 
