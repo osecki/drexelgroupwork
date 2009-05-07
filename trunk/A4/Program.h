@@ -2,15 +2,8 @@
 #define PROGRAM_H
 
 #include <map>
-#include <vector>
 #include <string>
 #include "StmtList.h"
-#include "ConsCell.h"
-#include "Memory.h"
-
-// An invalid variable name to use to protect ConsCells as they are created
-#define TEMP_NAME string("+*TEMP*+")
-#define DEBUG true
 
 using namespace std;
 
@@ -18,13 +11,14 @@ class Program
 {
 public:
     Program(StmtList *SL);
-    ~Program();
+    ~Program() {delete SL_; };
     void dump();
     void eval();
 
 private:
     StmtList *SL_;
-    Memory memory;
+		// Changed the environmental table in order to bind to Element* rather
+		// than int
     map<string, Element*> NameTable_;
     map<string, Proc*> FunctionTable_;
 };

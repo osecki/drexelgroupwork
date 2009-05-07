@@ -5,16 +5,15 @@
 
 Number::Number(int value)
 {
-    address = NULL_POINTER;
     value_ = value;
 }
 
-Element* Number::eval(map<string,Element*> NT, map<string,Proc*> FT, Memory &memory) const
+Element* Number::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
     return new Number(value_);
 }
 
-string Number::toString(const Memory &memory) const {
+string Number::toString() const {
     std::stringstream s;
     s << value_;
     return s.str();

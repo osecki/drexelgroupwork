@@ -5,9 +5,8 @@
 **/
 #include "Number.h"
 #include "Element.h"
-
-void Element::print(const Memory &memory) {
-    cout<<toString(memory)<<endl;
+void Element::print() {
+    cout<<toString()<<endl;
 }
 
 int Element::listp() {
@@ -16,14 +15,4 @@ int Element::listp() {
 
 int Element::intp() {
     return 0;
-}
-
-
-
-int Element::getAddress() {
-    return address;
-}
-
-void Element::setAddress(int address) {
-    this->address = address;
 }
