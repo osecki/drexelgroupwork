@@ -155,11 +155,16 @@ assign_stmt:
     ;
 
 define_stmt:
-    DEFINE IDENT PROC '(' param_list ')' stmt_list END {
-        $$ = new DefineStmt(string($2),new Proc($5,$7));
+    DEFINE IDENT proc_stmt {
+        $$ = new DefineStmt(string($2), $3);
     }
     ;
 
+proc_stmt:
+    PROC '(' param_list ')' stmt_list END {
+        $$ = new Proc ($3, $5);
+    }
+    ;
 
 if_stmt:
     IF expr THEN stmt_list ELSE stmt_list FI {
@@ -199,6 +204,9 @@ expr:
     }
     |
     term {
+        $$ = $1;
+    }
+    proc_stmt {
         $$ = $1;
     }
     ;

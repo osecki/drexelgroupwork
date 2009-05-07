@@ -1,5 +1,5 @@
-flex: ML-lex.l
-	flex ML-lex.l
+flex: lex.l
+	flex lex.l
 
 parse: *.ypp *.y
 	bison *.ypp
