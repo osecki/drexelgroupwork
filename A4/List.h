@@ -6,9 +6,9 @@
 
 #ifndef LIST_H_
 #define LIST_H_
-#include<iostream>
-#include <list>
+
 #include <iostream>
+#include <list>
 #include <map>
 #include "Element.h"
 
@@ -25,22 +25,22 @@ public:
 	// constructor with sequence
 	List (list<Element*> *s);
   
-  // copy constructor	
+      // copy constructor	
 	List (List* other);
 
 	// destructor
-  virtual ~List();
+      virtual ~List();
 
 	// Functions for A2
-  Element* getFirst();
-  Element* getRest();
-  void concatenate(List* other);
-  void cons (Element* e);
-  virtual int listp();
-  int nullp();
+  	Element* getFirst();
+ 	Element* getRest();
+  	void concatenate(List* other);
+  	void cons (Element* e);
+  	virtual int listp();
+  	int nullp();
 
-  virtual string toString() const;
-  virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
+  	virtual string toString() const;
+  	virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
 
 private:
 	list<Element*> *elements;

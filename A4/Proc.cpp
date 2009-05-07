@@ -1,15 +1,30 @@
+/**
+ * Program:  Proc.cpp
+ * Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Alimoor Reza
+ * Class:    CS550, Assignment 4, Spring 2009
+**/
+
 #include "Proc.h"
 #include <list>
 #include <map>
 #include <string>
 #include "StmtList.h"
 #include <iostream>
+#include "Element.h"
 
 Proc::Proc(list<string> *PL, StmtList *SL)
 {
     SL_ = SL;
     PL_ = PL;
     NumParam_ = PL->size();
+}
+
+Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
+	this;
+}
+
+string List::toString() const {
+	return "Function";
 }
 
 // Changed environment table here and in function below
