@@ -5,24 +5,16 @@
 
 Program::Program(StmtList *SL)
 {
-NameTable_.clear();
-FunctionTable_.clear();
-SL_ = SL;
+    NameTable_.clear();
+    SL_ = SL;
 }
 
 void Program::dump()
 {
-	// Changed environment table here
-  map<string,Element*>::iterator p;
-  map<string,Proc*>::iterator f;
-
-  cout << "Dump of Symbol Table" << endl;
-  cout << "Name Table" << endl;
-  for (p = NameTable_.begin();p != NameTable_.end();p++)
-    cout << p->first << " -> " << p->second->toString(NameTable_) << endl;
-  cout << "Function Table" << endl;
-  for (f = FunctionTable_.begin();f != FunctionTable_.end();f++)
-    cout << f->first << endl;
+    cout << "Dump of Symbol Table" << endl;
+    for (map<string,Element*>::iterator p = NameTable_.begin();p != NameTable_.end();p++) {
+        cout << p->first << " -> " << p->second->toString(NameTable_) << endl;
+    }
 }
 
 void Program::eval()
