@@ -1,0 +1,9 @@
+a:= proc()
+    return := proc()
+        return := 10
+    end
+end;
+
+f := a();
+ten := f();
+tenalso := a()()
