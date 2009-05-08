@@ -8,7 +8,7 @@ Ident::Ident(string name)
 }
 
 // Changed environment table here
-Element* Ident::eval(map<string,Element*> NT, map<string,Proc*> FT) const
+Element* Ident::eval(map<string,Element*> NT) const
 {
     return NT[name_];
 }

@@ -24,7 +24,7 @@ Proc::~Proc() {
 }
 
 
-Element* Proc::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
+Element* Proc::eval(map<string,Element*> NT) const {
 	return new Proc(*this);
 }
 
@@ -48,11 +48,11 @@ Element* Proc::apply(map<string,Element*> &NT, map<string,Proc*> &FT, list<Expr*
         exit(1);
     }
     for (p = PL_->begin(), e = EL->begin(); p != PL_->end(); p++, e++)
-        NNT[*p] = (*e)->eval(NT,FT);
+        NNT[*p] = (*e)->eval(NT);
 
     // evaluate function body using new name table and old function table
 
-    SL_->eval(NNT,FT);
+    SL_->eval(NNT);
     if ( NNT.find("return") != NNT.end() )
         return NNT["return"];
     else {
