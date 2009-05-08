@@ -14,7 +14,6 @@
 #include "IfStmt.h"
 #include "WhileStmt.h"
 #include "AssignStmt.h"
-#include "DefineStmt.h"
 #include "Stmt.h"
 #include "StmtList.h"
 #include "List.h"
@@ -26,7 +25,6 @@
 #include "Nullp.h"
 #include "Listp.h"
 #include "Intp.h"
-#include "Memory.h"
 
 using namespace std;
 void yyerror (const char *error);
@@ -150,7 +148,7 @@ assign_stmt:
     }
     |
     DEFINE IDENT proc_stmt {
-        $$ = new DefineStmt(string($2), $3);
+        $$ = new AssignStmt(string($2), $3);
     }
     ;
 

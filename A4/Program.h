@@ -17,10 +17,7 @@ public:
 
 private:
     StmtList *SL_;
-		// Changed the environmental table in order to bind to Element* rather
-		// than int
     map<string, Element*> NameTable_;
-    map<string, Proc*> FunctionTable_;
 };
 
 #endif

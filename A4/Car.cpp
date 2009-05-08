@@ -16,7 +16,7 @@ Car::Car(Expr* op1)
 
 Element* Car::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
-		// Calls the getFirst() method from inside list
-    Element* x = ((List*)op1_->eval(NT,FT))->getFirst();
+    // Calls the getFirst() method from inside list
+    Element* x = ((List*)op1_->eval(NT,FT))->getFirst()->eval(NT, FT);
     return x;
 }
