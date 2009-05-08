@@ -34,7 +34,7 @@ string Proc::toString(map<string,Element*> NT) const {
 }
 
 // Changed environment table here and in function below
-Element* Proc::apply(map<string,Element*> &NT, map<string,Proc*> &FT, list<Expr*> *EL)
+Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
 {
     map<string,Element*> NNT;
     NNT.clear();

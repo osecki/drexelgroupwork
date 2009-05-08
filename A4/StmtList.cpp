@@ -8,7 +8,7 @@ void StmtList::insert(Stmt * S)
 }
 
 // Changed environment table here
-void StmtList::eval(map<string,Element*> &NT, map<string,Proc*> &FT)
+void StmtList::eval(map<string,Element*> &NT)
 {
   list<Stmt*>::iterator Sp;
   for (Sp = SL_.begin();Sp != SL_.end();Sp++) {
