@@ -11,7 +11,7 @@
 #include <map>
 #include <string>
 #include "StmtList.h"
-#incldue "Element.h"
+#include "Element.h"
 
 using namespace std;
 
@@ -21,7 +21,7 @@ class Proc : public Element {
 
 public:
     Proc(list<string> *PL, StmtList *SL);
-    ~Proc() {delete SL_; };
+    ~Proc();
 
 	virtual string toString() const;
   	virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;

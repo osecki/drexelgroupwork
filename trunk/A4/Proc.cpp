@@ -19,11 +19,17 @@ Proc::Proc(list<string> *PL, StmtList *SL)
     NumParam_ = PL->size();
 }
 
-Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
-	this;
+Proc::~Proc() {
+    delete SL_;
 }
 
-string List::toString() const {
+
+Element* Proc::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
+	return new Proc(*this);
+}
+
+
+string Proc::toString() const {
 	return "Function";
 }
 

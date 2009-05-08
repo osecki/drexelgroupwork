@@ -11,60 +11,60 @@ using namespace std;
 
 // default constructor
 List::List() {
-    elements = new list<Element*>;
+    elements = new list<Expr*>;
 }
 
 // constructor with sequence
-List::List (list<Element*> *s) {
-    elements = new list<Element*>;
+List::List (list<Expr*> *s) {
+    elements = new list<Expr*>;
     elements->insert(elements->begin(), s->begin(), s->end());
 }
 
 // copy constructor
 List::List(List* other) {
-    elements = new list<Element*>;
+    elements = new list<Expr*>;
     elements->insert(elements->begin(), other->elements->begin(), other->elements->end());
 }
 
 // destructor
 List::~List() {
-	    for (list<Element*>::iterator iterator = elements->begin(); iterator != elements->end(); iterator++) {
-				        delete (*iterator);
-								    }
-			    delete elements;
+    for (list<Expr*>::iterator iterator = elements->begin(); iterator != elements->end(); iterator++) {
+        delete (*iterator);
+    }
+    delete elements;
 }
 
 // functions for A2
-Element* List::getFirst() {
+Expr* List::getFirst() {
 	  // If list size >= 1, then return first element, otherwise crash
     if(elements->size()) {
         return elements->front();
     } else {
         // Error out
-				cout << "ERROR:  Cannot do a Car(list) on an empty list or other object." << endl;
-				exit(1);
+        cout << "ERROR:  Cannot do a Car(list) on an empty list or other object." << endl;
+        exit(1);
         return new List;
     }
 }
 
-Element* List::getRest() {
+Expr* List::getRest() {
 	 // If list size >= 2, return all but the first element, otherwise crash
 	 if (elements->size() + 1) {
-		   list<Element*> * temp = new list<Element*>;
-			 list<Element*>::iterator iterator = elements->begin();
-			 iterator++;
+        list<Expr*> * temp = new list<Expr*>;
+        list<Expr*>::iterator iterator = elements->begin();
+        iterator++;
 
-			 while ( iterator != elements->end() )
-			 {
-				 temp->push_back((*iterator));
-				 iterator++;
-			 }
-			 return new List (temp);
+        while ( iterator != elements->end() )
+        {
+            temp->push_back((*iterator));
+            iterator++;
+        }
+        return new List (temp);
 	 } else {
-		   // Error out
-			 cout << "ERROR:  Cannot do a Cdr(list) on an empty list or other object." << endl;
-			 exit(1);
-			 return new List;
+        // Error out
+        cout << "ERROR:  Cannot do a Cdr(list) on an empty list or other object." << endl;
+        exit(1);
+        return new List;
 	 }
 }
 
@@ -77,7 +77,7 @@ int List::listp() {
 	    return 1;
 }
 
-void List::cons (Element* e)
+void List::cons (Expr* e)
 {
 	elements->push_front(e);
 }
@@ -87,19 +87,19 @@ void List::concatenate(List* other) {
 }
 
 // general functions
-string List::toString() const {
+string List::toString((map<string,Element*> NT, map<string,Proc*> FT) const {
     string s = "[";
 
     // Iterate over elements and print out each one and commas
-    list<Element*>::iterator iterator = elements->begin();
-		while ( iterator != elements->end() )
-		{
-        s = s + (*iterator)->toString();
+    list<Expr*>::iterator iterator = elements->begin();
+    while ( iterator != elements->end() )
+    {
+        s = s + (*iterator)->eval(NT,FT)->toString();
 
-				iterator++;
-				
-				if ( iterator != elements->end() )
-					s = s + ',';
+        iterator++;
+
+        if ( iterator != elements->end() )
+            s = s + ',';
     }
     return s + "]";
 }

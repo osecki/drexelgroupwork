@@ -18,7 +18,7 @@ FunCall::~FunCall() { delete AL_; }
 // Changed environment table here
 Element* FunCall::eval(map<string,Element*> NT, map<string,Proc*> FT) const
 {
-    Element element;
+    Element* element;
     if(NULL == expression) {
         element = NT[name_];
     } else {
