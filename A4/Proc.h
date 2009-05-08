@@ -20,9 +20,9 @@ class Expr;
 class Proc : public Element {
 
 public:
-    	Proc(list<string> *PL, StmtList *SL);
-    	~Proc() {delete SL_; };
-		
+    Proc(list<string> *PL, StmtList *SL);
+    ~Proc() {delete SL_; };
+
 	virtual string toString() const;
   	virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
 
