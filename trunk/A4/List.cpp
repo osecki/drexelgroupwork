@@ -87,14 +87,14 @@ void List::concatenate(List* other) {
 }
 
 // general functions
-string List::toString((map<string,Element*> NT, map<string,Proc*> FT) const {
+string List::toString((map<string,Element*> NT) const {
     string s = "[";
 
     // Iterate over elements and print out each one and commas
     list<Expr*>::iterator iterator = elements->begin();
     while ( iterator != elements->end() )
     {
-        s = s + (*iterator)->eval(NT,FT)->toString();
+        s = s + (*iterator)->eval(NT)->toString();
 
         iterator++;
 
@@ -104,7 +104,7 @@ string List::toString((map<string,Element*> NT, map<string,Proc*> FT) const {
     return s + "]";
 }
 
-Element* List::eval(map<string,Element*> NT, map<string,Proc*> FT) const {
+Element* List::eval(map<string,Element*> NT) const {
     List* newL = new List;
     newL->elements = elements;
     return newL;

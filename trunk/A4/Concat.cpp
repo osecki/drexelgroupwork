@@ -15,11 +15,11 @@ Concat::Concat(Expr* op1, Expr* op2)
     op2_ = op2;
 }
 
-Element* Concat::eval(map<string,Element*> NT, map<string,Proc*> FT) const
+Element* Concat::eval(map<string,Element*> NT) const
 {
 		// Calls the concatenate() function from List
-    List* newL = new List((List*)op1_->eval(NT, FT));
-    newL->concatenate((List*)op2_->eval(NT, FT));
+    List* newL = new List((List*)op1_->eval(NT));
+    newL->concatenate((List*)op2_->eval(NT));
     return newL;
 }
 

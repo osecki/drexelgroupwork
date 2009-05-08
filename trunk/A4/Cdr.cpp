@@ -14,8 +14,8 @@ Cdr::Cdr(Expr* op1)
     op1_ = op1;
 }
 
-Element* Cdr::eval(map<string,Element*> NT, map<string,Proc*> FT) const
+Element* Cdr::eval(map<string,Element*> NT) const
 {
     // Calls the getRest() function from List
-    return ((List*)op1_->eval(NT, FT))->getRest()->eval(NT, FT);
+    return ((List*)op1_->eval(NT))->getRest()->eval(NT);
 }
