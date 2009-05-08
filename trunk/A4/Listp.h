@@ -20,7 +20,7 @@ class Listp : public Expr
 public:
     Listp (Expr* op1 = NULL);
     virtual ~Listp() {delete op1_;};
-    virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
+    virtual Element* eval(map<string,Element*> NT) const;
 private:
     Expr* op1_;
 };

@@ -24,7 +24,7 @@ public:
     ~Proc();
 
 	virtual string toString(map<string,Element*> NT) const;
-  	virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
+  	virtual Element* eval(map<string,Element*> NT) const;
 
 	Element* apply(map<string,Element*> &NT, map<string,Proc*> &FT, list<Expr*> *EL);
 
