@@ -23,7 +23,7 @@ public:
     Proc(list<string> *PL, StmtList *SL);
     ~Proc();
 
-	virtual string toString() const;
+	virtual string toString(map<string,Element*> NT) const;
   	virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const;
 
 	Element* apply(map<string,Element*> &NT, map<string,Proc*> &FT, list<Expr*> *EL);

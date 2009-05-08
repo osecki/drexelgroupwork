@@ -6,7 +6,7 @@
 #include "Number.h"
 #include "Element.h"
 void Element::print() {
-    cout<<toString()<<endl;
+    cout<<toString(map<string,Element*> NT)<<endl;
 }
 
 int Element::listp() {
