@@ -52,12 +52,9 @@ stmt_list:
     }
     ;
 
-stmt:  assign_stmt {
+stmt:
+    assign_stmt {
         printf("stmt -> assign_stmt\n");
-    }
-    |
-    define_stmt {
-        printf("stmt -> define_stmt\n");
     }
     |
     if_stmt {
@@ -73,10 +70,7 @@ assign_stmt:
     IDENT ASSIGNOP expr {
         printf("assign_stmt -> identifier := expr\n");
     }
-    ;
-
-
-define_stmt:
+    |
     DEFINE IDENT proc_stmt {
         printf("define_stmt -> proc");
     }
@@ -217,6 +211,14 @@ element:
 funcall:
     IDENT '(' expr_list ')' {
         printf("funcall -> identifier ( expr_list )\n");
+    }
+    |
+    proc_stmt '(' expr_list ')' {
+        printf("funcall -> proc ( expr_list )\n");
+    }
+    |
+    funcall '(' expr_list ')' {
+        printf("funcall -> funcall ( expr_list )\n");
     }
     ;
 
