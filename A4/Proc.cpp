@@ -41,21 +41,29 @@ Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
 
     // bind parameters in new name table
 
-    list<string>::iterator p;
-    list<Expr*>::iterator e;
+
     if (NumParam_ != EL->size()) {
         cout << "Param count does not match" << endl;
         exit(1);
     }
-    for (p = PL_->begin(), e = EL->begin(); p != PL_->end(); p++, e++)
+
+    // Copy name table from current context ... (Geoff)
+    for (map<string,Element*>::iterator p = NT.begin();p != NT.end();p++) {
+        NNT[p->first] = p->second;
+    }
+
+    list<string>::iterator p;
+    list<Expr*>::iterator e;
+    for (p = PL_->begin(), e = EL->begin(); p != PL_->end(); p++, e++) {
         NNT[*p] = (*e)->eval(NT);
+    }
 
     // evaluate function body using new name table and old function table
 
     SL_->eval(NNT);
-    if ( NNT.find("return") != NNT.end() )
+    if ( NNT.find("return") != NNT.end() ) {
         return NNT["return"];
-    else {
+    } else {
         cout << "Error:  no return value" << endl;
         exit(1);
     }
