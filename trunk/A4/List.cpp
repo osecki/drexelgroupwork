@@ -94,7 +94,7 @@ string List::toString((map<string,Element*> NT) const {
     list<Expr*>::iterator iterator = elements->begin();
     while ( iterator != elements->end() )
     {
-        s = s + (*iterator)->eval(NT)->toString();
+        s = s + (*iterator)->eval(NT)->toString(NT);
 
         iterator++;
 

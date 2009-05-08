@@ -29,7 +29,7 @@ Element* Proc::eval(map<string,Element*> NT) const {
 }
 
 
-string Proc::toString() const {
+string Proc::toString(map<string,Element*> NT) const {
 	return "Function";
 }
 

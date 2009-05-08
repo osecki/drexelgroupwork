@@ -20,7 +20,7 @@ public:
 	virtual int listp();
   virtual int intp();
 	virtual Element* eval(map<string,Element*> NT, map<string,Proc*> FT) const = 0;
-	virtual string toString() const = 0;
+	virtual string toString(map<string,Element*> NT) const = 0;
 	void print();
 };
 
