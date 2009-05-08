@@ -14,7 +14,6 @@ class StmtList
 {
 public:
     StmtList() {};
-		// Changed environment table here
     void eval(map<string,Element*> &NT);
     void insert(Stmt *T);
 
