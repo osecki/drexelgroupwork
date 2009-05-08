@@ -87,7 +87,7 @@ void List::concatenate(List* other) {
 }
 
 // general functions
-string List::toString((map<string,Element*> NT) const {
+string List::toString(map<string,Element*> NT) const {
     string s = "[";
 
     // Iterate over elements and print out each one and commas
