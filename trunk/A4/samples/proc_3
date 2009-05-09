@@ -1,0 +1,6 @@
+a:= proc()
+    return := x;
+end;
+
+x:=10;
+dynamicTenStaticCrash := a()

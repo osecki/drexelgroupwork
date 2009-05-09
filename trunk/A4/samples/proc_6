@@ -1,0 +1,14 @@
+x:= 10;
+
+b:= proc()
+    return := x;
+end
+
+a:= proc()
+    x := 5;
+    return := b;
+end;
+
+ten := a()();
+f := a();
+alsoTen := f()
