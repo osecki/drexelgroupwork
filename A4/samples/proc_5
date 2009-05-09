@@ -1,7 +1,7 @@
 a:= proc()
     x := 5;
     return := proc()
-        return := x;
+        return := x
     end
 end;
 
