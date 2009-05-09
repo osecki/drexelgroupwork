@@ -1,12 +1,12 @@
 x:= 10;
 
 b:= proc()
-    return := x;
+    return := x
 end
 
 a:= proc()
     x := 5;
-    return := b;
+    return := b
 end;
 
 ten := a()();
