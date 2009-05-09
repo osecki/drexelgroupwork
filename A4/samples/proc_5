@@ -1,0 +1,11 @@
+a:= proc()
+    x := 5;
+    return := proc()
+        return := x;
+    end
+end;
+
+x := 10;
+five := a()();
+f := a();
+alsoFive := f()

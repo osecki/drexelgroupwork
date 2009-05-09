@@ -1,0 +1,13 @@
+define function
+proc(x)
+    if(x) then
+        return := proc(y)
+            return := y + 2
+        end
+    else
+        return := x
+    fi
+end;
+
+y := function(1);
+z := function(0)

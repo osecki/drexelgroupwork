@@ -1,0 +1,9 @@
+x:= 5;
+
+a:= proc()
+    return:= x
+end;
+
+x:=10;
+
+dynamicTenStaticTen := a()
