@@ -40,7 +40,7 @@ public:
   	int nullp();
 
   	virtual string toString(map<string,Element*> NT) const;
-  	virtual Element* eval(map<string,Element*> NT) const;
+  	virtual Element* eval(map<string,Element*> &NT) const;
 
 private:
 	list<Expr*> *elements;

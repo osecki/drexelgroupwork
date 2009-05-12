@@ -20,7 +20,7 @@ class Cons : public Expr
 public:
     Cons (Expr* op1 = NULL, Expr* op2 = NULL);
     virtual ~Cons() {delete op1_; delete op2_; };
-    virtual Element* eval(map<string,Element*> NT) const;
+    virtual Element* eval(map<string,Element*> &NT) const;
 private:
     Expr* op1_;
     Expr* op2_;

@@ -14,7 +14,7 @@ class Ident : public Expr
 public:
     Ident(string name = "");
 		// Changed environment table here
-		virtual Element* eval(map<string,Element*> NT) const;
+		virtual Element* eval(map<string,Element*> &NT) const;
 private:
     string name_;
 };

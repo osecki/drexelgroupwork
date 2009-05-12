@@ -8,7 +8,7 @@ Number::Number(int value)
     value_ = value;
 }
 
-Element* Number::eval(map<string,Element*> NT) const
+Element* Number::eval(map<string,Element*> &NT) const
 {
     return new Number(value_);
 }

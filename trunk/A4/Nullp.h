@@ -20,7 +20,7 @@ class Nullp : public Expr
 public:
     Nullp (Expr* op1 = NULL);
     virtual ~Nullp() {delete op1_;};
-    virtual Element* eval(map<string,Element*> NT) const;
+    virtual Element* eval(map<string,Element*> &NT) const;
 private:
     Expr* op1_;
 };

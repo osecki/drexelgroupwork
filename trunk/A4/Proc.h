@@ -24,7 +24,7 @@ public:
     ~Proc();
 
 	virtual string toString(map<string,Element*> NT) const;
-  	virtual Element* eval(map<string,Element*> NT) const;
+  	virtual Element* eval(map<string,Element*> &NT) const;
   	void setTheEnvironment(map<string,Element*> NewNT) ;
 
 	Element* apply(map<string,Element*> &NT, list<Expr*> *EL);

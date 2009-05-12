@@ -22,7 +22,7 @@ FunCall::~FunCall() {
 }
 
 // Changed environment table here
-Element* FunCall::eval(map<string,Element*> NT) const
+Element* FunCall::eval(map<string,Element*> &NT) const
 {
     Element* element;
     if(name_ != "") {

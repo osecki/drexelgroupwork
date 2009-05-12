@@ -16,7 +16,7 @@ public:
     FunCall(string name, list<Expr*> *AL);
     FunCall(Expr* e, list<Expr*> *AL);
     virtual ~FunCall();
-    virtual Element* eval(map<string,Element*> NT) const;
+    virtual Element* eval(map<string,Element*> &NT) const;
 private:
     string name_;
     Expr* expression;

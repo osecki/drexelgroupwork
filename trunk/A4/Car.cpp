@@ -14,7 +14,7 @@ Car::Car(Expr* op1)
     op1_ = op1;
 }
 
-Element* Car::eval(map<string,Element*> NT) const
+Element* Car::eval(map<string,Element*> &NT) const
 {
     // Calls the getFirst() method from inside list
     Element* x = ((List*)op1_->eval(NT))->getFirst()->eval(NT);

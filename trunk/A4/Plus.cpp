@@ -10,7 +10,7 @@ Plus::Plus(Expr* op1, Expr* op2)
 }
 
 // Changed environment table here and casted it to be a "Number"
-Element* Plus::eval(map<string,Element*> NT) const
+Element* Plus::eval(map<string,Element*> &NT) const
 {
     return new Number(((Number*)op1_->eval(NT))->getValue() + ((Number*)op2_->eval(NT))->getValue());
 }
