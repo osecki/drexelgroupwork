@@ -23,7 +23,9 @@ Proc::~Proc() {
     delete SL_;
 }
 
-
+void Proc::setTheEnvironment(map<string, Element*> NewNT) {
+	this->NewNT = NewNT;
+}
 Element* Proc::eval(map<string,Element*> NT) const {
 	return new Proc(*this);
 }
@@ -41,7 +43,6 @@ Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
 
     // bind parameters in new name table
 
-
     if (NumParam_ != EL->size()) {
         cout << "Param count does not match" << endl;
         exit(1);
@@ -52,11 +53,18 @@ Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
         NNT[p->first] = p->second;
     }
 
+
+    // load the saved environment that holds the correct parameter values
+	for (map<string, Element*>::iterator p = NewNT.begin(); p != NewNT.end(); p++) {
+		NNT[p->first] = NewNT[p->first];
+	}
+
     list<string>::iterator p;
     list<Expr*>::iterator e;
     for (p = PL_->begin(), e = EL->begin(); p != PL_->end(); p++, e++) {
         NNT[*p] = (*e)->eval(NT);
     }
+
 
     // evaluate function body using new name table and old function table
 
