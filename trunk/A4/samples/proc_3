@@ -1,5 +1,5 @@
 a:= proc()
-    return := x;
+    return := x
 end;
 
 x:=10;
