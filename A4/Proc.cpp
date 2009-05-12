@@ -12,6 +12,8 @@
 #include <iostream>
 #include "Element.h"
 
+#define STATIC false
+
 Proc::Proc(list<string> *PL, StmtList *SL)
 {
     SL_ = SL;
@@ -26,13 +28,14 @@ Proc::~Proc() {
 void Proc::setTheEnvironment(map<string, Element*> NewNT) {
 	this->savedEnvironment = NewNT;
 }
+
 Element* Proc::eval(map<string,Element*> NT) const {
 	return new Proc(*this);
 }
 
 
 string Proc::toString(map<string,Element*> NT) const {
-	return "Function";
+	return "** Function **";
 }
 
 // Changed environment table here and in function below
@@ -46,28 +49,28 @@ Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
         cout << "Param count does not match" << endl;
         exit(1);
     }
+    
 
-	/* TODO (Maybe for dynamic?)
-    // Copy name table from current context ... (Geoff)
-    for (map<string,Element*>::iterator p = NT.begin();p != NT.end();p++) {
-        NNT[p->first] = p->second;
+    
+    // Do this always
+	evaluationEnvironment = savedEnvironment;
+	
+    if(!STATIC) {
+	    // Copy name table from current context ... (Geoff)
+	    for (map<string,Element*>::iterator p = NT.begin();p != NT.end();p++) {
+    		cout << "Copying over " << p->first << endl;
+	        evaluationEnvironment[p->first] = p->second;
+	    }
     }
-    */
-
-
-    // load the saved environment that holds the correct parameter values
-	for (map<string, Element*>::iterator p = savedEnvironment.begin(); p != savedEnvironment.end(); p++) {
-		// No need to evaluate environment because all statements
-		// previous to the creation of this proc have been evaluated already
-		evaluationEnvironment[p->first] = savedEnvironment[p->first];
-	}
-
+    
+    	
 	// Evaluate parameters
     list<string>::iterator p;
     list<Expr*>::iterator e;
     for (p = PL_->begin(), e = EL->begin(); p != PL_->end(); p++, e++) {
         evaluationEnvironment[*p] = (*e)->eval(NT);
     }
+    
 
 
 	cout << "Evaluating with environment: "<< endl;
@@ -78,6 +81,11 @@ Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
     // evaluate function body using new name table and old function table
 
     SL_->eval(evaluationEnvironment);
+    
+    if(!STATIC) {	
+    	NT = evaluationEnvironment;
+    }
+    
     if ( evaluationEnvironment.find("return") != evaluationEnvironment.end() ) {
         return evaluationEnvironment["return"];
     } else {
