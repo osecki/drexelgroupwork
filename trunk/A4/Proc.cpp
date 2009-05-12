@@ -24,7 +24,7 @@ Proc::~Proc() {
 }
 
 void Proc::setTheEnvironment(map<string, Element*> NewNT) {
-	this->NewNT = NewNT;
+	this->savedEnvironment = NewNT;
 }
 Element* Proc::eval(map<string,Element*> NT) const {
 	return new Proc(*this);
@@ -38,8 +38,7 @@ string Proc::toString(map<string,Element*> NT) const {
 // Changed environment table here and in function below
 Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
 {
-    map<string,Element*> NNT;
-    NNT.clear();
+    map<string,Element*> evaluationEnvironment;
 
     // bind parameters in new name table
 
@@ -48,29 +47,39 @@ Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
         exit(1);
     }
 
+	/* TODO (Maybe for dynamic?)
     // Copy name table from current context ... (Geoff)
     for (map<string,Element*>::iterator p = NT.begin();p != NT.end();p++) {
         NNT[p->first] = p->second;
     }
+    */
 
 
     // load the saved environment that holds the correct parameter values
-	for (map<string, Element*>::iterator p = NewNT.begin(); p != NewNT.end(); p++) {
-		NNT[p->first] = NewNT[p->first];
+	for (map<string, Element*>::iterator p = savedEnvironment.begin(); p != savedEnvironment.end(); p++) {
+		// No need to evaluate environment because all statements
+		// previous to the creation of this proc have been evaluated already
+		evaluationEnvironment[p->first] = savedEnvironment[p->first];
 	}
 
+	// Evaluate parameters
     list<string>::iterator p;
     list<Expr*>::iterator e;
     for (p = PL_->begin(), e = EL->begin(); p != PL_->end(); p++, e++) {
-        NNT[*p] = (*e)->eval(NT);
+        evaluationEnvironment[*p] = (*e)->eval(NT);
     }
 
 
+	cout << "Evaluating with environment: "<< endl;
+	for (map<string, Element*>::iterator p = evaluationEnvironment.begin(); p != evaluationEnvironment.end(); p++) {	
+		cout << p->first << endl;
+	}
+
     // evaluate function body using new name table and old function table
 
-    SL_->eval(NNT);
-    if ( NNT.find("return") != NNT.end() ) {
-        return NNT["return"];
+    SL_->eval(evaluationEnvironment);
+    if ( evaluationEnvironment.find("return") != evaluationEnvironment.end() ) {
+        return evaluationEnvironment["return"];
     } else {
         cout << "Error:  no return value" << endl;
         exit(1);

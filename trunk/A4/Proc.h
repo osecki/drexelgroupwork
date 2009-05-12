@@ -33,7 +33,7 @@ private:
     	StmtList *SL_;
     	list<string> *PL_;
     	int NumParam_;
-    	map<string, Element*> NewNT;
+    	map<string, Element*> savedEnvironment;
 };
 
 #endif
