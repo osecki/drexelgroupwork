@@ -1,0 +1,15 @@
+Translating Program
+Dump of Symbol Table
+a -> ** Function **
+addone -> ** Function **
+b -> ** Function **
+c -> 10
+d -> ** Function **
+e -> 10
+f -> ** Function **
+g -> ** Function **
+h -> 20
+makeadder -> ** Function **
+return -> 4
+x -> 2
+y -> 4

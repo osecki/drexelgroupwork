@@ -1,0 +1,21 @@
+a := proc() return := proc() return := 10 end end;
+b := a();
+c := b();
+
+d := proc(x) return := x end;
+e := d(c);
+
+f := proc()
+	g := proc ()
+    return := 20
+  end;
+
+  return := g()
+end;
+
+h := f();
+
+makeadder := proc(x) return := proc (y) return := x + y end end;
+addone := makeadder(1);
+x := 2;
+y := addone(2)
