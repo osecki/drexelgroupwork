@@ -1,0 +1,7 @@
+makeX := proc()
+	x:=10;
+	return := 1
+end;
+
+one := makeX();
+ten := x

@@ -12,7 +12,6 @@
 #include <iostream>
 #include "Element.h"
 
-#define STATIC false
 
 Proc::Proc(list<string> *PL, StmtList *SL)
 {
@@ -29,7 +28,7 @@ void Proc::setTheEnvironment(map<string, Element*> NewNT) {
 	this->savedEnvironment = NewNT;
 }
 
-Element* Proc::eval(map<string,Element*> NT) const {
+Element* Proc::eval(map<string,Element*> &NT) const {
 	return new Proc(*this);
 }
 
@@ -49,16 +48,15 @@ Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
         cout << "Param count does not match" << endl;
         exit(1);
     }
-    
-
-    
+        
     // Do this always
 	evaluationEnvironment = savedEnvironment;
 	
     if(!STATIC) {
 	    // Copy name table from current context ... (Geoff)
 	    for (map<string,Element*>::iterator p = NT.begin();p != NT.end();p++) {
-    		cout << "Copying over " << p->first << endl;
+    		// TODO Remove me
+    		// cout << "Copying over " << p->first << endl;
 	        evaluationEnvironment[p->first] = p->second;
 	    }
     }
@@ -73,17 +71,22 @@ Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
     
 
 
+	/* TODO Remove me
 	cout << "Evaluating with environment: "<< endl;
 	for (map<string, Element*>::iterator p = evaluationEnvironment.begin(); p != evaluationEnvironment.end(); p++) {	
 		cout << p->first << endl;
 	}
+	*/
 
     // evaluate function body using new name table and old function table
 
     SL_->eval(evaluationEnvironment);
     
-    if(!STATIC) {	
-    	NT = evaluationEnvironment;
+    if(!STATIC) {
+		// Copy changes over to single environment
+	    for (map<string, Element*>::iterator p = evaluationEnvironment.begin(); p != evaluationEnvironment.end(); p++) {	
+			NT[p->first] = p->second;
+		}	
     }
     
     if ( evaluationEnvironment.find("return") != evaluationEnvironment.end() ) {

@@ -13,7 +13,7 @@ class Expr
 public:
     virtual ~Expr() {};
 		// Changed environment table here
-		virtual Element* eval(map<string,Element*> NT) const = 0;
+		virtual Element* eval(map<string,Element*> &NT) const = 0;
 private:
 };
 

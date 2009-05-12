@@ -104,7 +104,7 @@ string List::toString(map<string,Element*> NT) const {
     return s + "]";
 }
 
-Element* List::eval(map<string,Element*> NT) const {
+Element* List::eval(map<string,Element*> &NT) const {
     List* newL = new List;
     newL->elements = elements;
     return newL;

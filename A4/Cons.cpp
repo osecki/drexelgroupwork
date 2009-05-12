@@ -15,7 +15,7 @@ Cons::Cons(Expr* op1, Expr* op2)
     op2_ = op2;
 }
 
-Element* Cons::eval(map<string,Element*> NT) const
+Element* Cons::eval(map<string,Element*> &NT) const
 {
 		// Calls the cons() function from List
     List* newL = new List((List*)op1_->eval(NT));

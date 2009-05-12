@@ -1,0 +1,12 @@
+adder := proc(left)
+	return := proc(right)
+		return := left + right
+	end
+end;
+
+addTwo := adder(2);
+twelve := addTwo(10);
+
+addThree := adder(3);
+thirteen := addThree(10);
+twelveAlso := addTwo(10)
