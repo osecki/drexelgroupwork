@@ -1,0 +1,9 @@
+x := 10;
+getX := proc() 
+	return:=x
+end;
+
+ten := getX();
+x := 11;
+
+eleven := getX()
