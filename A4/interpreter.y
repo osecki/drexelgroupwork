@@ -47,7 +47,8 @@ stmt_list:
     stmt ';' stmt_list {
         printf("stmt_list -> stmt ; stmt_list\n");
     }
-    |   stmt  {
+    |   
+	stmt  {
         printf("stmt_list -> stmt\n");
     }
     ;
