@@ -84,8 +84,9 @@ Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
     
     if(!STATIC) {
 		// Copy changes over to single environment
-	    for (map<string, Element*>::iterator p = evaluationEnvironment.begin(); p != evaluationEnvironment.end(); p++) {	
-			NT[p->first] = p->second;
+	    for (map<string, Element*>::iterator p = evaluationEnvironment.begin(); p != evaluationEnvironment.end(); p++) {
+	    	if(p->first != "return")	
+				NT[p->first] = p->second;
 		}	
     }
     
