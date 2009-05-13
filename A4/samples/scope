@@ -1,0 +1,14 @@
+y := 14;
+a := proc()
+    returnY := proc()
+        y := 100;
+        return := y
+    end;
+    y := 11;
+    return := returnY()
+end;
+
+x := a();
+
+
+youShouldMoveYAssignmentsAllAroundThisThing := 0
