@@ -1,15 +1,40 @@
+FOR STATIC:
+
 Translating Program
-Dump of Symbol Table
-a -> ** Function **
-addone -> ** Function **
-b -> ** Function **
-c -> 10
-d -> ** Function **
-e -> 10
-f -> ** Function **
-g -> ** Function **
-h -> 20
-makeadder -> ** Function **
-return -> 4
-x -> 2
-y -> 4
+
+
+              Symbol | Value
+---------------------+--------------------
+                   a | ** Function **
+              addone | ** Function **
+                   b | ** Function **
+                   d | ** Function **
+                   f | ** Function **
+           makeadder | ** Function **
+                 ten | 10
+             tenAlso | 10
+               three | 3
+              twenty | 20
+                   x | 2
+
+FOR DYNAMIC:
+
+Translating Program
+
+
+              Symbol | Value
+---------------------+--------------------
+                   a | ** Function **
+              addone | ** Function **
+                   b | ** Function **
+                   d | ** Function **
+                   f | ** Function **
+                   g | ** Function **
+           makeadder | ** Function **
+                 ten | 10
+             tenAlso | 10
+               three | 4
+              twenty | 20
+                   x | 2
+                   y | 2
+
