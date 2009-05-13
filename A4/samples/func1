@@ -13,8 +13,9 @@ proc(n)
 fi od;
   return := count
 end;
-lenones := len(b);
-lentwo := len(c);
-lenthree := len(d);
-lenfour := len(e);
-lenfive := len(f)
+
+zero := len(b);
+one := len(c);
+three := len(d);
+four := len(e);
+threeAlso := len(f)
