@@ -16,7 +16,6 @@ Part 7:  Two versions are implemented, static and dynamic
 Part 8:  Tested the program with all of the scenarios mentioned
 
 Notes:
--Depends on answers to questions given at office hours
 -We eliminated the function table and just use the name table.
 -We eliminated the DefineStatement class because it was duplicated
 functionality, but did change the bison to support the define syntax.
@@ -75,5 +74,9 @@ Testing:
 -Testing was done using the files in samples/*. They all test a bunch of
 static and dynamic examples, and there is the officialInput file for everything
 asked for in the "What to do" section, along with officialInput_out for its
-output.
+output. They can easily be tested by running "./runAll Static" or "./runAll
+Dynamic". The test file will be printed out, followed by the resulting
+environment. Simply hit enter to go from file to file in samples/.
+-The official 'sample input' and 'sample output' provided is in
+officialInput and officialInput_out, respectively.
 
