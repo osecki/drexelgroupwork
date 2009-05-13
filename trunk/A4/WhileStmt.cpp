@@ -15,7 +15,7 @@ WhileStmt::~WhileStmt() { delete E_; delete S_; }
 // Changed environment table here
 void WhileStmt::eval(map<string,Element*> &NT) const
 {
-	
+	// The logic is like this because we need to check the dynamic cast each time on the changing environment
 	while(1) {
 		Element* e = E_->eval(NT);
 		if(dynamic_cast<Number*>(e)) {
