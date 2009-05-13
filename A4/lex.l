@@ -11,6 +11,7 @@
 %}
 
 %%
+[ \t\n\r]*\#[A-Za-z\:0-9= ;']+\n ;
 [ \t\n\r] ;    /* ignore whitespace */
 \+       { return yytext[0]; }
 \-       { return yytext[0]; }

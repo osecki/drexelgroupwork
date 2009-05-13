@@ -1,14 +1,13 @@
-y := 14;
+# Comment and uncomment these assignments of y it's
+# y := 11;
 a := proc()
+    # y := 12;
     returnY := proc()
-        y := 100;
+        # y := 13;
         return := y
     end;
-    y := 11;
+    y := 14;
     return := returnY()
 end;
-
-x := a();
-
-
-youShouldMoveYAssignmentsAllAroundThisThing := 0
+# y:= 15;
+x := a()
