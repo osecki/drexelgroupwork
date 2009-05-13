@@ -1,4 +1,4 @@
-# Comment and uncomment these assignments of y it's
+# Comment and uncomment these assignments of y
 # y := 11;
 a := proc()
     # y := 12;
