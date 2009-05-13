@@ -11,7 +11,6 @@ class Number : public Element
 {
 public:
     Number(int value = 0);
-    Number(const Number& n);
 	int getValue();
     virtual int intp();
     virtual Element* eval(map<string,Element*> &NT) const;

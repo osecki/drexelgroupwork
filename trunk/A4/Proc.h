@@ -34,7 +34,6 @@ private:
 	StmtList *SL_;
 	list<string> *PL_;
 	int NumParam_;
-	vector<string> known;
 	map<string, Element*> *savedEnvironment;
 };
 

@@ -29,11 +29,6 @@ Proc::~Proc() {
 
 void Proc::setTheEnvironment(map<string, Element*> *NewNT) {
 	this->savedEnvironment = NewNT;
-	// Update list of names
-	for(map<string, Element*>::iterator iter = NewNT->begin(); iter != NewNT->end(); iter++) {
-		// cout << " I know about " << iter->first << endl; 
-		known.push_back(iter->first);
-	} 
 }
 
 Element* Proc::eval(map<string,Element*> &NT) const {
@@ -59,10 +54,9 @@ Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
     
     map<string,Element*> *evaluationEnvironment = new map<string,Element*>();    
     if(STATIC) {
-		// *Copy* over *KNOWN* values from parent environment
-	    for(vector<string>::iterator iter = known.begin(); iter != known.end(); iter++) {
-    		// cerr << "Known: " << *iter << endl;
-			(*evaluationEnvironment)[*iter] = (*savedEnvironment)[*iter]; 
+		// *Copy* over values from parent environment
+	    for (map<string,Element*>::iterator p = savedEnvironment->begin();p != savedEnvironment->end();p++) {
+	        (*evaluationEnvironment)[p->first] = p->second;
 	    }
 	} else {
 	    // Copy name table from current context ... (Geoff)
