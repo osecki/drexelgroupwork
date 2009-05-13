@@ -17,9 +17,15 @@ Cons::Cons(Expr* op1, Expr* op2)
 
 Element* Cons::eval(map<string,Element*> &NT) const
 {
-		// Calls the cons() function from List
-    List* newL = new List((List*)op1_->eval(NT));
-    Element* two = (Element*)op2_->eval(NT);
-    newL->cons(two);
-    return newL;
+	Element* e1 = op1_->eval(NT);
+	
+	if(dynamic_cast<List*>(e1)) {
+    	List* newL = new List((List*)e1);
+    	Element* two = op2_->eval(NT);
+    	newL->cons(two);
+    	return newL;
+	}
+	
+	cout << "ERROR: Tried to cons to a non-list" << endl;
+	exit(1);
 }

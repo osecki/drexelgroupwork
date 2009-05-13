@@ -41,8 +41,6 @@ Expr* List::getFirst() {
         return elements->front();
     } else {
         // Error out
-        cout << "ERROR:  Cannot do a Car(list) on an empty list or other object." << endl;
-        exit(1);
         return new List;
     }
 }

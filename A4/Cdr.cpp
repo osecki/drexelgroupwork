@@ -16,6 +16,12 @@ Cdr::Cdr(Expr* op1)
 
 Element* Cdr::eval(map<string,Element*> &NT) const
 {
-    // Calls the getRest() function from List
-    return ((List*)op1_->eval(NT))->getRest()->eval(NT);
+    Element* e = op1_->eval(NT);
+    if(dynamic_cast<List*>(e)) {
+    	return ((List*)e)->getRest()->eval(NT);
+    }
+    
+    cout << "ERROR: Can not perform cdr on a non-list" << endl;
+    exit(1);
+    
 }

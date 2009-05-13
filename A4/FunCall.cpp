@@ -36,7 +36,7 @@ Element* FunCall::eval(map<string,Element*> &NT) const
     if(dynamic_cast<Proc*>(element)) {
     	return ((Proc*)element)->apply(NT, AL_);
     } else {
-    	cout << "ERROR: Not a function" << endl;
+    	cout << "ERROR: Tried to treat a non-function as a function" << endl;
     	exit(1);
     }
 }

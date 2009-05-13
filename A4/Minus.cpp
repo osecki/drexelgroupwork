@@ -12,5 +12,12 @@ Minus::Minus(Expr* op1, Expr* op2)
 // Changed environment table here and cast it to be a "Number"
 Element* Minus::eval(map<string,Element*> &NT) const
 {
-    return new Number(((Number*)op1_->eval(NT))->getValue() - ((Number*)op2_->eval(NT))->getValue());
+	Element* e1 = op1_->eval(NT);
+	Element* e2 = op2_->eval(NT);
+	if(dynamic_cast<Number*>(e1) && dynamic_cast<Number*>(e2)) { 
+    	return new Number(((Number*)e1)->getValue() - ((Number*)e2)->getValue());
+	}
+	
+	cout << "ERROR: Tried to subtract non-numbers" << endl;
+	exit(1); 
 }
