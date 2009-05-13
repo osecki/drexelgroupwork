@@ -6,4 +6,4 @@ end;
 
 x:=10;
 
-dynamicTenStaticTen := a()
+tenEitherWay := a()

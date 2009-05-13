@@ -4,14 +4,17 @@
  * Class:    CS550, Assignment 4, Spring 2009
 **/
 
-#include "Proc.h"
+
 #include <list>
 #include <map>
-#include <string>
-#include "StmtList.h"
-#include <iostream>
-#include "Element.h"
 
+#include <string>
+#include <iostream>
+#include "StmtList.h"
+#include "Element.h"
+#include "Proc.h"
+
+#define RETURN "return"
 
 Proc::Proc(list<string> *PL, StmtList *SL)
 {
@@ -24,8 +27,13 @@ Proc::~Proc() {
     delete SL_;
 }
 
-void Proc::setTheEnvironment(map<string, Element*> NewNT) {
+void Proc::setTheEnvironment(map<string, Element*> *NewNT) {
 	this->savedEnvironment = NewNT;
+	// Update list of names
+	for(map<string, Element*>::iterator iter = NewNT->begin(); iter != NewNT->end(); iter++) {
+		// cout << " I know about " << iter->first << endl; 
+		known.push_back(iter->first);
+	} 
 }
 
 Element* Proc::eval(map<string,Element*> &NT) const {
@@ -40,61 +48,65 @@ string Proc::toString(map<string,Element*> NT) const {
 // Changed environment table here and in function below
 Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
 {
-    map<string,Element*> evaluationEnvironment;
-
-    // bind parameters in new name table
-
     if (NumParam_ != EL->size()) {
-        cout << "Param count does not match" << endl;
+        cout << "ERROR: Wrong number of parameters to function call" << endl;
         exit(1);
     }
-        
-    // Do this always
-	evaluationEnvironment = savedEnvironment;
-	
-    if(!STATIC) {
+    
+    //
+    // Establish environment for evaluation
+    //
+    
+    map<string,Element*> *evaluationEnvironment = new map<string,Element*>();    
+    if(STATIC) {
+		// *Copy* over *KNOWN* values from parent environment
+	    for(vector<string>::iterator iter = known.begin(); iter != known.end(); iter++) {
+    		// cerr << "Known: " << *iter << endl;
+			(*evaluationEnvironment)[*iter] = (*savedEnvironment)[*iter]; 
+	    }
+	} else {
 	    // Copy name table from current context ... (Geoff)
 	    for (map<string,Element*>::iterator p = NT.begin();p != NT.end();p++) {
-    		// TODO Remove me
-    		// cout << "Copying over " << p->first << endl;
-	        evaluationEnvironment[p->first] = p->second;
+	        (*evaluationEnvironment)[p->first] = p->second;
 	    }
     }
     
     	
-	// Evaluate parameters
+	// Evaluate parameters 
+	// @note These are local only, so should override the parent scope without
+	//       changing the parent's values.
     list<string>::iterator p;
     list<Expr*>::iterator e;
     for (p = PL_->begin(), e = EL->begin(); p != PL_->end(); p++, e++) {
-        evaluationEnvironment[*p] = (*e)->eval(NT);
+        (*evaluationEnvironment)[*p] = (*e)->eval(NT);
     }
-    
 
-
-	/* TODO Remove me
-	cout << "Evaluating with environment: "<< endl;
-	for (map<string, Element*>::iterator p = evaluationEnvironment.begin(); p != evaluationEnvironment.end(); p++) {	
-		cout << p->first << endl;
-	}
-	*/
-
-    // evaluate function body using new name table and old function table
-
-    SL_->eval(evaluationEnvironment);
+	/*
+	// Evaluate statement list in the new environment
+	cout << "Applying with this environment" << endl;
+	for (map<string,Element*>::iterator p = evaluationEnvironment->begin();p != evaluationEnvironment->end();p++) {
+        cout << p->first << endl;
+    }
+    cout << "-EOE-" << endl;
+    /**/
+	    
+    SL_->eval(*evaluationEnvironment);
     
     if(!STATIC) {
 		// Copy changes over to single environment
-	    for (map<string, Element*>::iterator p = evaluationEnvironment.begin(); p != evaluationEnvironment.end(); p++) {
-	    	if(p->first != "return")	
+	    for (map<string, Element*>::iterator p = evaluationEnvironment->begin(); p != evaluationEnvironment->end(); p++) {
+	    	if(p->first != RETURN) {
+	    		// Do not copy return value 
 				NT[p->first] = p->second;
+	    	}
 		}	
     }
     
-    if ( evaluationEnvironment.find("return") != evaluationEnvironment.end() ) {
-        return evaluationEnvironment["return"];
-    } else {
-        cout << "Error:  no return value" << endl;
-        exit(1);
+    if ( evaluationEnvironment->find(RETURN) != evaluationEnvironment->end() ) {
+        return (*evaluationEnvironment)[RETURN];
     }
+    
+    cout << "Error:  No return value set in function" << endl;
+    exit(1);
 }
 

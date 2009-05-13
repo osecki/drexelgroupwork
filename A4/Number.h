@@ -11,9 +11,8 @@ class Number : public Element
 {
 public:
     Number(int value = 0);
-    // Added this helper method
-		int getValue();
-		// Needed for A2
+    Number(const Number& n);
+	int getValue();
     virtual int intp();
     virtual Element* eval(map<string,Element*> &NT) const;
     virtual string toString(map<string,Element*> NT) const;

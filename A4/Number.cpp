@@ -3,6 +3,12 @@
 #include "Proc.h"
 #include <sstream>
 
+
+Number::Number(const Number& n) {
+	cout << "CC(" << n.value_ << ")" << endl;
+	this->value_ = n.value_;
+}
+
 Number::Number(int value)
 {
     value_ = value;

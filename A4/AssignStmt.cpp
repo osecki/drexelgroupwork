@@ -4,15 +4,21 @@
 
 AssignStmt::AssignStmt(string name, Expr *E)
 {
-  name_ = name;
-  E_ = E;
+	name_ = name;
+	E_ = E;
 }
 
 // Changed environment table here
 void AssignStmt::eval(map<string,Element*> &NT) const
 {
-	// if the expression is Proc type then set the current environment
-	if (dynamic_cast<Proc*>(E_))
-		((Proc*)E_)->setTheEnvironment(NT);
+	// Change name table
 	NT[name_] = E_->eval(NT);
+	
+	// if the expression is Proc type then set the current environment
+	if (dynamic_cast<Proc*>(E_)) {
+		// Now set the environment 
+		((Proc*)E_)->setTheEnvironment(&NT);
+		// Update name table with this new Proc
+		NT[name_] = E_->eval(NT);
+	}
 }
