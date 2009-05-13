@@ -1,0 +1,9 @@
+a := proc()
+    return := 1
+end;
+
+b := proc()
+    return := a()
+end;
+
+one := b()

@@ -1,0 +1,20 @@
+x := 11;
+
+getX := proc()
+	return := x
+end;
+
+setX := proc(y)
+	x:=y;
+	return := 1
+end;
+
+eleven := getX();
+
+x := 10;
+
+ten := getX();
+junk := setX(100);
+tenAlso := getX();
+
+elevenAlso := eleven
