@@ -1,0 +1,11 @@
+#!/bin/bash
+for file in samples/*;
+do
+    clear;
+    echo "Running $file";
+    echo "------------------";
+    cat $file;
+    echo "";
+    ./$1 < $file;
+    read;
+done

@@ -1,6 +1,7 @@
 #include <map>
 #include "Proc.h"
 #include "FunCall.h"
+#include "Ident.h"
 
 FunCall::FunCall(string name, list<Expr*> *AL)
 {
@@ -26,9 +27,16 @@ Element* FunCall::eval(map<string,Element*> &NT) const
 {
     Element* element;
     if(name_ != "") {
-        element = NT[name_];
+    	// Have Ident do the lookup so it can catch errors if any
+        element = (new Ident(name_))->eval(NT);
     } else {
         element = expression->eval(NT);
     }
-    return ((Proc*)element)->apply(NT, AL_);
+    
+    if(dynamic_cast<Proc*>(element)) {
+    	return ((Proc*)element)->apply(NT, AL_);
+    } else {
+    	cout << "ERROR: Not a function" << endl;
+    	exit(1);
+    }
 }

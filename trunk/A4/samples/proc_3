@@ -3,4 +3,4 @@ a:= proc()
 end;
 
 x:=10;
-dynamicTenStaticCrash := a()
+dTENsCRASH := a()

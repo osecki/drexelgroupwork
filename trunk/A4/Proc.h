@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
 #include <string>
 #include "StmtList.h"
 #include "Element.h"
@@ -25,15 +26,16 @@ public:
 
 	virtual string toString(map<string,Element*> NT) const;
   	virtual Element* eval(map<string,Element*> &NT) const;
-  	void setTheEnvironment(map<string,Element*> NewNT) ;
+  	void setTheEnvironment(map<string,Element*>* NewNT) ;
 
 	Element* apply(map<string,Element*> &NT, list<Expr*> *EL);
 
 private:
-    	StmtList *SL_;
-    	list<string> *PL_;
-    	int NumParam_;
-    	map<string, Element*> savedEnvironment;
+	StmtList *SL_;
+	list<string> *PL_;
+	int NumParam_;
+	vector<string> known;
+	map<string, Element*> *savedEnvironment;
 };
 
 #endif

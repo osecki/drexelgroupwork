@@ -8,4 +8,5 @@ end;
 x := 10;
 five := a()();
 f := a();
+x := 10;
 alsoFive := f()
