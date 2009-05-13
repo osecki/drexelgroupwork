@@ -1,0 +1,10 @@
+sum := proc(x)
+    if(x)
+    then
+        return := x + sum(x - 1)
+    else
+        return := 0
+    fi
+end;
+
+six := sum(3)
