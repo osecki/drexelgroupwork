@@ -16,7 +16,11 @@ Car::Car(Expr* op1)
 
 Element* Car::eval(map<string,Element*> &NT) const
 {
-    // Calls the getFirst() method from inside list
-    Element* x = ((List*)op1_->eval(NT))->getFirst()->eval(NT);
-    return x;
+    Element* e = op1_->eval(NT);
+    if(dynamic_cast<List*>(e)) {
+    	return ((List*)e)->getFirst()->eval(NT); 
+    }
+    
+    cout << "ERROR: Can not perform car on a non-list" << endl;
+    exit(1);	
 }

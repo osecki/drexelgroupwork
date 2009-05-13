@@ -25,7 +25,7 @@ void IfStmt::eval(map<string,Element*> &NT) const
 	        S2_->eval(NT);
 	    }
 	} else {
-		cout << "ERROR: Conditional does not evaluate to a numeric value" << endl;
+		cout << "ERROR: Conditional of if does not evaluate to a numeric value" << endl;
 		exit(1);
 	}
 }
