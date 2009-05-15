@@ -1,0 +1,7 @@
+Class list (x) L:=x;
+a:= proc()
+    	return := 10
+   end
+end;
+L := list(2);
+z := L.a()

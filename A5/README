@@ -1,0 +1,82 @@
+Assignment 4
+CS550 Programming Languages
+Spring 2009, 5/13/2009
+Team: (Group 7) Jordan Osecki, Geoff Oxholm and Alimore Reza
+Team Lead on this Assignment:  Alimore Reza, Jordan Osecki, and Geoff Oxholm
+
+Implemented successfully is the following parts:
+
+Part 1:  Proc statements can be assigned to variables
+Part 2:  Proc statements can be passed as arguments to function calls
+Part 3:  Proc statements can be returned as values from functions
+Part 4:  Also allow unnamed expressions, like lambda expressions
+Part 5:  Extended from Assignment 2
+Part 6:  Supported nested procedures
+Part 7:  Two versions are implemented, static and dynamic
+Part 8:  Tested the program with all of the scenarios mentioned
+
+Notes:
+-We eliminated the function table and just use the name table.
+-We eliminated the DefineStatement class because it was duplicated
+functionality, but did change the bison to support the define syntax.
+
+Files Included:
+
+-makefile:  The makefile which can be used to compile and run everything
+-README:  This readme file with all required information
+-samples/*:  Input and output files from testing the program parts
+
+-Program.h/.cpp - Mini-compiler File
+-StmtList.h/.cpp - Mini-compiler File
+-Stmt.h - Mini-compiler File
+-AssignStmt.h/.cpp - Mini-compiler File
+-IfStmt.h/.cpp - Mini-compiler File
+-WhileStmt.h/.cpp - Mini-compiler File
+-Expr.h - Mini-compiler File
+-Plus.h/.cpp - Mini-compiler File
+-Times.h/.cpp - Mini-compiler File
+-Minus.h/.cpp - Mini-compiler File
+-Funcall.h/.cpp - Mini-compiler File
+-Proc.h/.cpp - Mini-compiler File
+-Ident.h/.cpp - Mini-compiler File
+
+-Element.h/.cpp - New MC File which can be List or Number
+-Number.h/.cpp - MC Files which had functions added to them
+-List.h/.cpp - New MC Files which support lists and their functions
+-Car.h/.cpp - Handles Car function
+-Cdr.h/.cpp - Handles Cdr function
+-Cons.h/.cpp - Handles Cons function
+-Concat.h/.cpp - Handles Concat function
+-Nullp.h/.cpp - Handles Nullp function
+-Listp.h/.cpp - Handles Listp function
+-Intp.h/.cpp - Handles Intp function
+
+-interpreter.ypp - ML Interpreter ypp
+-interpreter.y - ML Interpreter y
+-lex.l - ML Interpreter lex
+
+Running the code:
+
+-To run the code, run make flex and parse. To compile it for a static test,
+type 'make static'. Use 'make dynamic' for a dynamic scope run. To run it,
+either use ./Static < input or ./Dynamic < input, respectively. There are some
+included files in samples/* which tests our code for all cases, including
+the ones specifically asked to test in "What to do".
+
+How the code works:
+-The code works mainly through edits in the bison and Proc. Bison was edited
+to allow for assignments to procs and also for anonymous functions. A Proc
+now inherits from Element. The eval() for proc was changed to get an
+environment either statically or dynamically. For static, it copies the name
+table from assignment time. For dynamic, it uses the global name table.
+
+Testing:
+-Testing was done using the files in samples/*. They all test a bunch of
+static and dynamic examples, and there is the officialInput file for everything
+asked for in the "What to do" section, along with officialInput_out for its
+output. They can easily be tested by running "./runAll Static" or "./runAll
+Dynamic". The test file will be printed out, followed by the resulting
+environment. Simply hit enter to go from file to file in samples/.
+-The official 'sample input' and 'sample output' provided is in
+officialInput and officialInput_out, respectively.
+

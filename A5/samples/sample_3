@@ -1,0 +1,8 @@
+Class list (x) L:=x;
+a:= proc()
+    	return := 10
+   end;
+b:= proc ()
+	return := 12
+   end
+end

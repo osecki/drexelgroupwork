@@ -1,0 +1,105 @@
+sample input 1:
+---------------
+Class list (x) L:=x;
+a:= proc()
+    return := proc()
+        return := 10
+    end
+end
+end
+
+sample input 2:
+---------------
+Class list (x) L:=x;
+a:= proc()
+    	return := 10
+   end
+end
+
+
+Output:
+-------
+param_list -> IDENT
+factor -> identifier
+term -> factor
+expr -> term
+assign_stmt -> identifier := expr
+stmt -> assign_stmt
+element -> NUMBER
+factor -> element
+term -> factor
+expr -> term
+assign_stmt -> identifier := expr
+stmt -> assign_stmt
+stmt_list -> stmt
+() stmt_list end
+expr->proc
+assign_stmt -> identifier := expr
+stmt -> assign_stmt
+stmt_list -> stmt
+stmt_list -> stmt ; stmt_list
+class_stmt -> identifier ( param_list ) stmt_list
+stmt -> class_stmt
+stmt_list -> stmt
+program -> stmt_list
+
+
+sample input 3:
+---------------
+Class list (x) L:=x;
+a:= proc()
+    	return := 10
+   end;
+b:= proc ()
+	return := 12
+   end
+end
+
+Output:
+-------
+endparam_list -> IDENT
+factor -> identifier
+term -> factor
+expr -> term
+assign_stmt -> identifier := expr
+stmt -> assign_stmt
+element -> NUMBER
+factor -> element
+term -> factor
+expr -> term
+assign_stmt -> identifier := expr
+stmt -> assign_stmt
+stmt_list -> stmt
+() stmt_list end
+expr->proc
+assign_stmt -> identifier := expr
+stmt -> assign_stmt
+element -> NUMBER
+factor -> element
+term -> factor
+expr -> term
+assign_stmt -> identifier := expr
+stmt -> assign_stmt
+stmt_list -> stmt
+() stmt_list end
+
+expr->proc
+assign_stmt -> identifier := expr
+stmt -> assign_stmt
+stmt_list -> stmt
+stmt_list -> stmt ; stmt_list
+stmt_list -> stmt ; stmt_list
+class_stmt -> identifier ( param_list ) stmt_list
+stmt -> class_stmt
+stmt_list -> stmt
+program -> stmt_list
+
+sample input 4:
+---------------
+Class list (x) L:=x;
+a:= proc()
+    	return := 10
+   end
+end;
+L := list(2);
+z := L.a()
