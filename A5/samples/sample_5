@@ -1,6 +1,7 @@
 Class list (x) y:=x;
 a:= proc()
-    	return := 2
+    	return := y*2
    end
 end;
-L := list(2)
+L := list(2);
+z := L.a()
