@@ -25,6 +25,9 @@
 #include "Nullp.h"
 #include "Listp.h"
 #include "Intp.h"
+#include "NewClassStmt.h"
+#include "NewClass.h"
+#include "DotNotationFunCall.h"
 
 using namespace std;
 void yyerror (const char *error);
@@ -54,6 +57,7 @@ list<string> *PL;
 list<Expr*> *EL;
 list<Expr*> *SQ;
 Program *P;
+NewClass* NC;
 
 %}
 
@@ -68,6 +72,8 @@ Program *P;
   List* listptr;
   list<Expr*> *listsequenceptr;
   Element  *elementptr;
+  FunCall *funcallptr;
+  
 }
 
 %token CAR
@@ -90,13 +96,13 @@ Program *P;
 %token DO
 %token OD
 %token PROC
-%token CLASS
 %token END
+%token CLASS
 
 %type <exprptr> expr
 %type <exprptr> term
 %type <exprptr> factor
-%type <exprptr> funcall
+%type <funcallptr> funcall
 %type <stmtptr> stmt
 %type <stmtptr> assign_stmt
 %type <stmtptr> class_stmt
@@ -115,6 +121,7 @@ Program *P;
 
 program:
     stmt_list {
+	cout<<"program -> stmt_list\n";
         P = new Program($1);
         P->eval();
         P->dump();
@@ -123,35 +130,52 @@ program:
 
 stmt_list:
     stmt ';' stmt_list {
-        $3->insert($1); $$ = $3;
+	cout<<"stmt_list -> stmt;stmt_list\n";
+        $3->insert($1); 
+        $$ = $3;
     }
     |
     stmt  {
+	cout<<"stmt_list -> stmt;stmt_list\n";
         SL = new StmtList();  SL->insert($1); $$ = SL;
     }
     ;
 
-stmt:  assign_stmt {
+stmt:
+    class_stmt {
+	cout<<"stmt -> class_stmt\n";
+	$$ = $1;	
+    }
+    |
+    assign_stmt {
+      	cout<<"stmt -> assign_stmt\n";
         $$ = $1;
     }
     |
     if_stmt {
+	cout<<"stmt -> if_stmt\n";
         $$ = $1;
     }
     |
     while_stmt  {
+	cout<<"stmt -> while_stmt\n";
         $$ = $1;
-    }
-    | 
-    class_stmt {
-	$$ = $1;	
     }
     ;
 
 class_stmt:
     CLASS IDENT '(' param_list ')' stmt_list END {
-	
-     };
+        cout<<"class_stmt -> NewClassStmt\n";
+        NC = new NewClass(string($2), $4, $6);
+	$$ = new NewClassStmt(NC);	
+     }
+    |
+    CLASS IDENT '(' ')' stmt_list END {
+	cout<<"class_stmt -> NewClassStmt with empty param\n";
+	NC = new NewClass(string($2), new list<string>() , $5);
+	$$ = new NewClassStmt(NC);	
+     } 
+    ;
 
 assign_stmt:
     IDENT ASSIGNOP expr {
@@ -271,7 +295,8 @@ factor:
     }
     |
     IDENT '.' funcall {
-	printf("factor -> identifier.funcall( )\n");
+	cout<<"factor -> class . funcall() \n";
+	$$ = new DotNotationFunCall(string($1), $3);
     }
     ;
 
