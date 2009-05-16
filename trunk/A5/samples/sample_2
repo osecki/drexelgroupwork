@@ -1,4 +1,4 @@
-Class list (x) L:=x;
+Class abc (x) L:=x;
 a:= proc()
     	return := 10
    end

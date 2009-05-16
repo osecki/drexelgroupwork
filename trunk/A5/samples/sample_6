@@ -1,0 +1,10 @@
+Class list (x) y:=x;
+a:= proc()
+    	return := y*2
+   end
+end;
+L := list(2);
+first := L.a();
+M := list(3);
+second := M.a();
+third := L.a()
