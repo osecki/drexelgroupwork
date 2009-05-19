@@ -27,7 +27,8 @@ public:
 
 	virtual string toString(map<string,Element*> NT) const;
   	virtual Element* eval(map<string,Element*> &NT) const;
-  	void setTheEnvironment(map<string,Element*>* NewNT) ;
+  	void setTheEnvironment(map<string,Element*>* NewNT);
+  	
   	map<string, Element*>* getTheEnvironment();
   	string getName();
   	string getSuperClassName();
