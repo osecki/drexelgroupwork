@@ -22,6 +22,7 @@ class NewClass : public Element {
 
 public:
     NewClass(string name, list<string> *PL, StmtList *SL);
+    NewClass(string name, string superClassName, list<string> *PL, StmtList *SL);
     ~NewClass();
 
 	virtual string toString(map<string,Element*> NT) const;
@@ -29,6 +30,8 @@ public:
   	void setTheEnvironment(map<string,Element*>* NewNT) ;
   	map<string, Element*>* getTheEnvironment();
   	string getName();
+  	string getSuperClassName();
+  	NewClass* getTheSuperClass();
 	Element* constructor(map<string,Element*> &NT, list<Expr*> *EL);
 
 private:
@@ -36,6 +39,8 @@ private:
 	list<string> *PL_;
 	int NumParam_;
 	string name_;
+	string superClassName_;
+	NewClass* superClass_;
 	map<string, Element*>* savedEnvironment;
 };
 
