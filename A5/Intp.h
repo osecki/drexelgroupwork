@@ -1,7 +1,7 @@
 /**
  *  Program:  Intp.h
  *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Alimoor Reza
- *  Class:    CS550, Assignment 4, Spring 2009
+ *  Class:    CS550, Assignment 5, Spring 2009
 **/
 
 #ifndef INTP_H

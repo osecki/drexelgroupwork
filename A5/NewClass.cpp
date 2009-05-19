@@ -1,9 +1,8 @@
 /**
- * Program:  Proc.cpp
+ * Program:  NewClass.cpp
  * Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Alimoor Reza
- * Class:    CS550, Assignment 4, Spring 2009
+ * Class:    CS550, Assignment 5, Spring 2009
 **/
-
 
 #include <list>
 #include <map>
@@ -26,7 +25,6 @@ NewClass::NewClass(string name,list<string> *PL, StmtList *SL)
     superClass_ = NULL;
     savedEnvironment = new map<string,Element*>();
 }
-
 
 NewClass::NewClass(string name, string superClassName, list<string> *PL, StmtList *SL)
 {
@@ -67,7 +65,6 @@ Element* NewClass::eval(map<string,Element*> &NT) const {
 	return NT[name_];
 }
 
-
 string NewClass::toString(map<string,Element*> NT) const {
 	return "**Class**";
 }
@@ -81,7 +78,7 @@ Element* NewClass::constructor(map<string,Element*> &NT, list<Expr*> *EL)
     }
     
     if (superClassName_ != "") {
-	// There is a super class
+	  // There is a super class
 
     	// get the the super class using NT
     	Element* superClass = NT[superClassName_];

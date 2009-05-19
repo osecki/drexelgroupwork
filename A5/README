@@ -1,30 +1,23 @@
-Assignment 4
+Assignment 5
 CS550 Programming Languages
-Spring 2009, 5/13/2009
+Spring 2009, 5/23/2009
 Team: (Group 7) Jordan Osecki, Geoff Oxholm and Alimore Reza
-Team Lead on this Assignment:  Alimore Reza, Jordan Osecki, and Geoff Oxholm
+Team Lead on this Assignment:  Alimore Reza
 
 Implemented successfully is the following parts:
 
-Part 1:  Proc statements can be assigned to variables
-Part 2:  Proc statements can be passed as arguments to function calls
-Part 3:  Proc statements can be returned as values from functions
-Part 4:  Also allow unnamed expressions, like lambda expressions
-Part 5:  Extended from Assignment 2
-Part 6:  Supported nested procedures
-Part 7:  Two versions are implemented, static and dynamic
-Part 8:  Tested the program with all of the scenarios mentioned
-
-Notes:
--We eliminated the function table and just use the name table.
--We eliminated the DefineStatement class because it was duplicated
-functionality, but did change the bison to support the define syntax.
+-Part 1: Extended A4 to support object oriented programming
+-Part 2: Changed bison to allow for class definitions, dot notation, and
+inheritance
+-Part 3: Made code to support classes, dot notation, and inheritance at eval
+time
 
 Files Included:
 
 -makefile:  The makefile which can be used to compile and run everything
 -README:  This readme file with all required information
 -samples/*:  Input and output files from testing the program parts
+-error/*:  Sample files that test our error checking mechanisms
 
 -Program.h/.cpp - Mini-compiler File
 -StmtList.h/.cpp - Mini-compiler File
@@ -51,31 +44,35 @@ Files Included:
 -Listp.h/.cpp - Handles Listp function
 -Intp.h/.cpp - Handles Intp function
 
+-NewClassStmt.h/.cpp - Handles the new class declaration
+-NewClass.h/.cpp - Handles the Class object
+-DotNotationFunCall.h/.cpp - Handles the new types of funcalls
+
 -interpreter.ypp - ML Interpreter ypp
 -interpreter.y - ML Interpreter y
 -lex.l - ML Interpreter lex
 
 Running the code:
 
--To run the code, run make flex and parse. To compile it for a static test,
-type 'make static'. Use 'make dynamic' for a dynamic scope run. To run it,
-either use ./Static < input or ./Dynamic < input, respectively. There are some
-included files in samples/* which tests our code for all cases, including
-the ones specifically asked to test in "What to do".
+-To run the code, run make flex and parse. To compile it, type 'make compile'.
+To run it, use ./Compiler < input. There are some included files in samples/* 
+which tests our code for all cases, including the ones specifically asked to 
+test in "What to do".
 
 How the code works:
--The code works mainly through edits in the bison and Proc. Bison was edited
-to allow for assignments to procs and also for anonymous functions. A Proc
-now inherits from Element. The eval() for proc was changed to get an
-environment either statically or dynamically. For static, it copies the name
-table from assignment time. For dynamic, it uses the global name table.
+-The code works through changes in Bison, Funcall, and new classes. In
+Bison, it now allows regular class statements with or without parameres and
+with or without inheritance and allows for dot notaiton funcalls. In
+Funcall, if it is from inside a class, it is handled specially. New classes
+were made to handle class statement objects, class objects, and class
+function calls, respectively.
 
 Testing:
 -Testing was done using the files in samples/*. They all test a bunch of
-static and dynamic examples, and there is the officialInput file for everything
+class and inheritnace examples, and there is the officialInput file for everything
 asked for in the "What to do" section, along with officialInput_out for its
-output. They can easily be tested by running "./runAll Static" or "./runAll
-Dynamic". The test file will be printed out, followed by the resulting
+output. They can all easily be tested by running "./runAll Compiler". 
+The test file will be printed out, followed by the resulting
 environment. Simply hit enter to go from file to file in samples/.
 -The official 'sample input' and 'sample output' provided is in
 officialInput and officialInput_out, respectively.
