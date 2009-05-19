@@ -1,0 +1,17 @@
+Class list () 
+a:= proc()
+    	return := 2
+   end
+end;
+
+Class childlist () : list
+b:= proc()
+	return := 9
+    end
+end;
+L := list();
+onlyBaseObjectFunc := L.a();
+childlistObject := childlist();
+baseFunc := childlistObject.a();
+childFunc := childlistObject.b()
+

@@ -14,6 +14,7 @@
    int value;
    char *ident;
 }
+%token COLON
 %token CAR
 %token CDR
 %token NULLP
@@ -75,7 +76,12 @@ stmt:
 class_stmt:
     CLASS IDENT '(' param_list ')' stmt_list END {
 	printf("class_stmt -> identifier ( param_list ) stmt_list\n");
-     };
+     }
+    |
+     CLASS IDENT '(' param_list ')' COLON IDENT stmt_list END {
+	printf("class_stmt -> NewClassStmt with inheritance\n");
+     }
+     ;
 
 assign_stmt:
     IDENT ASSIGNOP expr {

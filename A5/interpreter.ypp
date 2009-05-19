@@ -76,6 +76,7 @@ NewClass* NC;
   
 }
 
+%token COLON
 %token CAR
 %token CDR
 %token NULLP
@@ -174,7 +175,19 @@ class_stmt:
 	cout<<"class_stmt -> NewClassStmt with empty param\n";
 	NC = new NewClass(string($2), new list<string>() , $5);
 	$$ = new NewClassStmt(NC);	
-     } 
+     }
+    |
+     CLASS IDENT '(' ')' COLON IDENT stmt_list END {
+	cout<<"class_stmt -> NewClassStmt with empty param and inheritance\n";
+	NC = new NewClass(string($2), string($6), new list<string>() , $7);
+	$$ = new NewClassStmt(NC);	
+     }
+    |
+     CLASS IDENT '(' param_list ')' COLON IDENT stmt_list END {
+	cout<<"class_stmt -> NewClassStmt with param and inheritance\n";
+	NC = new NewClass(string($2), string($7), new list<string>() , $8);
+	$$ = new NewClassStmt(NC);	
+     }
     ;
 
 assign_stmt:

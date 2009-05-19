@@ -41,6 +41,7 @@ do       { return DO; }
 od       { return OD; }
 proc     { return PROC; }
 end      { return END; }
+\:	 {return COLON;}
 [A-Za-z]+   { yylval.ident = strdup(yytext);  return IDENT; }
 [0-9]+   { yylval.value = atoi(yytext); return NUMBER; }
 .        return yytext[0];

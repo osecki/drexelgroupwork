@@ -20,6 +20,18 @@ NewClass::NewClass(string name,list<string> *PL, StmtList *SL)
     SL_ = SL;
     PL_ = PL;
     this->name_ = name;
+    this->superClassName_ = "";
+    NumParam_ = PL->size();
+	cout<<"New Class Constructor\n";
+}
+
+
+NewClass::NewClass(string name, string superClassName, list<string> *PL, StmtList *SL)
+{
+    SL_ = SL;
+    PL_ = PL;
+    this->name_ = name;
+    this->superClassName_ = superClassName;
     NumParam_ = PL->size();
 	cout<<"New Class Constructor\n";
 }
@@ -30,6 +42,12 @@ NewClass::~NewClass() {
 
 string NewClass::getName() {
 	return this->name_;
+}
+string NewClass::getSuperClassName() {
+	return this->superClassName_;
+}
+NewClass* NewClass::getTheSuperClass() {
+	return this->superClass_;
 }
 
 void NewClass::setTheEnvironment(map<string, Element*> *NewNT) {
@@ -75,7 +93,31 @@ Element* NewClass::constructor(map<string,Element*> &NT, list<Expr*> *EL)
 	    }
     //}*/
 
+		// grab function and values from the super class if there is any
+        map<string, Element*>* superClassSavedEnvironment;
+        if (superClassName_ != "") {
 
+        	// get the environment of the super class using NT
+        	Element* superClass = NT[superClassName_];
+        	if (dynamic_cast<NewClass*>(superClass)) {
+        		// create a new object
+        		NewClass* tempClass = dynamic_cast<NewClass*>(superClass);
+        		superClass_ = dynamic_cast<NewClass*>(tempClass->constructor(NT, EL));
+        		superClassSavedEnvironment = superClass_->getTheEnvironment();
+        		// now push the super class environment into the child class evaluation environment
+        		for (map<string, Element*>::iterator p = superClassSavedEnvironment->begin(); p != superClassSavedEnvironment->end(); p++) {
+    				// Do not copy return value
+    				(*evaluationEnvironment)[p->first] = p->second;
+
+        		}
+
+        	} else {
+        		cout<<"ERROR : accessing non class as class object\n";
+        		exit(1);
+        	}
+
+
+        }
 	// Evaluate parameters
 	// @note These are local only, so should override the parent scope without
 	//       changing the parent's values.
@@ -94,6 +136,8 @@ Element* NewClass::constructor(map<string,Element*> &NT, list<Expr*> *EL)
     cout << "-EOE-" << endl;
     /**/
 
+
+
     SL_->eval(*evaluationEnvironment);
 
 
@@ -104,7 +148,7 @@ Element* NewClass::constructor(map<string,Element*> &NT, list<Expr*> *EL)
     		(*savedEnvironment)[p->first] = p->second;
     	}
     }
-	
+
 	/*
 	// Evaluate statement list in the new environment
 	cout << " saved environment " << endl;
