@@ -1,8 +1,8 @@
 Class list(init)
-       priv := init;
-       Cons := proc(x) return := cons(x, priv) end;
-       Car := proc() return := car(priv) end;
-       Cdr := proc() return :=cdr(priv) end
+       L := init;
+       Cons := proc(x) L := cons(x, L); return := 0 end;
+       Car := proc() return := car(L) end;
+       Cdr := proc() return :=cdr(L) end
 end;
 
        L := list([]);
