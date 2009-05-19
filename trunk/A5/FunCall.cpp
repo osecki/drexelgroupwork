@@ -25,24 +25,21 @@ FunCall::~FunCall() {
     }
 }
 
-
 // Changed environment table here
 Element* FunCall::eval(map<string,Element*> &NT) const
 {
     Element* element;
     if(name_ != "") {
-    	// Have Ident do the lookup so it can catch errors if any
+    	  // Have Ident do the lookup so it can catch errors if any
         element = (new Ident(name_))->eval(NT);
     } else {
         element = expression->eval(NT);
     }
 
     if(dynamic_cast<Proc*>(element)) {
-
     	return ((Proc*)element)->apply(NT, AL_);
     }
     else if(dynamic_cast<NewClass*>(element)) {
-
     	// check whether it is calling the constructor
     	NewClass* newClass = (NewClass*)element;
     	if (this->name_ == newClass->getName()) {

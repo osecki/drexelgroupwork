@@ -1,0 +1,20 @@
+Class Country (x)
+	population := x;
+  getFemales := proc() return := population - 2 end;
+  setPop := proc (p) population := p; return := 0 end
+end;
+
+Class SpecificCountry (x) : Country
+	getFemales := proc() return := population - 10 end;
+	getMales := proc() return := population -  2 end;
+  getPop := proc() return := population end
+end;
+
+a := Country(1000);
+b := SpecificCountry(2000);
+
+ninenineeight := a.getFemales();
+nineteennineeight := b.getMales();
+nineteenninety := b.getFemales();
+temp := b.setPop(5000);
+fiveThou := b.getPop()

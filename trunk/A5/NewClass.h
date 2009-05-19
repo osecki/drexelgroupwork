@@ -1,7 +1,7 @@
 /**
- * Program:  Proc.h
+ * Program:  NewClass.h
  * Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Alimoor Reza
- * Class:    CS550, Assignment 4, Spring 2009
+ * Class:    CS550, Assignment 5, Spring 2009
 **/
 
 #ifndef NEWCLASS_H
@@ -25,7 +25,7 @@ public:
     NewClass(string name, string superClassName, list<string> *PL, StmtList *SL);
     ~NewClass();
 
-	virtual string toString(map<string,Element*> NT) const;
+	  virtual string toString(map<string,Element*> NT) const;
   	virtual Element* eval(map<string,Element*> &NT) const;
   	void setTheEnvironment(map<string,Element*>* NewNT);
   	

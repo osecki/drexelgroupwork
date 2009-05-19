@@ -1,13 +1,11 @@
 /**
  * Program:  Proc.cpp
  * Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Alimoor Reza
- * Class:    CS550, Assignment 4, Spring 2009
+ * Class:    CS550, Assignment 5, Spring 2009
 **/
-
 
 #include <list>
 #include <map>
-
 #include <string>
 #include <iostream>
 #include "StmtList.h"
@@ -27,7 +25,6 @@ Proc::~Proc() {
     delete SL_;
 }
 
-
 void Proc::setTheEnvironment(map<string, Element*> *NewNT) {
 	this->savedEnvironment = NewNT;
 }
@@ -36,11 +33,9 @@ Element* Proc::eval(map<string,Element*> &NT) const {
 	return new Proc(*this);
 }
 
-
 string Proc::toString(map<string,Element*> NT) const {
 	return "** Function **";
 }
-
 
 map<string, Element*>* Proc::getTheEnvironment() {
 	return savedEnvironment;
@@ -54,24 +49,14 @@ Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
         exit(1);
     }
     
-    //
     // Establish environment for evaluation
-    //
     
     map<string,Element*> *evaluationEnvironment = new map<string,Element*>();    
-    if(STATIC) {
 		// *Copy* over values from parent environment
-	    for (map<string,Element*>::iterator p = savedEnvironment->begin();p != savedEnvironment->end();p++) {
+	  for (map<string,Element*>::iterator p = savedEnvironment->begin();p != savedEnvironment->end();p++) {
 	        (*evaluationEnvironment)[p->first] = p->second;
-	    }
-	} else {
-	    // Copy name table from current context ... (Geoff)
-	    for (map<string,Element*>::iterator p = NT.begin();p != NT.end();p++) {
-	        (*evaluationEnvironment)[p->first] = p->second;
-	    }
-    }
-    
-    	
+		}
+
 	// Evaluate parameters 
 	// @note These are local only, so should override the parent scope without
 	//       changing the parent's values.
@@ -81,37 +66,16 @@ Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
         (*evaluationEnvironment)[*p] = (*e)->eval(NT);
     }
 
-	/*
-	// Evaluate statement list in the new environment
-	cout << "Applying with this environment" << endl;
-	for (map<string,Element*>::iterator p = evaluationEnvironment->begin();p != evaluationEnvironment->end();p++) {
-        cout << p->first << endl;
-    }
-    cout << "-EOE-" << endl;
-    /**/
-	    
     SL_->eval(*evaluationEnvironment);
     
     this->savedEnvironment = evaluationEnvironment;
     
-    if(STATIC) {
- 	   /**/
  	   for (map<string, Element*>::iterator p = evaluationEnvironment->begin(); p != evaluationEnvironment->end(); p++) {
             if(NT.find(p->first) != NT.end() && p->second != NULL) {
                 // Copy only values changed that are in parent environment
                 NT[p->first] = p->second;
             }
-            
-        }/**/
-    } else {
-		// Copy changes over to single environment
-	    for (map<string, Element*>::iterator p = evaluationEnvironment->begin(); p != evaluationEnvironment->end(); p++) {
-	    	if(p->first != RETURN) {
-	    		// Do not copy return value 
-				NT[p->first] = p->second;
-	    	}
-		}	
-    }
+		 }            
     
     if ( evaluationEnvironment->find(RETURN) != evaluationEnvironment->end() ) {
         return (*evaluationEnvironment)[RETURN];

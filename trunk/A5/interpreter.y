@@ -2,13 +2,12 @@
 #include <stdio.h>
 %}
 
-
 %union{
 
 /**
  *  Program:  ML-interpreterHead.y
  *  Authors:  Group 7: Jordan Osecki, Geoff Oxholm, Alimoor Reza
- *  Class:    CS550, Assignment 4, Spring 2009
+ *  Class:    CS550, Assignment 5, Spring 2009
 **/
 
    int value;
@@ -35,7 +34,6 @@
 %token PROC
 %token END
 %token CLASS
-
 
 %%
 
@@ -75,11 +73,19 @@ stmt:
 
 class_stmt:
     CLASS IDENT '(' param_list ')' stmt_list END {
-	printf("class_stmt -> identifier ( param_list ) stmt_list\n");
-     }
+	    printf("class_stmt -> identifier ( param_list ) stmt_list\n");
+    }
+    |
+    CLASS IDENT '(' ')' stmt_list END {
+       printf("class_stmt -> identifier () stmt_list\n");
+    }
+    |
+    CLASS IDENT '(' ')' COLON IDENT stmt_list END {
+       printf("class_stmt -> NewClassStmt (no param) with inheritance\n");
+    }
     |
      CLASS IDENT '(' param_list ')' COLON IDENT stmt_list END {
-	printf("class_stmt -> NewClassStmt with inheritance\n");
+	     printf("class_stmt -> NewClassStmt (param) with inheritance\n");
      }
      ;
 
