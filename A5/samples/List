@@ -1,0 +1,14 @@
+Class list(init)
+       priv := init;
+       Cons := proc(x) return := cons(x, priv) end;
+       Car := proc() return := car(priv) end;
+       Cdr := proc() return :=cdr(priv) end
+end;
+
+       L := list([]);
+       a := L.Cons(3);
+       b := L.Cons(2);
+       c := L.Cons(1);
+       x := L.Car();
+       M := L.Cdr()
+
