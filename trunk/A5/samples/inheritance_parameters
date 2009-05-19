@@ -1,0 +1,55 @@
+Class list (x)
+
+    X := x;
+
+    getX := proc()
+        return := X
+    end
+
+end;
+
+q:=1;
+
+
+Class childlist (x) : list
+
+    getX := proc()
+        return := X + X
+    end;
+
+    setX:= proc(x)
+        X := x;
+        return := 0
+    end
+end;
+
+Class babylist(x) : childlist
+
+
+    setX := proc(x)
+        X:= x*x;
+        return := 0
+    end
+end;
+
+
+justL := list(99);
+
+L := childlist(12);
+ignore := L.setX(2);
+
+x := L.getX();
+
+
+Ltwo := childlist(24);
+ignore := Ltwo.setX(34);
+
+four := L.getX();
+
+sixtyEight := Ltwo.getX();
+ninetyNine := justL.getX();
+
+b := babylist(1);
+ignore := b.setX(100);
+
+twentyThousand := b.getX()

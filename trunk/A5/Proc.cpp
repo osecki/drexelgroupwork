@@ -27,6 +27,7 @@ Proc::~Proc() {
     delete SL_;
 }
 
+
 void Proc::setTheEnvironment(map<string, Element*> *NewNT) {
 	this->savedEnvironment = NewNT;
 }
@@ -38,6 +39,11 @@ Element* Proc::eval(map<string,Element*> &NT) const {
 
 string Proc::toString(map<string,Element*> NT) const {
 	return "** Function **";
+}
+
+
+map<string, Element*>* Proc::getTheEnvironment() {
+	return savedEnvironment;
 }
 
 // Changed environment table here and in function below
@@ -86,7 +92,18 @@ Element* Proc::apply(map<string,Element*> &NT, list<Expr*> *EL)
 	    
     SL_->eval(*evaluationEnvironment);
     
-    if(!STATIC) {
+    this->savedEnvironment = evaluationEnvironment;
+    
+    if(STATIC) {
+ 	   /**/
+ 	   for (map<string, Element*>::iterator p = evaluationEnvironment->begin(); p != evaluationEnvironment->end(); p++) {
+            if(NT.find(p->first) != NT.end() && p->second != NULL) {
+                // Copy only values changed that are in parent environment
+                NT[p->first] = p->second;
+            }
+            
+        }/**/
+    } else {
 		// Copy changes over to single environment
 	    for (map<string, Element*>::iterator p = evaluationEnvironment->begin(); p != evaluationEnvironment->end(); p++) {
 	    	if(p->first != RETURN) {

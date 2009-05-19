@@ -15,6 +15,7 @@ class FunCall : public Expr
 public:
     FunCall(string name, list<Expr*> *AL);
     FunCall(Expr* e, list<Expr*> *AL);
+    string getName();
     virtual ~FunCall();
     virtual Element* eval(map<string,Element*> &NT) const;
 private:

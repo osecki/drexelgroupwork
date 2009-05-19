@@ -25,6 +25,7 @@ FunCall::~FunCall() {
     }
 }
 
+
 // Changed environment table here
 Element* FunCall::eval(map<string,Element*> &NT) const
 {
@@ -43,13 +44,21 @@ Element* FunCall::eval(map<string,Element*> &NT) const
     else if(dynamic_cast<NewClass*>(element)) {
 
     	// check whether it is calling the constructor
-    	NewClass* newClass = dynamic_cast<NewClass*>(element);
+    	NewClass* newClass = (NewClass*)element;
     	if (this->name_ == newClass->getName()) {
+    		newClass->setTheEnvironment(new map<string,Element*>(NT));
     		return newClass->constructor(NT, AL_);
+    	} else {
+    		cout << "ERROR: No such class!" << endl;
+    		exit(1);
     	}
 
     } else {
     	cout << "ERROR: Tried to treat a non-function as a function" << endl;
     	exit(1);
     }
+}
+
+string FunCall::getName() {
+		return name_;
 }

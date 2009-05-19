@@ -18,6 +18,7 @@ void AssignStmt::eval(map<string,Element*> &NT) const
 	if (STATIC && dynamic_cast<Proc*>(E_)) {
 		// Now set the environment 
 		((Proc*)E_)->setTheEnvironment(&NT);
+		
 		// Update name table with this new Proc
 		NT[name_] = E_->eval(NT);
 	}
