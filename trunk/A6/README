@@ -1,0 +1,61 @@
+Assignment 6
+CS550 Programming Languages
+Spring 2009, 5/27/2009
+Team: (Group 7) Jordan Osecki, Geoff Oxholm and Alimore Reza
+Team Lead on this Assignment:  Alimore Reza and Jordan Osecki
+
+Implemented successfully is the following parts:
+
+-
+
+Notes:
+
+-
+
+Files Included:
+
+-makefile:  The makefile which can be used to compile and run everything
+-README:  This readme file with all required information
+-samples/*:  Input and output files from testing the program parts
+
+-Program.h/.cpp - Mini-compiler File
+-StmtList.h/.cpp - Mini-compiler File
+-Stmt.h - Mini-compiler File
+-AssignStmt.h/.cpp - Mini-compiler File
+-IfStmt.h/.cpp - Mini-compiler File
+-WhileStmt.h/.cpp - Mini-compiler File
+-Expr.h - Mini-compiler File
+-Plus.h/.cpp - Mini-compiler File
+-Times.h/.cpp - Mini-compiler File
+-Minus.h/.cpp - Mini-compiler File
+-Ident.h/.cpp - Mini-compiler File
+
+-interpreter.ypp - ML Interpreter ypp
+-interpreter.y - ML Interpreter y
+-lex.l - ML Interpreter lex
+
+Running the code:
+
+-To run the code, run make flex and parse. To compile it, type 'make compile'.
+To run it, use ./Compiler < input. There are some included files in samples/* 
+which tests our code for all cases, including the ones specifically asked to 
+test in "What to do". TODO
+
+How the code works:
+-The code works through changes in Bison, Funcall, and new classes. In
+Bison, it now allows regular class statements with or without parameres and
+with or without inheritance and allows for dot notaiton funcalls. In
+Funcall, if it is from inside a class, it is handled specially. New classes
+were made to handle class statement objects, class objects, and class
+function calls, respectively. TODO
+
+Testing:
+-Testing was done using the files in samples/*. They all test a bunch of
+class and inheritnace examples, and there is the officialInput file for everything
+asked for in the "What to do" section, along with officialInput_out for its
+output. They can all easily be tested by running "./runAll Compiler". 
+The test file will be printed out, followed by the resulting
+environment. Simply hit enter to go from file to file in samples/.
+-The official 'sample input' and 'sample output' provided is in
+officialInput and officialInput_out, respectively. TODO
+
