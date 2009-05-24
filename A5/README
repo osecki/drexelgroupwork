@@ -12,6 +12,22 @@ inheritance
 -Part 3: Made code to support classes, dot notation, and inheritance at eval
 time
 
+NOTES:
+-Our program doesn't work on the sample List program on the assignments
+page, for a few reasons. Our cons only returns the new result, does not
+change the second parameter. Johnson said this was okay. Our program also
+only lets dot notation statements be an expression, meaning the line
+"L.cons(x, L)" doesn't work, but Johnson said this was okay too. In our
+samples directory we included a version of the example on the site that
+works with our interpreter.
+-We are not 100% confident on how our environments are working. We used some
+ad hoc methods in A4 to get that to work and it was hard to mold them to
+work with this assignment. Although all of the examples we tried worked just
+fine, there may be instances of it where it doesn't work. If this is the
+case and/or you try an example that doesn't work, please let us know and we
+can explain how we did it to you, so you can judge the magnitude of the
+error, program and points -wise. Thanks.
+
 Files Included:
 
 -makefile:  The makefile which can be used to compile and run everything

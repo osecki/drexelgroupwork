@@ -1,5 +1,5 @@
 #!/bin/bash
-for file in samples/*;
+for file in ../A5/samples/*;
 do
     clear;
     echo "Running $file";
