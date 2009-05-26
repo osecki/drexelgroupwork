@@ -1,5 +1,6 @@
 #include <map>
 #include "AssignStmt.h"
+#include <vector>
 #include "Program.h"
 #include <iostream>
 using namespace std;
@@ -15,7 +16,7 @@ AssignStmt::AssignStmt(string name, Expr *E)
 	T[name_] = E_->eval(T);
 }*/
 
-void AssignStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const
+void AssignStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
 {
 		//  Look into constant table for Ident. If it is there get value from it, otherwise create new Ident and add to symbol table
 		map<string, SymbolDetails>::iterator location = symbolTable.find(name_);
@@ -27,7 +28,7 @@ void AssignStmt::translate(map<int, string> &constantValues, map<string, SymbolD
 		}
 
 		// Perform the necessary RAL instructions
-		cout << "LD	" << E_->translate(constantValues, symbolTable) << endl;
-		cout << "ST	" <<name_ << endl;
+		ralProgram.push_back("LD	" + E_->translate(constantValues, symbolTable, ralProgram));
+		ralProgram.push_back("ST	" + name_);
 }
 

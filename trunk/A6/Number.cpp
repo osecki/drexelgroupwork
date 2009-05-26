@@ -2,6 +2,7 @@
 #include <map>
 #include "Program.h"
 #include <sstream>
+#include <vector>
 #include <iostream>
 #define CONSTANT "CONSTANT_"
 using namespace std;
@@ -11,7 +12,7 @@ Number::Number(int value)
     value_ = value;
 }
 
-string Number::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const
+string Number::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
 {
 	// Look into constant table for the Number. If it is there get value, otherwise create new Number and add to symbol table
 	string newConstant;
@@ -34,7 +35,7 @@ string Number::translate(map<int, string> &constantValues, map<string, SymbolDet
 		symbolTable[newConstant] = newSymbolConst;
 	}
 
-	cout<<"LD	"<<newConstant<<endl;
+	ralProgram.push_back("LD	" + newConstant);
 
 	// create new temporary variable then Store the new ident there
 	string newTemp;
@@ -46,7 +47,7 @@ string Number::translate(map<int, string> &constantValues, map<string, SymbolDet
 	SymbolDetails newSymbolTemp(-1, "Temporary", -1);
 	symbolTable[newTemp] = newSymbolTemp;
 
-	cout<<"ST	"<<newTemp<<endl;
+	ralProgram.push_back("ST	" + newTemp);
 
 	return newTemp;
 }

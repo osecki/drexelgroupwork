@@ -2,6 +2,7 @@
 #include "Expr.h"
 #include "Number.h"
 #include <map>
+#include <vector>
 #include <iostream>
 #include <sstream>
 #include "Program.h"
@@ -13,15 +14,15 @@ Minus::Minus(Expr* op1, Expr* op2)
     op2_ = op2;
 }
 
-string Minus::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const
+string Minus::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
 {
 	  // Handle two operands
-		string temp1 = op1_->translate(constantValues, symbolTable);
-		string temp2 = op2_->translate(constantValues, symbolTable);
+		string temp1 = op1_->translate(constantValues, symbolTable, ralProgram);
+		string temp2 = op2_->translate(constantValues, symbolTable, ralProgram);
 		
     // Handle Load and operator
-		cout<<"LD "<<temp1<<endl;
-		cout<<"SUB  "<<temp2<<endl;
+		ralProgram.push_back("LD " + temp1);
+		ralProgram.push_back("SUB  " + temp2);
 		
 		// Handle Final Store and Temporary Variable Creation
 		Program P;
@@ -33,7 +34,7 @@ string Minus::translate(map<int, string> &constantValues, map<string, SymbolDeta
 		
 		SymbolDetails newSymbolTemp(-1, "Temporary", -1);
 		symbolTable[newTemp] = newSymbolTemp;
-		cout<<"ST "<<newTemp<<endl;
+		ralProgram.push_back("ST " + newTemp);
 		
 		return newTemp;
 }

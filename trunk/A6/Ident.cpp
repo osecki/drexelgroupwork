@@ -1,6 +1,7 @@
 #include "Ident.h"
 #include <map>
 #include "Program.h"
+#include <vector>
 #include <sstream>
 #include <iostream>
 using namespace std;
@@ -10,7 +11,7 @@ Ident::Ident(string name)
     name_ = name;
 }
 
-string Ident::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const
+string Ident::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
 {
 	// Look into constant table for Ident. If there, get value from it, otherwise create new Ident and add to the symbol table
 	map<string, SymbolDetails>::iterator location = symbolTable.find(name_);
@@ -21,7 +22,7 @@ string Ident::translate(map<int, string> &constantValues, map<string, SymbolDeta
 		symbolTable[name_] = newSymbolVar;
 	}
 
-	cout<<"LD	"<<name_<<endl;
+	ralProgram.push_back("LD	" + name_);
 
 	// Create new temporary variable then Store the new ident there
 	string newTemp;
@@ -34,7 +35,7 @@ string Ident::translate(map<int, string> &constantValues, map<string, SymbolDeta
 	SymbolDetails newSymbolTemp(-1, "Temporary", -1);
 	symbolTable[newTemp] = newSymbolTemp;
 
-	cout<<"ST	"<<newTemp<<endl;
+	ralProgram.push_back("ST	" + newTemp);
 
 	return newTemp;
 }

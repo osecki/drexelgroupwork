@@ -2,6 +2,7 @@
 #include "StmtList.h"
 #include "Expr.h"
 #include "Number.h"
+#include <vector>
 #include <map>
 #include "Program.h"
 #include <sstream>
@@ -15,11 +16,11 @@ IfStmt::IfStmt(Expr *E, StmtList *S1, StmtList *S2)
   S2_ = S2;
 }
 
-void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const
+void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
 {
 	// Handle Condition
-	string cond = E_->translate(constantValues, symbolTable);
-	cout<<"LD	" << cond << endl;
+	string cond = E_->translate(constantValues, symbolTable, ralProgram);
+	ralProgram.push_back("LD	" + cond);
 
 	// Handle First Jumps
 	Program p;
@@ -29,11 +30,11 @@ void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetai
 	newLabel1 = "L" + outLabel1.str();
 	p.labelCounter++;
 
-	cout<<"JMN	"<<newLabel1<<endl;
-	cout<<"JMZ	"<<newLabel1<<endl;
+	ralProgram.push_back("JMN	" + newLabel1);
+	ralProgram.push_back("JMZ	" + newLabel1);
 
 	// Handle Code Block 1
-	S1_->translate(constantValues, symbolTable);
+	S1_->translate(constantValues, symbolTable, ralProgram);
 
 	// Handle Second Jumps
 	string newLabel2;
@@ -42,13 +43,13 @@ void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetai
 	newLabel2 = "L" + outLabel2.str();
 	p.labelCounter++;
 
-	cout<<"JMP	"<<newLabel2<<endl;
+	ralProgram.push_back("JMP	" + newLabel2);
 
 	// Handle Code Block 2
-	cout<<newLabel1<<":";
-	S2_->translate(constantValues, symbolTable);
+	ralProgram.push_back(newLabel1 + ":");
+	S2_->translate(constantValues, symbolTable, ralProgram);
 
 	// Handle Last Label
-	cout<<newLabel2<<":";
+	ralProgram.push_back(newLabel2 + ":");
 }
 

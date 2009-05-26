@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 #include "Stmt.h"
 #include "Expr.h"
 using namespace std;
@@ -12,7 +13,7 @@ class AssignStmt: public Stmt
 public:
     AssignStmt(string name="", Expr *E=NULL);
     ~AssignStmt() {delete E_;};
-    void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const;
+    void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const;
 private:
     string name_;
     Expr* E_;
