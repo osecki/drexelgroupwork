@@ -13,41 +13,36 @@ WhileStmt::WhileStmt(Expr *E, StmtList *S)
   	S_ = S;
 }
 
-/*void WhileStmt::eval(map<string,int> &T) const
+void WhileStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const
 {
-	while (E_->eval(T) > 0) 
-		S_->eval(T);
-}*/
-
-void WhileStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const{
-
+  // Handle first label and condition
 	Program p;
 	string newLabel1;
 	stringstream outLabel1;
 	outLabel1 << p.labelCounter;
-
 	newLabel1 = "L" + outLabel1.str();
-
 	p.labelCounter++;
 	cout<<newLabel1<<":";
 
 	string temp = E_->translate(constantValues, symbolTable);
-
 	cout<<"LD	"<<temp<<endl;
 
+  // Handle the first jumps
 	string newLabel2;
 	stringstream outLabel2;
 	outLabel2 << p.labelCounter;
-
 	newLabel2 = "L" + outLabel2.str();
-
 	p.labelCounter++;
+
 	cout<<"JMN	"<<newLabel2<<endl;
 	cout<<"JMZ	"<<newLabel2<<endl;
 
+	// Handle the loop body
 	S_->translate(constantValues, symbolTable);
 
+	// Handle the second jumps
 	cout<<"JMP	"<<newLabel1<<endl;
 
+	// Handle last label
 	cout<<newLabel2<<":";
 }

@@ -10,7 +10,6 @@ class Ident : public Expr
 {
 public:
     Ident(string name = "");
-    //virtual int eval(map<string,int> T) const;
     virtual string translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const;
 private:
     string name_;

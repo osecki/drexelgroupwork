@@ -13,7 +13,6 @@ class IfStmt: public Stmt
 public:
     IfStmt(Expr *E, StmtList *S1, StmtList *S2);
     ~IfStmt() {delete E_;};
-    //void eval(map<string,int> &T) const;
     void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const;
 private:
     Expr* E_;

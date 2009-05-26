@@ -11,7 +11,6 @@ class Minus : public Expr
 public:
     Minus(Expr* op1 = NULL, Expr* op2 = NULL);
     virtual ~Minus() {delete op1_; delete op2_;};
-    //virtual int eval(map<string,int> T) const;
     virtual string translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const;
 private:
     Expr* op1_;
