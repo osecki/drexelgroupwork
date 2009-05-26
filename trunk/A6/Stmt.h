@@ -11,8 +11,7 @@ class Stmt
 public:
     Stmt() {};
     virtual ~Stmt() {};
-    //virtual void eval(map<string,int> &T) const = 0;
-    virtual void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const=0;
+    virtual void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const = 0;
 private:
 };
 

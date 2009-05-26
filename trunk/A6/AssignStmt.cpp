@@ -15,33 +15,19 @@ AssignStmt::AssignStmt(string name, Expr *E)
 	T[name_] = E_->eval(T);
 }*/
 
-void AssignStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const{
-
-		//  Look into the constant table for the Ident. If it is there
-		//  get the value from it otherwise create the new Ident and add to symbol table
-
+void AssignStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const
+{
+		//  Look into constant table for Ident. If it is there get value from it, otherwise create new Ident and add to symbol table
 		map<string, SymbolDetails>::iterator location = symbolTable.find(name_);
-
-		if ( location!=symbolTable.end() ) {
-			// already there nothing to do
-			//cout<<"found in the symbol table"<<endl;
-		} else
+		if ( location == symbolTable.end() )
 		{
-			// create new and add to the symbol table
-			SymbolDetails newSymbolVar(-1,"Variable",-1);
-
-			//cout<<"Not in the symbol table creating new variable "<<name_<<endl;
-			symbolTable[name_] = newSymbolVar;
+			// Create new and add to the symbol table
+			SymbolDetails tempDetails (-1, "Variable", -1);
+			symbolTable[name_] = tempDetails;
 		}
 
-		// load the temporary variable found from the translating the expression
-
-		string temp = E_->translate(constantValues, symbolTable);
-
-		cout<<"LD	"<<temp<<endl;
-
-		// now store it into the variable
-		cout<<"ST	"<<name_<<endl;
-
+		// Perform the necessary RAL instructions
+		cout << "LD	" << E_->translate(constantValues, symbolTable) << endl;
+		cout << "ST	" <<name_ << endl;
 }
 
