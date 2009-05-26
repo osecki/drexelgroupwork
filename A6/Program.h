@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 #include "StmtList.h"
 using namespace std;
 
@@ -19,12 +20,11 @@ public:
     static int constantCounter;
     static int temporaryVarCounter;
     static int labelCounter;
-
 private:
     StmtList *SL_;
-    //map<string, int> SymbolTable_;
     map<int, string> constantValues;
     map<string, SymbolDetails> symbolTable;
+    vector<string> ralProgram;
 };
 
 #endif
