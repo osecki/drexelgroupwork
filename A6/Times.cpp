@@ -22,7 +22,7 @@ string Times::translate(map<int, string> &constantValues, map<string, SymbolDeta
 		
 		// Handle Load and operator
 		ralProgram.push_back("LD " + temp1);
-		ralProgram.push_back("MUL  " + temp2);
+		ralProgram.push_back("MUL " + temp2);
 		
 		// Handle Final Store and Temporary Variable Creation
 		Program P;

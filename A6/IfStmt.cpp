@@ -20,7 +20,7 @@ void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetai
 {
 	// Handle Condition
 	string cond = E_->translate(constantValues, symbolTable, ralProgram);
-	ralProgram.push_back("LD	" + cond);
+	ralProgram.push_back("LD " + cond);
 
 	// Handle First Jumps
 	Program p;
@@ -30,8 +30,8 @@ void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetai
 	newLabel1 = "L" + outLabel1.str();
 	p.labelCounter++;
 
-	ralProgram.push_back("JMN	" + newLabel1);
-	ralProgram.push_back("JMZ	" + newLabel1);
+	ralProgram.push_back("JMN " + newLabel1);
+	ralProgram.push_back("JMZ " + newLabel1);
 
 	// Handle Code Block 1
 	S1_->translate(constantValues, symbolTable, ralProgram);
@@ -43,7 +43,7 @@ void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetai
 	newLabel2 = "L" + outLabel2.str();
 	p.labelCounter++;
 
-	ralProgram.push_back("JMP	" + newLabel2);
+	ralProgram.push_back("JMP " + newLabel2);
 
 	// Handle Code Block 2
 	ralProgram.push_back(newLabel1 + ":");
