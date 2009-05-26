@@ -13,7 +13,7 @@ WhileStmt::WhileStmt(Expr *E, StmtList *S)
   	S_ = S;
 }
 
-void WhileStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const
+void WhileStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
 {
   // Handle first label and condition
 	Program p;
@@ -21,11 +21,10 @@ void WhileStmt::translate(map<int, string> &constantValues, map<string, SymbolDe
 	stringstream outLabel1;
 	outLabel1 << p.labelCounter;
 	newLabel1 = "L" + outLabel1.str();
-	p.labelCounter++;
-	cout<<newLabel1<<":";
+	p.labelCounter++;;
 
-	string temp = E_->translate(constantValues, symbolTable);
-	cout<<"LD	"<<temp<<endl;
+	string temp = E_->translate(constantValues, symbolTable, ralProgram);
+	ralProgram.push_back(newLabel1 + ":LD	" + temp);
 
   // Handle the first jumps
 	string newLabel2;
@@ -34,15 +33,15 @@ void WhileStmt::translate(map<int, string> &constantValues, map<string, SymbolDe
 	newLabel2 = "L" + outLabel2.str();
 	p.labelCounter++;
 
-	cout<<"JMN	"<<newLabel2<<endl;
-	cout<<"JMZ	"<<newLabel2<<endl;
+	ralProgram.push_back("JMN	" + newLabel2);
+	ralProgram.push_back("JMZ	" + newLabel2);
 
 	// Handle the loop body
-	S_->translate(constantValues, symbolTable);
+	S_->translate(constantValues, symbolTable, ralProgram);
 
 	// Handle the second jumps
-	cout<<"JMP	"<<newLabel1<<endl;
+	ralProgram.push_back("JMP	" + newLabel1);
 
 	// Handle last label
-	cout<<newLabel2<<":";
+	ralProgram.push_back(newLabel2 + ":");
 }
