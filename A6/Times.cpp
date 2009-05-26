@@ -13,3 +13,4 @@ int Times::eval(map<string,int> T) const
 {
 	return op1_->eval(T) * op2_->eval(T);
 }
+

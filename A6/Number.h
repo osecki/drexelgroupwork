@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include "Expr.h"
 
 class Number : public Expr
 {
