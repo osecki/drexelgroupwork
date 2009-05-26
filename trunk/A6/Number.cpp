@@ -4,7 +4,7 @@
 #include <sstream>
 #include <vector>
 #include <iostream>
-#define CONSTANT "CONSTANT_"
+#define CONSTANT "C"
 using namespace std;
 
 Number::Number(int value)
@@ -35,7 +35,7 @@ string Number::translate(map<int, string> &constantValues, map<string, SymbolDet
 		symbolTable[newConstant] = newSymbolConst;
 	}
 
-	ralProgram.push_back("LD	" + newConstant);
+	ralProgram.push_back("LD " + newConstant);
 
 	// create new temporary variable then Store the new ident there
 	string newTemp;
@@ -47,7 +47,7 @@ string Number::translate(map<int, string> &constantValues, map<string, SymbolDet
 	SymbolDetails newSymbolTemp(-1, "Temporary", -1);
 	symbolTable[newTemp] = newSymbolTemp;
 
-	ralProgram.push_back("ST	" + newTemp);
+	ralProgram.push_back("ST " + newTemp);
 
 	return newTemp;
 }

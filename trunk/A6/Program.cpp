@@ -1,6 +1,7 @@
 #include <map>
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 #include <vector>
 #include "Program.h"
 
@@ -44,6 +45,13 @@ void Program::dump()
   for (int i=0; i< ralProgram.size(); i++)
 	     cout << ralProgram[i] << endl;
 
+	ofstream myfile;
+	myfile.open ("output.txt");
+
+	for (int i=0; i< ralProgram.size(); i++)
+		myfile << ralProgram[i] << endl;
+	
+	myfile.close();
 }
 
 void Program::translate()

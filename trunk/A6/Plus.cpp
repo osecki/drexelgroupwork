@@ -21,8 +21,8 @@ string Plus::translate(map<int, string> &constantValues, map<string, SymbolDetai
 	string temp2 = op2_->translate(constantValues, symbolTable, ralProgram);
 
 	// Handle Load and operator
-	ralProgram.push_back("LD	" + temp1);
-	ralProgram.push_back("ADD	" + temp2);
+	ralProgram.push_back("LD " + temp1);
+	ralProgram.push_back("ADD " + temp2);
 
 	// Handle Final Store and Temporary Variable Creation
 	Program P;
@@ -34,7 +34,7 @@ string Plus::translate(map<int, string> &constantValues, map<string, SymbolDetai
 
 	SymbolDetails newSymbolTemp(-1, "Temporary", -1);
 	symbolTable[newTemp] = newSymbolTemp;
-	ralProgram.push_back("ST	" + newTemp);
+	ralProgram.push_back("ST " + newTemp);
 
 	return newTemp;
 }
