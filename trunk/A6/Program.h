@@ -10,7 +10,8 @@ class Program
 {
 public:
     Program(StmtList *SL);
-    ~Program() {delete SL_; };
+    Program(){};
+		//~Program() {delete SL_; };
     void dump();
     //void eval();
     void translate();

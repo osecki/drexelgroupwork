@@ -2,6 +2,10 @@
 #include "Expr.h"
 #include "Number.h"
 #include <map>
+#include <sstream>
+#include "Program.h"
+#include <iostream>
+using namespace std;
 
 Plus::Plus(Expr* op1, Expr* op2)
 {
