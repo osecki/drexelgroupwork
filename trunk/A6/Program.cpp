@@ -60,4 +60,18 @@ void Program::translate()
 	
 	// Add the HALT here, program has ended
 	ralProgram.push_back("HLT");
+
+	// Make sure no labels are on a line of their own
+	for ( int i = 0; i < ralProgram.size(); i++ )
+	{
+		if ( ralProgram[i].find(":") == ralProgram[i].length() - 1)
+		{
+			// Combine elements
+			ralProgram[i] = ralProgram[i] + ralProgram[i+1];
+			
+			// Delete second one
+			vector<string>::iterator temp = ralProgram.begin() + i;
+			ralProgram.erase(temp + 1, temp + 2);
+		}
+	}
 }
