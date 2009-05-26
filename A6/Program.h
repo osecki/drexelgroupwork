@@ -12,11 +12,18 @@ public:
     Program(StmtList *SL);
     ~Program() {delete SL_; };
     void dump();
-    void eval();
+    //void eval();
+    void translate();
+
+    static int constantCounter;
+    static int temporaryVarCounter;
+    static int labelCounter;
 
 private:
     StmtList *SL_;
-    map<string, int> SymbolTable_;
+    //map<string, int> SymbolTable_;
+    map<int, string> constantValues;
+    map<string, SymbolDetails> symbolTable;
 };
 
 #endif
