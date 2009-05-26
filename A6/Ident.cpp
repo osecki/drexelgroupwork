@@ -46,3 +46,4 @@ string Ident::translate(map<int, string> &constantValues, map<string, SymbolDeta
 
 	return newTemp;
 }
+

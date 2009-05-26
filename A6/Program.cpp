@@ -19,18 +19,17 @@ Program::Program(StmtList *SL)
 void Program::dump()
 {
 	cout << endl << endl;
-	cout << setw(20) << right << "Symbol" << " | " << left << "Value" << endl;
+	cout << setw(20) << right << "Symbol" << " | " << left << "Value" << right << "Type" << left << "Address" << endl;
 	cout << setfill('-') << setw(22) << right << "+" << setw(20) << "-" << setfill(' ') << endl;
 
     //for (map<string,int>::iterator p = SymbolTable_.begin(); p != SymbolTable_.end(); p++) {
     //    cout << setw(20) << right << p->first << " | " << left << p->second << endl;
     //}
 
-
-	cout<<"symbol table	"<<endl;
+	cout<<"Symbol Table	"<<endl;
 	cout<<"------------"<<endl;
 	for (map<string, SymbolDetails>::iterator sti = symbolTable.begin(); sti!=symbolTable.end(); sti++) {
-		cout<<(*sti).first<<"	"<<(*sti).second.type_<<endl;
+		cout<<(*sti).first<<"	"<<(*sti).second.getValue() << (*sti).second.getType() << (*sti).second.getAddress() << endl;
 	}
 
 	cout<<"constant table"<<endl;
@@ -48,4 +47,7 @@ void Program::dump()
 void Program::translate() {
 
 	SL_->translate(constantValues, symbolTable);
+	
+	// Add the HALT here, program has ended
+	cout << "HLT";
 }

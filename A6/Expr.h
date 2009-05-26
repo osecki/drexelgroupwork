@@ -3,7 +3,7 @@
 
 #include <map>
 #include <string>
-#include "SymbolDetails.h";
+#include "SymbolDetails.h"
 using namespace std;
 
 class Expr

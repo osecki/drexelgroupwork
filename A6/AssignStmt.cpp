@@ -44,3 +44,4 @@ void AssignStmt::translate(map<int, string> &constantValues, map<string, SymbolD
 		cout<<"ST	"<<name_<<endl;
 
 }
+

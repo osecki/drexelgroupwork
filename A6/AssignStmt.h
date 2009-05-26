@@ -13,7 +13,7 @@ public:
     AssignStmt(string name="", Expr *E=NULL);
     ~AssignStmt() {delete E_;};
     //void eval(map<string,int> &T) const;
-    void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable)
+    void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable) const;
 private:
     string name_;
     Expr* E_;

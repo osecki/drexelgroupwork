@@ -1,5 +1,10 @@
 #include "Number.h"
 #include <map>
+#include "Program.h"
+#include <sstream>
+#include <iostream>
+#define CONSTANT "CONSTANT_"
+using namespace std;
 
 Number::Number(int value)
 {

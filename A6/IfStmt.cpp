@@ -59,3 +59,4 @@ void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetai
 
 	cout<<newLabel2<<":";
 }
+

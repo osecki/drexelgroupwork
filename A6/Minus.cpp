@@ -2,6 +2,10 @@
 #include "Expr.h"
 #include "Number.h"
 #include <map>
+#include <iostream>
+#include <sstream>
+#include "Program.h"
+using namespace std;
 
 Minus::Minus(Expr* op1, Expr* op2)
 {
@@ -39,3 +43,4 @@ string Minus::translate(map<int, string> &constantValues, map<string, SymbolDeta
 
 	return newTemp;
 }
+
