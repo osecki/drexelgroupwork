@@ -11,7 +11,7 @@ class Stmt
 public:
     Stmt() {};
     virtual ~Stmt() {};
-    virtual void eval(map<string,int> T) const;
+    virtual void eval(map<string,int> &T) const = 0;
 private:
 };
 

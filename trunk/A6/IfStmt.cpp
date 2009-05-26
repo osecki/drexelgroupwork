@@ -11,12 +11,10 @@ IfStmt::IfStmt(Expr *E, StmtList *S1, StmtList *S2)
   S2_ = S2;
 }
 
-IfStmt::~IfStmt() { delete E_; delete S1_; delete S2_; }
-
-void IfStmt::eval(map<string,int> &NT) const
+void IfStmt::eval(map<string,int> &T) const
 {
-	if (E_->eval(NT) > 0)
-		S1_->eval(NT);
+	if (E_->eval(T) > 0)
+		S1_->eval(T);
 	else
-		S2_->eval(NT);
+		S2_->eval(T);
 }

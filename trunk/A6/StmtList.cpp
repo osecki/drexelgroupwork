@@ -10,8 +10,8 @@ void StmtList::insert(Stmt * S)
  	SL_.push_front(S);
 }
 
-void StmtList::eval(map<string,int> &NT) {
+void StmtList::eval(map<string,int> &T) {
   	for (list<Stmt*>::iterator Sp = SL_.begin(); Sp != SL_.end(); Sp++) {
-    	(*Sp)->eval(NT);
+    	(*Sp)->eval(T);
 	}
 }

@@ -9,8 +9,8 @@ WhileStmt::WhileStmt(Expr *E, StmtList *S)
   	S_ = S;
 }
 
-void WhileStmt::eval(map<string,int> &NT) const
+void WhileStmt::eval(map<string,int> &T) const
 {
-	while (E_->eval(NT) > 0) 
-		S_->eval(NT);
+	while (E_->eval(T) > 0) 
+		S_->eval(T);
 }

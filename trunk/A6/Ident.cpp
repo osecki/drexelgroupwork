@@ -6,7 +6,7 @@ Ident::Ident(string name)
     name_ = name;
 }
 
-int Ident::eval(map<string,int> NT) const
+int Ident::eval(map<string,int> T) const
 {	
-	return NT[name_];
+	return T[name_];
 }

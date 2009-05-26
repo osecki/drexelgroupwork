@@ -7,8 +7,7 @@ AssignStmt::AssignStmt(string name, Expr *E)
 	E_ = E;
 }
 
-void AssignStmt::eval(map<string,int> &NT) const
+void AssignStmt::eval(map<string,int> &T) const
 {
-	// Change name table
-	NT[name_] = E_->eval(NT);
+	T[name_] = E_->eval(T);
 }

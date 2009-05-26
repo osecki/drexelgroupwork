@@ -16,7 +16,7 @@ public:
 
 private:
     StmtList *SL_;
-    map<string, Element*> NameTable_;
+    map<string, int> SymbolTable_;
 };
 
 #endif
