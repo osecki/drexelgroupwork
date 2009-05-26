@@ -71,8 +71,8 @@ Program *P;
 program:
     stmt_list {
         P = new Program($1);
-        P->eval();
-        P->dump();
+        P->translate();
+        //P->dump();
     }
     ;
 

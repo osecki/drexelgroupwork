@@ -12,7 +12,8 @@ class AssignStmt: public Stmt
 public:
     AssignStmt(string name="", Expr *E=NULL);
     ~AssignStmt() {delete E_;};
-    void eval(map<string,int> &T) const;
+    //void eval(map<string,int> &T) const;
+    void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable)
 private:
     string name_;
     Expr* E_;

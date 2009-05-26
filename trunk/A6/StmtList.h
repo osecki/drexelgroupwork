@@ -11,7 +11,8 @@ class StmtList
 {
 public:
     StmtList() {};
-    void eval(map<string,int> &T);
+    //void eval(map<string,int> &T);
+    void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable);
     void insert(Stmt *T);
 private:
     list<Stmt*> SL_;
