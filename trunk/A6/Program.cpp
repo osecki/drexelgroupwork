@@ -1,6 +1,7 @@
 #include <map>
 #include <iostream>
 #include <iomanip>
+#include <vector>
 #include "Program.h"
 
 int Program::constantCounter = 1;
@@ -37,17 +38,18 @@ void Program::dump()
 	for (map<int, string>::iterator cti = constantValues.begin(); cti!=constantValues.end(); cti++) {
 		cout<<(*cti).first<<"	"<<(*cti).second<<endl;
 	}
+
+	cout << "PRINTING OUT VECTOR:" << endl;
+
+  for (int i=0; i< ralProgram.size(); i++)
+	     cout << ralProgram[i] << endl;
+
 }
 
-/*void Program::eval()
+void Program::translate()
 {
-    SL_->eval(SymbolTable_);
-}*/
-
-void Program::translate() {
-
-	SL_->translate(constantValues, symbolTable);
+	SL_->translate(constantValues, symbolTable, ralProgram);
 	
 	// Add the HALT here, program has ended
-	cout << "HLT";
+	ralProgram.push_back("HLT");
 }
