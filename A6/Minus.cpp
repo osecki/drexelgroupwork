@@ -16,14 +16,25 @@ Minus::Minus(Expr* op1, Expr* op2)
 
 string Minus::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
 {
-	  // Handle two operands
-		string temp1 = op1_->translate(constantValues, symbolTable, ralProgram);
-		string temp2 = op2_->translate(constantValues, symbolTable, ralProgram);
-		
-    // Handle Load and operator
-		ralProgram.push_back("LD " + temp1);
-		ralProgram.push_back("SUB " + temp2);
-		
+	  // Handle two operands and the Load and operator
+	  string temp1, temp2;
+	  if ( OPTIMIZE)
+	  {
+			  temp1 = op2_->translate(constantValues, symbolTable, ralProgram);
+			  temp2 = op1_->translate(constantValues, symbolTable, ralProgram);
+
+				ralProgram.push_back("LD " + temp2);
+				ralProgram.push_back("SUB " + temp1);
+		}
+    else
+	  {
+		    temp1 = op1_->translate(constantValues, symbolTable, ralProgram);
+			  temp2 = op2_->translate(constantValues, symbolTable, ralProgram);
+
+				ralProgram.push_back("LD " + temp1);
+				ralProgram.push_back("SUB " + temp2);
+		}
+
 		// Handle Final Store and Temporary Variable Creation
 		Program P;
 		string newTemp;
