@@ -16,6 +16,10 @@ public:
     void dump();
     //void eval();
     void translate();
+		void optimize();
+		void fixLabels();
+		void link();
+		void compile();
 
     static int constantCounter;
     static int temporaryVarCounter;
