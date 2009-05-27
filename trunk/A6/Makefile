@@ -5,9 +5,13 @@ parse: *.ypp *.y
 	bison *.ypp
 	bison -d *.y
 
+compileOptimize: lex.yy.c interpreter.tab.cpp
+	gcc -c lex.yy.c
+	g++-4.2 -g *.cpp lex.yy.o -DOPTIMIZE=true -o CompilerOptimize
+
 compile: lex.yy.c interpreter.tab.cpp
 	gcc -c lex.yy.c
-	g++-4.2 -g *.cpp lex.yy.o -o Compiler
+	g++-4.2 -g *.cpp lex.yy.o -DOPTIMIZE=false -o Compiler
 
 parserOnly: lex.yy.c
 	bison -d *.y
