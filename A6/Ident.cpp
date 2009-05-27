@@ -22,7 +22,7 @@ string Ident::translate(map<int, string> &constantValues, map<string, SymbolDeta
 		symbolTable[name_] = newSymbolVar;
 	}
 
-	ralProgram.push_back("LD " + name_);
+	ralProgram.push_back("LDA " + name_);
 
 	// Create new temporary variable then Store the new ident there
 	string newTemp;
@@ -35,7 +35,7 @@ string Ident::translate(map<int, string> &constantValues, map<string, SymbolDeta
 	SymbolDetails newSymbolTemp(-1, "Temporary", -1);
 	symbolTable[newTemp] = newSymbolTemp;
 
-	ralProgram.push_back("ST " + newTemp);
+	ralProgram.push_back("STA " + newTemp);
 
 	return newTemp;
 }

@@ -23,7 +23,7 @@ string Times::translate(map<int, string> &constantValues, map<string, SymbolDeta
 			  string temp1 = op2_->translate(constantValues, symbolTable, ralProgram);
 				string temp2 = op1_->translate(constantValues, symbolTable, ralProgram);
 	  
-				ralProgram.push_back("LD " + temp2);
+				ralProgram.push_back("LDA " + temp2);
 				ralProgram.push_back("MUL " + temp1);
 		}
 	  else
@@ -31,7 +31,7 @@ string Times::translate(map<int, string> &constantValues, map<string, SymbolDeta
 			  string temp1 = op1_->translate(constantValues, symbolTable, ralProgram);
 				string temp2 = op2_->translate(constantValues, symbolTable, ralProgram);
 		
-			 ralProgram.push_back("LD " + temp1);
+			 ralProgram.push_back("LDA " + temp1);
 			 ralProgram.push_back("MUL " + temp2);
 		} 	
 
@@ -45,7 +45,7 @@ string Times::translate(map<int, string> &constantValues, map<string, SymbolDeta
 
 		SymbolDetails newSymbolTemp(-1, "Temporary", -1);
 		symbolTable[newTemp] = newSymbolTemp;
-		ralProgram.push_back("ST " + newTemp);
+		ralProgram.push_back("STA " + newTemp);
 
 		return newTemp;
 }
