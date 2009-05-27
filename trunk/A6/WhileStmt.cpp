@@ -23,8 +23,9 @@ void WhileStmt::translate(map<int, string> &constantValues, map<string, SymbolDe
 	newLabel1 = "L" + outLabel1.str();
 	p.labelCounter++;;
 
+	ralProgram.push_back(newLabel1 + ":");
 	string temp = E_->translate(constantValues, symbolTable, ralProgram);
-	ralProgram.push_back(newLabel1 + ":LD " + temp);
+	ralProgram.push_back("LD " + temp);
 
   // Handle the first jumps
 	string newLabel2;

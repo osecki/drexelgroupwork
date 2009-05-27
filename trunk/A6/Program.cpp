@@ -60,18 +60,60 @@ void Program::translate()
 	
 	// Add the HALT here, program has ended
 	ralProgram.push_back("HLT");
+}
 
+void Program::fixLabels()
+{
 	// Make sure no labels are on a line of their own
 	for ( int i = 0; i < ralProgram.size(); i++ )
 	{
+		cout << "HERE" << endl;
 		if ( ralProgram[i].find(":") == ralProgram[i].length() - 1)
 		{
+			cout << "here"<< endl;
 			// Combine elements
 			ralProgram[i] = ralProgram[i] + ralProgram[i+1];
-			
+
 			// Delete second one
 			vector<string>::iterator temp = ralProgram.begin() + i;
 			ralProgram.erase(temp + 1, temp + 2);
 		}
 	}
 }
+
+void Program::optimize()
+{
+	// Iterate through, looking for Store followed by Load with same variable.
+	// If this is found, Delete the load
+	for ( int i = 0; i < ralProgram.size() - 1; i++ )
+	{
+		//cout << ralProgram[i].find("ST") << "-" << ralProgram[i+1].find("LD") << "-" << (ralProgram[i].substr(3)).compare(ralProgram[i+1].substr(3)) << endl;
+		if ( ralProgram[i].find("ST") == 0 && ralProgram[i+1].find("LD") == 0 &&
+				 (ralProgram[i].substr(3)).compare(ralProgram[i+1].substr(3)) == 0 )
+		{
+			// Delete the Load
+			vector<string>::iterator temp = ralProgram.begin() + i;
+			ralProgram.erase(temp + 1, temp + 2);
+		}
+	}
+}
+
+void Program::link()
+{
+	// TODO
+}
+
+void Program::compile()
+{
+	translate();
+
+	if (OPTIMIZE)
+	{
+		optimize();
+	}
+
+	fixLabels();
+
+	link();
+}
+
