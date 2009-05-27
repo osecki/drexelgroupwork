@@ -28,7 +28,7 @@ void AssignStmt::translate(map<int, string> &constantValues, map<string, SymbolD
 		}
 
 		// Perform the necessary RAL instructions
-		ralProgram.push_back("LD " + E_->translate(constantValues, symbolTable, ralProgram));
-		ralProgram.push_back("ST " + name_);
+		ralProgram.push_back("LDA " + E_->translate(constantValues, symbolTable, ralProgram));
+		ralProgram.push_back("STA " + name_);
 }
 

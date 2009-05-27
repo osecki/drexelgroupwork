@@ -20,7 +20,7 @@ void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetai
 {
 	// Handle Condition
 	string cond = E_->translate(constantValues, symbolTable, ralProgram);
-	ralProgram.push_back("LD " + cond);
+	ralProgram.push_back("LDA " + cond);
 
 	// Handle First Jumps
 	Program p;

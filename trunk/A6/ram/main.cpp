@@ -8,7 +8,7 @@
 #include "inst.h"
 using namespace std;
 
-void main()
+int main()
 {
 	int pSize, mSize;
 	char pName[80], mName[80];
@@ -35,4 +35,6 @@ void main()
 
 	cout << endl << "Final Memory Configuration" << endl;
 	M.dump();
+
+	return 0;
 }

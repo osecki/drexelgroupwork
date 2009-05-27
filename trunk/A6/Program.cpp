@@ -106,7 +106,7 @@ void Program::optimize()
 	// If this is found, Delete the load
 	for ( int i = 0; i < ralProgram.size() - 1; i++ )
 	{
-		if ( ralProgram[i].find("ST") == 0 && ralProgram[i+1].find("LD") == 0 &&
+		if ( ralProgram[i].find("STA") == 0 && ralProgram[i+1].find("LDA") == 0 &&
 				 (ralProgram[i].substr(3)).compare(ralProgram[i+1].substr(3)) == 0 )
 		{
 			// Delete the Load
