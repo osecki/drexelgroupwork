@@ -28,7 +28,7 @@ void Program::dump()
 	}
 
   cout << endl;
-	cout << "Program below and in prog.txt:" << endl;
+	cout << "Program below:" << endl;
 	cout << endl;
 
   for (int i=0; i< ralProgram.size(); i++)
@@ -41,14 +41,35 @@ void Program::dump()
 	progFile.close();
 
 	cout << endl;
+	cout << "Program file created in prog.txt:" << endl;
 	cout << "Memory file created in mem.txt" << endl;
 
 	ofstream memFile;
 	memFile.open ("mem.txt");
 	
-	for (map<string, SymbolDetails>::iterator j = symbolTable.begin(); j != symbolTable.end(); j++) {
-		memFile << (*j).second.getAddress() << "  " << (*j).second.getValue() << endl;
-	}	
+	// Output Constants to file
+	for (map<string, SymbolDetails>::iterator a = symbolTable.begin(); a != symbolTable.end(); a++) {
+		    if ( ((*a).second.getType()).compare("Constant") == 0 )
+				{
+					memFile << (*a).second.getAddress() << "  " << (*a).second.getValue() << endl;
+				}
+	}
+
+	// Output Variables to file
+	for (map<string, SymbolDetails>::iterator b = symbolTable.begin(); b != symbolTable.end(); b++) {
+		  if ( ((*b).second.getType()).compare("Variable") == 0 )
+			{
+				memFile << (*b).second.getAddress() << "  " << (*b).second.getValue() << endl;
+			} 
+	}
+
+	// Output Temporaries to file
+	for (map<string, SymbolDetails>::iterator c = symbolTable.begin(); c != symbolTable.end(); c++) {
+	  if ( ((*c).second.getType()).compare("Temporary") == 0 )
+		{
+			memFile << (*c).second.getAddress() << "  " << (*c).second.getValue() << endl;
+		} 
+	}
 
 	memFile.close();
 
