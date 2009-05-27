@@ -2,15 +2,31 @@ Assignment 6
 CS550 Programming Languages
 Spring 2009, 5/27/2009
 Team: (Group 7) Jordan Osecki, Geoff Oxholm and Alimore Reza
-Team Lead on this Assignment:  Alimore Reza and Jordan Osecki
+Team Lead on this Assignment:  Osecki and Reza
 
-Implemented successfully is the following parts:
-
--
+Implemented successfully are the following parts:
+-Part 1:  Extended RAM to have MUL and JMN
+-Part 2:  Provided translate() method to build up a vector of RAL
+instructions
+-Part 3:  Provided optimize() method to optimize the vector
+-Part 4:  Modified the symbol table accordingly
+-Part 5:  Provided link() method to convert to absolute RAL
+-Part 6:  Provided compile() method
+-Part 7:  Dump program and memory configuration to files for RAM simulation
+use
 
 Notes:
-
--
+-For peephole optimization, our program will switch the order in which
+math computations are done. They are purposely computed backwards in
+optimization mode in order to line up an extra "ST X, LD X" situation. Then
+the ST-LD situations are taken care of, with the LD instruction being
+deleted.
+-One issue is our symbol table is in a map, which doesn't order correctly,
+so the temporary variable addresses aren't the same if there are more than 9
+temporaries (it orders 1, 10, 11, ..., 2, 21, ..., etc.)
+-There seemed to mistakenly be a missing LD in the example slide
+-Our optimize flag is set up through the makefile, similar to how our static
+and dynamic option was.
 
 Files Included:
 
@@ -30,32 +46,38 @@ Files Included:
 -Minus.h/.cpp - Mini-compiler File
 -Ident.h/.cpp - Mini-compiler File
 
+-SymbolDetails.h/.cpp - Has data structure for new symbol table
+
 -interpreter.ypp - ML Interpreter ypp
 -interpreter.y - ML Interpreter y
 -lex.l - ML Interpreter lex
 
 Running the code:
 
--To run the code, run make flex and parse. To compile it, type 'make compile'.
-To run it, use ./Compiler < input. There are some included files in samples/* 
-which tests our code for all cases, including the ones specifically asked to 
-test in "What to do". TODO
+-To run the code, run make flex and parse. To compile it with any
+optimizations, type 'make compile'. For optimizations, type 'make
+compileOptimize'. To run it without optimizations, use ./Compiler < input.
+To run it with optimizations, use ./CompilerOptimize < input. It will print
+output, but it will create a file "prog.txt" and "mem.txt" to run in the RAM
+simulator. To run that, compile it and run the main. It will ask for program
+and memory size, followed by file paths.
+-The example from the slide is included in samples/*. Prog.txt will have 57
+lines unoptimized, 44 optimized. There are 22 instructions. When you run it
+in RAM, you will see fact = 120, n = -5, and i = 0. Samples/ contains the
+prog.txt and mem.txt for this example optimized and unoptimized.
 
 How the code works:
--The code works through changes in Bison, Funcall, and new classes. In
-Bison, it now allows regular class statements with or without parameres and
-with or without inheritance and allows for dot notaiton funcalls. In
-Funcall, if it is from inside a class, it is handled specially. New classes
-were made to handle class statement objects, class objects, and class
-function calls, respectively. TODO
+-The code works through starting with the code from Lecture 2b and then
+making a translate() method just lik eval(), which builds a vector and edits
+a new symbol table. After it is over, optimize works as described in
+"Notes", changing the vector. Then addresses for the symbols and labels are
+calculated, and substituted into the list. Then the two files are created.
 
 Testing:
 -Testing was done using the files in samples/*. They all test a bunch of
-class and inheritnace examples, and there is the officialInput file for everything
-asked for in the "What to do" section, along with officialInput_out for its
-output. They can all easily be tested by running "./runAll Compiler". 
-The test file will be printed out, followed by the resulting
-environment. Simply hit enter to go from file to file in samples/.
+programs being converted, and there is the slideExample* files for everything
+asked for the example from the slides, along with its prog.txt and mem.txt for its
+output.
 -The official 'sample input' and 'sample output' provided is in
-officialInput and officialInput_out, respectively. TODO
+slideExample and all of the prog/mem.txt's, respectively.
 

@@ -18,4 +18,4 @@ parserOnly: lex.yy.c
 	gcc-4.2 -g *.c -ly -lfl -o Parser
 
 clean:
-	rm -f lex.yy.c lex.yy.o *.tab.* Compiler Parser
+	rm -f lex.yy.c lex.yy.o *.tab.* Compiler Parser CompilerOptimize
