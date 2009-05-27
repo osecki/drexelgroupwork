@@ -3,13 +3,14 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstdlib>
 #include "ram.h"
 #include "inst.h"
 using namespace std;
 
 // Constructors
 
-RAM::RAM() { 
+RAM::RAM() {
 	const int DEFMEMSIZE = 100;
 	const int DEFPROGSIZE = 50;
 	memorySize = DEFMEMSIZE;
@@ -104,11 +105,11 @@ void RAM::init(const char *pInput, const char *mInput) {
 			pFile.getline(str,MAXSTRSIZE); } // flush to end of line
 		else if (instName == "LDA") {
 			program[pc].opcode = LDA;
-			pFile >> program[pc].operand; 
-			pFile.getline(str,MAXSTRSIZE);  pc++; } 
+			pFile >> program[pc].operand;
+			pFile.getline(str,MAXSTRSIZE);  pc++; }
 		else if (instName == "LDI") {
 			program[pc].opcode = LDI;
-			pFile >> program[pc].operand; 
+			pFile >> program[pc].operand;
 			pFile.getline(str,MAXSTRSIZE);  pc++; }
 		else if (instName == "STA") {
 			program[pc].opcode = STA;
@@ -116,19 +117,19 @@ void RAM::init(const char *pInput, const char *mInput) {
 			pFile.getline(str,MAXSTRSIZE);  pc++; }
 		else if (instName == "STI") {
 			program[pc].opcode = STI;
-			pFile >> program[pc].operand; 
+			pFile >> program[pc].operand;
 			pFile.getline(str,MAXSTRSIZE);  pc++; }
 		else if (instName == "ADD") {
 			program[pc].opcode = ADD;
-			pFile >> program[pc].operand; 
+			pFile >> program[pc].operand;
 			pFile.getline(str,MAXSTRSIZE);  pc++; }
 		else if (instName == "SUB") {
 			program[pc].opcode = SUB;
-			pFile >> program[pc].operand; 
+			pFile >> program[pc].operand;
 			pFile.getline(str,MAXSTRSIZE);  pc++; }
 		else if (instName == "MUL") {
 			program[pc].opcode = MUL;
-			pFile >> program[pc].operand; 
+			pFile >> program[pc].operand;
 			pFile.getline(str,MAXSTRSIZE);  pc++; }
 		else if (instName == "JMP") {
 			program[pc].opcode = JMP;
@@ -160,7 +161,7 @@ void RAM::init(const char *pInput, const char *mInput) {
 // simulate execution of RAM with given program and memory configuration.
 // Notes:
 //    1. Program may not terminate (if HLT is not executed)
-//    2. Currently no error checking is performed.  Checks for valid program 
+//    2. Currently no error checking is performed.  Checks for valid program
 //       and memory addresses and illegal opcodes should be provided.
 void RAM::execute()
 {
@@ -240,7 +241,7 @@ void RAM::execute()
 void RAM::dump()
 {
 	cout << "RAM Memory Contents" << endl;
-	cout << endl;  
+	cout << endl;
 	for (int i=1;i<=memorySize;i++)
 		cout << i << "   " << memory[i] << endl;
 }
