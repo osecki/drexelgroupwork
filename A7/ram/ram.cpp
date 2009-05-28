@@ -143,6 +143,10 @@ void RAM::init(const char *pInput, const char *mInput) {
 			program[pc].opcode = JMN;
 			pFile >> program[pc].operand;
 			pFile.getline(str,MAXSTRSIZE);  pc++; }
+		else if (instName == "JMI") {
+			program[pc].opcode = JMI;
+		  pFile >> program[pc].operand;
+		  pFile.getline(str,MAXSTRSIZE);  pc++; }
 		else if (instName == "HLT") {
 			program[pc].opcode = HLT;
 			pFile.getline(str,MAXSTRSIZE);  pc++; }
@@ -190,6 +194,12 @@ void RAM::execute()
 			pc++;
 			break;
 
+		case STI:
+			x = program[pc].operand;
+		  memory[memory[x]] = ac;
+		  pc++;
+			break;
+
 		case ADD:
 			x = program[pc].operand;
 			ac = ac + memory[x];
@@ -202,7 +212,7 @@ void RAM::execute()
 			pc++;
 			break;
 
-            case MUL:
+    case MUL:
 			x = program[pc].operand;
 			ac = ac * memory[x];
 			pc++;
@@ -221,12 +231,17 @@ void RAM::execute()
 				pc++;
 			break;
 
-            case JMN:
+    case JMN:
 			x = program[pc].operand;
 			if (ac < 0)
 				pc = x;
 			else
 				pc++;
+			break;
+
+		case JMI:
+			x = program[pc].operand;
+			pc = memory[x];
 			break;
 
 		case HLT:

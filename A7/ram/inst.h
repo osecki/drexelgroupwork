@@ -3,7 +3,7 @@
 #ifndef INSTHEADER
 #define INSTHEADER
 
-enum OPCODES { LDA, LDI, STA, STI, ADD, SUB, MUL, JMP, JMZ, JMN, HLT };
+enum OPCODES { LDA, LDI, STA, STI, ADD, SUB, MUL, JMP, JMZ, JMN, JMI, HLT };
 
 struct Instruction
 {
