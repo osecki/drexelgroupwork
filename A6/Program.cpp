@@ -59,7 +59,7 @@ void Program::dump()
 	for (map<string, SymbolDetails>::iterator b = symbolTable.begin(); b != symbolTable.end(); b++) {
 		  if ( ((*b).second.getType()).compare("Variable") == 0 )
 			{
-				memFile << (*b).second.getAddress() << "  " << (*b).second.getValue() << endl;
+				memFile << (*b).second.getAddress() << "  " << (*b).second.getValue() << "  ; " << (*b).first << endl;
 			} 
 	}
 
@@ -85,6 +85,34 @@ void Program::translate()
 
 void Program::fixLabels()
 {
+	// Kill multiple labels in a row
+	for ( int g = 0; g < ralProgram.size() - 1; g++ )
+	{
+		// If two labels are found in a row
+		if ( ralProgram[g].find(":") != string::npos && ralProgram[g+1].find(":") != string::npos )
+		{
+			// Record labels
+			string goodLabel = ralProgram[g].substr(0, ralProgram[g].find(":"));
+			string LabelToDelete = ralProgram[g+1].substr(0, ralProgram[g+1].find(":"));
+
+			// Loop through, change all instances of oneToDelete to good one
+			for ( int h = 0; h < ralProgram.size(); h++)
+			{
+				if ( ralProgram[h].find(LabelToDelete) == 4 )
+				{
+					ralProgram[h] = ralProgram[h].substr(0, 4) + goodLabel;
+				}
+			}
+
+			// Delete second one
+			vector<string>::iterator temp = ralProgram.begin() + g;
+			ralProgram.erase(temp + 1, temp + 2);
+
+			// Don't iterate count
+			g = g - 1;
+		}
+	}
+
 	// Make sure no labels are on a line of their own
 	for ( int i = 0; i < ralProgram.size(); i++ )
 	{

@@ -1,0 +1,13 @@
+a := 0;
+b := 1;
+c := 0;
+
+if a then d := 3 else if b then d := 2 else d := 1 fi fi;
+
+if a then e := 3 else if c then e := 2 else e := 1 fi fi;
+
+f := 5;
+g := 0;
+
+if a then f := 5 else while f do g := g + 1; f := f - 1 od fi
+

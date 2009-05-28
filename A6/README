@@ -27,6 +27,8 @@ temporaries (it orders 1, 10, 11, ..., 2, 21, ..., etc.)
 -There seemed to mistakenly be a missing LD in the example slide
 -Our optimize flag is set up through the makefile, similar to how our static
 and dynamic option was.
+-Added support for nested ifs and while loops and the multiple label issue.
+There is a test file for it in samples/*.
 
 Files Included:
 
