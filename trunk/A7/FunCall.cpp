@@ -15,7 +15,7 @@ FunCall::~FunCall() { delete AL_; }
     return FT[name_]->apply(NT, FT, AL_);
 }*/
 
-virtual string translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
+string FunCall::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
 {
 	// TODO
 	return "";

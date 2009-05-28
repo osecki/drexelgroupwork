@@ -13,6 +13,9 @@
 #include "Stmt.h"
 #include "StmtList.h"
 #include "Number.h"
+#include "DefineStmt.h"
+#include "Proc.h"
+#include "FunCall.h"
 using namespace std;
 
 void yyerror (const char *error);
@@ -124,7 +127,7 @@ assign_stmt:
 
 define_stmt: 
     DEFINE IDENT PROC '(' param_list ')' stmt_list END { 
-        $$ = new DefineStmt(string($2),new Proc($5,$7)); 
+        $$ = new DefineStmt(string($2), new Proc($5, $7)); 
     }
     ;
 

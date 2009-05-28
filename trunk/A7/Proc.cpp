@@ -12,6 +12,8 @@ Proc::Proc(list<string> *PL, StmtList *SL)
     NumParam_ = PL->size();
 }
 
+// TODO This function changed eval() to translate(), but more needs to be
+// done
 int Proc::apply(map<string,int> &NT, map<string,Proc*> &FT, list<Expr*> *EL) 
 {
 	map<string,int> NNT;
@@ -26,11 +28,11 @@ int Proc::apply(map<string,int> &NT, map<string,Proc*> &FT, list<Expr*> *EL)
 		exit(1);
 	}
 	for (p = PL_->begin(), e = EL->begin(); p != PL_->end(); p++, e++) 
-		NNT[*p] = (*e)->eval(NT,FT);
+		// NNT[*p] = (*e)->translate(NT,FT); TODO 
 
 	// evaluate function body using new name table and old function table
 
-	SL_->eval(NNT,FT);
+	//SL_->translate(NNT,FT); TODO
 	if ( NNT.find("return") != NNT.end() )
 		return NNT["return"];
 	else {
@@ -39,7 +41,7 @@ int Proc::apply(map<string,int> &NT, map<string,Proc*> &FT, list<Expr*> *EL)
 	}
 }
 
-string translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram)
+string Proc::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram)
 {
 	// TODO
 	return "";

@@ -28,7 +28,7 @@ fi       { return FI; }
 while    { return WHILE; }
 do       { return DO; }
 od       { return OD; }
-proc     { return PROC: }
+proc     { return PROC; }
 end      { return END; }
 [A-Za-z]+   { yylval.ident = strdup(yytext);  return IDENT; }
 [0-9]+   { yylval.value = atoi(yytext); return NUMBER; }
