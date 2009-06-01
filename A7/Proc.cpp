@@ -42,8 +42,7 @@ int Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &sy
 
 string Proc::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT)
 {
-    // Simply write code but with ldi and sti calls
-    SL_->translate(constantValues, symbolTable, ralProgram, FT);
+    //SL_->translate(constantValues, symbolTable, ralProgram, FT);
 	return "";
 }
 

@@ -149,15 +149,16 @@ void Program::optimize()
 
 void Program::compile()
 {
+    cout << "Translating" << endl;
     translate();
 
     if (OPTIMIZE) {
         optimize();
     }
 
-    fixLabels();
+    //fixLabels();
 
-    link();
+    //link();
 }
 
 
