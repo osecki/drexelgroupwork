@@ -5,6 +5,7 @@
 #include <sstream>
 #include <vector>
 #include "Program.h"
+#include "Proc.h"
 
 int Program::constantCounter = 1;
 int Program::temporaryVarCounter = 1;
@@ -31,12 +32,12 @@ void Program::dump()
     cout << "Program below:" << endl;
     cout << endl;
 
-    for (int i=0; i< ralProgram.size(); i++)
+    for (unsigned int i=0; i< ralProgram.size(); i++)
         cout << ralProgram[i] << endl;
 
     ofstream progFile;
     progFile.open ("prog.txt");
-    for (int i=0; i< ralProgram.size(); i++)
+    for (unsigned int i=0; i< ralProgram.size(); i++)
         progFile << ralProgram[i] << endl;
     progFile.close();
 
@@ -75,7 +76,12 @@ void Program::dump()
 
 void Program::translate()
 {
-    SL_->translate(constantValues, symbolTable, ralProgram);
+    // Treat main as a function
+    Proc* p = new Proc(new list<string>(), SL_);
+
+    //SL_->translate(constantValues, symbolTable, ralProgram);
+
+    p->translate(constantValues, symbolTable, ralProgram);
 
     // Add the HALT here, program has ended
     ralProgram.push_back("HLT");
@@ -84,7 +90,7 @@ void Program::translate()
 void Program::fixLabels()
 {
     // Kill multiple labels in a row
-    for ( int g = 0; g < ralProgram.size() - 1; g++ ) {
+    for ( unsigned int g = 0; g < ralProgram.size() - 1; g++ ) {
         // If two labels are found in a row
         if ( ralProgram[g].find(":") != string::npos && ralProgram[g+1].find(":") != string::npos ) {
             // Record labels
@@ -92,7 +98,7 @@ void Program::fixLabels()
             string LabelToDelete = ralProgram[g+1].substr(0, ralProgram[g+1].find(":"));
 
             // Loop through, change all instances of oneToDelete to good one
-            for ( int h = 0; h < ralProgram.size(); h++) {
+            for ( unsigned int h = 0; h < ralProgram.size(); h++) {
                 if ( ralProgram[h].find(LabelToDelete) == 4 ){
                     ralProgram[h] = ralProgram[h].substr(0, 4) + goodLabel;
                 }
@@ -108,7 +114,7 @@ void Program::fixLabels()
     }
 
     // Make sure no labels are on a line of their own
-    for ( int i = 0; i < ralProgram.size(); i++ ) {
+    for ( unsigned  int i = 0; i < ralProgram.size(); i++ ) {
         if ( ralProgram[i].find(":") == ralProgram[i].length() - 1) {
             // Combine elements
             ralProgram[i] = ralProgram[i] + ralProgram[i+1];
@@ -124,7 +130,7 @@ void Program::optimize()
 {
     // Iterate through, looking for Store followed by Load with same variable.
     // If this is found, Delete the load
-    for ( int i = 0; i < ralProgram.size() - 1; i++ ) {
+    for ( unsigned int i = 0; i < ralProgram.size() - 1; i++ ) {
         if ( ralProgram[i].find("STA") == 0 && ralProgram[i+1].find("LDA") == 0 &&
             (ralProgram[i].substr(3)).compare(ralProgram[i+1].substr(3)) == 0 ){
             // Delete the Load
@@ -165,7 +171,7 @@ void Program::link()
 
     // Calculate the addresses for labels
     map<string, int> labelValues;
-    for ( int i = 0; i < ralProgram.size(); i++ )
+    for ( unsigned  int i = 0; i < ralProgram.size(); i++ )
     {
         if ( ralProgram[i].find(":") != string::npos ) {
             // First enter into map
@@ -177,7 +183,7 @@ void Program::link()
     }
 
     // Time to actually do the linking in the program
-    for ( int j = 0; j < ralProgram.size(); j++ )
+    for ( unsigned int j = 0; j < ralProgram.size(); j++ )
     {
         string tempVar = ralProgram[j].substr(ralProgram[j].find(" ") + 1);
 
