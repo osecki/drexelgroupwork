@@ -12,7 +12,7 @@ class StmtList
 {
 public:
     StmtList() {};
-    void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram);
+    void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT);
     void insert(Stmt *T);
 private:
     list<Stmt*> SL_;

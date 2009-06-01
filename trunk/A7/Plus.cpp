@@ -14,7 +14,7 @@ Plus::Plus(Expr* op1, Expr* op2)
     op2_ = op2;
 }
 
-string Plus::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
+string Plus::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const
 {
 	// Handle two operands
   string temp1, temp2;

@@ -16,7 +16,7 @@ IfStmt::IfStmt(Expr *E, StmtList *S1, StmtList *S2)
   S2_ = S2;
 }
 
-void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
+void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const
 {
 	// Handle Condition
 	string cond = E_->translate(constantValues, symbolTable, ralProgram);

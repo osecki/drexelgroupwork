@@ -13,9 +13,9 @@ class Proc
 public:
     Proc(list<string> *PL, StmtList *SL);
     ~Proc() {delete SL_; };
-    int apply(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram);
-    string translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram);
-    void link(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram);
+    int apply(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT);
+    string translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT);
+    void link(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT);
 private:
     StmtList *SL_;
     list<string> *PL_;

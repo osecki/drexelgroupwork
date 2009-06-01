@@ -14,7 +14,7 @@ Minus::Minus(Expr* op1, Expr* op2)
     op2_ = op2;
 }
 
-string Minus::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
+string Minus::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const
 {
 	  // Handle two operands and the Load and operator
 	  string temp1, temp2;

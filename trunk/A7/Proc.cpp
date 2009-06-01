@@ -13,7 +13,7 @@ Proc::Proc(list<string> *PL, StmtList *SL)
     NumParam_ = PL->size();
 }
 
-int Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram)
+int Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT)
 {
 // 	if (NumParam_ != EL->size()) {
 // 		cout << "Param count does not match" << endl;
@@ -40,7 +40,7 @@ int Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &sy
     return -1;
 }
 
-string Proc::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram)
+string Proc::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT)
 {
     // Simply write code but with ldi and sti calls
     SL_->translate(constantValues, symbolTable, ralProgram);
@@ -49,7 +49,7 @@ string Proc::translate(map<int, string> &constantValues, map<string, SymbolDetai
 
 
 
-void Proc::link(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram)
+void Proc::link(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT)
 {
     // Loop through the symbol table three times, giving each addresses
     int counter = 1;

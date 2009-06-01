@@ -14,7 +14,7 @@ class WhileStmt: public Stmt
 public:
     WhileStmt(Expr *E, StmtList *S);
     ~WhileStmt() {delete E_;};
-    void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const;
+    void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const;
 private:
     Expr* E_;
     StmtList *S_;
