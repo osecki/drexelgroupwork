@@ -7,6 +7,10 @@
 #include "StmtList.h"
 using namespace std;
 
+class Proc;
+class FunCall;
+class DefineStmt;
+
 class Program
 {
 public:
@@ -29,6 +33,9 @@ private:
     map<int, string> constantValues;
     map<string, SymbolDetails> symbolTable;
     vector<string> ralProgram;
+    Proc* p;
+    FunCall* f;
+    DefineStmt* d;
 };
 
 #endif
