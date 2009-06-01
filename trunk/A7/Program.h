@@ -36,6 +36,7 @@ private:
     Proc* p;
     FunCall* f;
     DefineStmt* d;
+    map<string, Proc*> FT;
 };
 
 #endif

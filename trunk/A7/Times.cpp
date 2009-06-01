@@ -14,22 +14,22 @@ Times::Times(Expr* op1, Expr* op2)
     op2_ = op2;
 }
 
-string Times::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const
+string Times::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT) const
 {
 	  // Handle two operands and load and operator
     string temp1, temp2;
 	  if ( OPTIMIZE)
 		{
-			  string temp1 = op2_->translate(constantValues, symbolTable, ralProgram);
-				string temp2 = op1_->translate(constantValues, symbolTable, ralProgram);
+			  string temp1 = op2_->translate(constantValues, symbolTable, ralProgram, FT);
+				string temp2 = op1_->translate(constantValues, symbolTable, ralProgram, FT);
 	  
 				ralProgram.push_back("LDA " + temp2);
 				ralProgram.push_back("MUL " + temp1);
 		}
 	  else
 		{
-			  string temp1 = op1_->translate(constantValues, symbolTable, ralProgram);
-				string temp2 = op2_->translate(constantValues, symbolTable, ralProgram);
+			  string temp1 = op1_->translate(constantValues, symbolTable, ralProgram, FT);
+				string temp2 = op2_->translate(constantValues, symbolTable, ralProgram, FT);
 		
 			 ralProgram.push_back("LDA " + temp1);
 			 ralProgram.push_back("MUL " + temp2);

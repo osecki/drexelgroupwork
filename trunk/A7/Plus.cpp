@@ -14,22 +14,22 @@ Plus::Plus(Expr* op1, Expr* op2)
     op2_ = op2;
 }
 
-string Plus::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const
+string Plus::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT) const
 {
 	// Handle two operands
   string temp1, temp2;
 	if ( OPTIMIZE)
 	{
-		string temp1 = op2_->translate(constantValues, symbolTable, ralProgram);
-		string temp2 = op1_->translate(constantValues, symbolTable, ralProgram);
+		string temp1 = op2_->translate(constantValues, symbolTable, ralProgram, FT);
+		string temp2 = op1_->translate(constantValues, symbolTable, ralProgram, FT);
 	
 		 ralProgram.push_back("LDA " + temp2);
 		 ralProgram.push_back("ADD " + temp1);			 
 	}
 	else
 	{
-		string temp1 = op1_->translate(constantValues, symbolTable, ralProgram);
-		string temp2 = op2_->translate(constantValues, symbolTable, ralProgram);
+		string temp1 = op1_->translate(constantValues, symbolTable, ralProgram, FT);
+		string temp2 = op2_->translate(constantValues, symbolTable, ralProgram, FT);
 	
 		 ralProgram.push_back("LDA " + temp1);
 		 ralProgram.push_back("ADD " + temp2);			 

@@ -15,10 +15,9 @@ int Program::labelCounter = 1;
 
 Program::Program(StmtList *SL)
 {
-    //SymbolTable_.clear();
-    constantValues.clear();// = new map<int, string>();
-    symbolTable.clear();// = new map<string, SymbolDetails*>();
-
+    constantValues.clear();
+    symbolTable.clear();
+    FT.clear();
     SL_ = SL;
 }
 
@@ -86,7 +85,7 @@ void Program::translate()
 
     // Add the function to the function table
     d = new DefineStmt("main", p);
-    d->translate(constantValues, symbolTable, ralProgram);
+    d->translate(constantValues, symbolTable, ralProgram, FT);
 
     // Call it (with no parameters)
     f = new FunCall("main", new list<Expr*>());
@@ -164,5 +163,5 @@ void Program::compile()
 
 void Program::link()
 {
-    p->link(constantValues, symbolTable, ralProgram);
+    p->link(constantValues, symbolTable, ralProgram, FT);
 }

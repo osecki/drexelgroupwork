@@ -13,7 +13,7 @@ WhileStmt::WhileStmt(Expr *E, StmtList *S)
   	S_ = S;
 }
 
-void WhileStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const
+void WhileStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT) const
 {
   // Handle first label and condition
 	Program p;
@@ -24,7 +24,7 @@ void WhileStmt::translate(map<int, string> &constantValues, map<string, SymbolDe
 	p.labelCounter++;;
 
 	ralProgram.push_back(newLabel1 + ":");
-	string temp = E_->translate(constantValues, symbolTable, ralProgram);
+	string temp = E_->translate(constantValues, symbolTable, ralProgram, FT);
 	ralProgram.push_back("LDA " + temp);
 
   // Handle the first jumps
@@ -38,7 +38,7 @@ void WhileStmt::translate(map<int, string> &constantValues, map<string, SymbolDe
 	ralProgram.push_back("JMZ " + newLabel2);
 
 	// Handle the loop body
-	S_->translate(constantValues, symbolTable, ralProgram);
+	S_->translate(constantValues, symbolTable, ralProgram, FT);
 
 	// Handle the second jumps
 	ralProgram.push_back("JMP " + newLabel1);
