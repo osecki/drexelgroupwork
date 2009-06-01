@@ -17,11 +17,11 @@ string Number::translate(map<int, string> &constantValues, map<string, SymbolDet
 	// Look into constant table for the Number. If it is there get value, otherwise create new Number and add to symbol table
 	string newConstant;
 	Program p;
-	
+
 	map<int, string>::iterator location = constantValues.find(value_);
 	if ( location!=constantValues.end() ) {
 		newConstant = constantValues[value_];
-	}else {
+	} else {
 		stringstream outConst;
 
 		outConst << p.constantCounter;
