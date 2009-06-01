@@ -18,7 +18,7 @@ public:
 private:
     StmtList *SL_;
     list<string> *PL_;
-    int NumParam_;
+    unsigned int NumParam_;
 };
 
 #endif

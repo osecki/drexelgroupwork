@@ -14,7 +14,7 @@ Proc::Proc(list<string> *PL, StmtList *SL)
 
 // TODO This function changed eval() to translate(), but more needs to be
 // done
-int Proc::apply(map<string,int> &NT, map<string,Proc*> &FT, list<Expr*> *EL) 
+int Proc::apply(map<string,int> &NT, map<string,Proc*> &FT, list<Expr*> *EL)
 {
 	map<string,int> NNT;
 	NNT.clear();
@@ -27,8 +27,8 @@ int Proc::apply(map<string,int> &NT, map<string,Proc*> &FT, list<Expr*> *EL)
 		cout << "Param count does not match" << endl;
 		exit(1);
 	}
-	for (p = PL_->begin(), e = EL->begin(); p != PL_->end(); p++, e++) 
-		// NNT[*p] = (*e)->translate(NT,FT); TODO 
+	for (p = PL_->begin(), e = EL->begin(); p != PL_->end(); p++, e++)
+		// NNT[*p] = (*e)->translate(NT,FT); TODO
 
 	// evaluate function body using new name table and old function table
 
@@ -39,10 +39,13 @@ int Proc::apply(map<string,int> &NT, map<string,Proc*> &FT, list<Expr*> *EL)
 		cout << "Error:  no return value" << endl;
 		exit(1);
 	}
+    // Unreachable
+    return -1;
 }
 
 string Proc::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram)
 {
-	// TODO
+    SL_->translate(constantValues, symbolTable, ralProgram);
+
 	return "";
 }

@@ -1,21 +1,33 @@
-flex: lex.l
+CC=g++-4.2
+C=gcc-4.2
+OPTIMIZE=false
+CFLAGS = -Wall -g -DOPTIMIZE=$(OPTIMIZE)
+SRC_FILES=interpreter.tab.cpp AssignStmt.cpp FunCall.cpp IfStmt.cpp Minus.cpp Plus.cpp Program.cpp SymbolDetails.cpp WhileStmt.cpp DefineStmt.cpp Ident.cpp Number.cpp Proc.cpp StmtList.cpp Times.cpp
+OBJECT_FILES=$(SRC_FILES:.cpp=.o)
+
+Compiler: $(OBJECT_FILES) lex.yy.o interpreter.tab.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+Parser: lex.yy.c interpreter.tab.c
+	$(C) $(CFLAGS) $^ -ly -lfl -o $@
+
+lex.yy.c: lex.l
 	flex lex.l
 
-parse: *.ypp *.y
+lex.yy.o: lex.yy.c
+	$(C) -c lex.yy.c
+
+interpreter.tab.cpp: interpreter.ypp
 	bison *.ypp
-	bison -d *.y
 
-compileOptimize: lex.yy.c interpreter.tab.cpp
-	gcc -c lex.yy.c
-	g++-4.2 -g *.cpp lex.yy.o -DOPTIMIZE=true -o CompilerOptimize
+interpreter.tab.c interpreter.tab.h: interpreter.y
+	bison -d *.y	
 
-compile: lex.yy.c interpreter.tab.cpp
-	gcc -c lex.yy.c
-	g++-4.2 -g *.cpp lex.yy.o -DOPTIMIZE=false -o Compiler
+interpreter.tab.o: interpreter.tab.h interpreter.tab.c
 
-parserOnly: lex.yy.c
-	bison -d *.y
-	gcc-4.2 -g *.c -ly -lfl -o Parser
+
+$(OBJECT_FILES): %.o: %.cpp
+	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
-	rm -f lex.yy.c lex.yy.o *.tab.* Compiler Parser CompilerOptimize
+	rm -f lex.yy.c *.o *.tab.* Compiler Parser
