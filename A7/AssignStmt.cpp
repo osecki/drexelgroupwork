@@ -16,7 +16,7 @@ AssignStmt::AssignStmt(string name, Expr *E)
 	T[name_] = E_->eval(T);
 }*/
 
-void AssignStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
+void AssignStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const
 {
 		//  Look into constant table for Ident. If it is there get value from it, otherwise create new Ident and add to symbol table
 		map<string, SymbolDetails>::iterator location = symbolTable.find(name_);

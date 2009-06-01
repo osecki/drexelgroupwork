@@ -12,7 +12,7 @@ class Plus : public Expr
 public:
     Plus(Expr* op1 = NULL, Expr* op2 = NULL);
     virtual ~Plus() {delete op1_; delete op2_;};
-    virtual string translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const;
+    virtual string translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const;
 private:
     Expr* op1_;
     Expr* op2_;

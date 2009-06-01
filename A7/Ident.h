@@ -11,7 +11,7 @@ class Ident : public Expr
 {
 public:
     Ident(string name = "");
-    virtual string translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const;
+    virtual string translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const;
 private:
     string name_;
 };

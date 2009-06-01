@@ -14,7 +14,7 @@ Times::Times(Expr* op1, Expr* op2)
     op2_ = op2;
 }
 
-string Times::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
+string Times::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const
 {
 	  // Handle two operands and load and operator
     string temp1, temp2;

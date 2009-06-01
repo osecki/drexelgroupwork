@@ -13,7 +13,7 @@ class AssignStmt: public Stmt
 public:
     AssignStmt(string name="", Expr *E=NULL);
     ~AssignStmt() {delete E_;};
-    void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const;
+    void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const;
 private:
     string name_;
     Expr* E_;

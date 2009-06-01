@@ -14,7 +14,7 @@ class Expr
 public:
 	Expr() {};
 	virtual ~Expr() {};
-	virtual string translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const=0;
+	virtual string translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const=0;
 private:
 };
 

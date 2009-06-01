@@ -17,7 +17,7 @@ DefineStmt::DefineStmt(string name, Proc *P)
     FT[name_] = P_;
 }*/
 
-void DefineStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
+void DefineStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const
 {
 	// TODO
 }

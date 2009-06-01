@@ -14,7 +14,7 @@ class DefineStmt : public Stmt
 public:
     DefineStmt(string name="", Proc *P=NULL);
     virtual ~DefineStmt();
-    virtual void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const;
+    virtual void translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const;
 private:
     string name_;
     Proc* P_;

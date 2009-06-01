@@ -13,7 +13,7 @@ WhileStmt::WhileStmt(Expr *E, StmtList *S)
   	S_ = S;
 }
 
-void WhileStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
+void WhileStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const
 {
   // Handle first label and condition
 	Program p;

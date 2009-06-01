@@ -12,7 +12,7 @@ Number::Number(int value)
     value_ = value;
 }
 
-string Number::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram) const
+string Number::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const
 {
 	// Look into constant table for the Number. If it is there get value, otherwise create new Number and add to symbol table
 	string newConstant;
