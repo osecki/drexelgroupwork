@@ -11,7 +11,7 @@ Ident::Ident(string name)
     name_ = name;
 }
 
-string Ident::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &ralProgramFT) const
+string Ident::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT) const
 {
 	// Look into constant table for Ident. If there, get value from it, otherwise create new Ident and add to the symbol table
 	map<string, SymbolDetails>::iterator location = symbolTable.find(name_);
