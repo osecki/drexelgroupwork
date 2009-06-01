@@ -8,6 +8,7 @@
 #include "Proc.h"
 #include "FunCall.h"
 #include "DefineStmt.h"
+#include "Number.h"
 
 int Program::constantCounter = 1;
 int Program::temporaryVarCounter = 1;
@@ -23,6 +24,7 @@ Program::Program(StmtList *SL)
 
 void Program::dump()
 {
+	/*
     cout << "Symbol Table" << endl;
     cout << "Symbol\t\tValue\t\tType\t\tAddress" << endl;
     for (map<string, SymbolDetails>::iterator sti = symbolTable.begin(); sti!=symbolTable.end(); sti++) {
@@ -32,10 +34,14 @@ void Program::dump()
     cout << endl;
     cout << "Program below:" << endl;
     cout << endl;
-
+	*/
+	
+	
+	
     for (unsigned int i=0; i< ralProgram.size(); i++)
         cout << ralProgram[i] << endl;
-
+    
+	/*
     ofstream progFile;
     progFile.open ("prog.txt");
     for (unsigned int i=0; i< ralProgram.size(); i++)
@@ -57,25 +63,8 @@ void Program::dump()
         }
     }
 
-    /* No such thing as variables or temporaries anymore
-
-    // Output Variables to file
-    for (map<string, SymbolDetails>::iterator b = symbolTable.begin(); b != symbolTable.end(); b++) {
-        if ( ((*b).second.getType()).compare("Variable") == 0 ) {
-            memFile << (*b).second.getAddress() << "  " << (*b).second.getValue() << "  ; " << (*b).first << endl;
-        }
-    }
-
-    // Output Temporaries to file
-    for (map<string, SymbolDetails>::iterator c = symbolTable.begin(); c != symbolTable.end(); c++) {
-        if ( ((*c).second.getType()).compare("Temporary") == 0 ) {
-            memFile << (*c).second.getAddress() << "  " << (*c).second.getValue() << endl;
-        }
-    }
-    */
-
     memFile.close();
-
+	*/
 }
 
 void Program::translate()
@@ -86,12 +75,36 @@ void Program::translate()
     // Add the function to the function table
     d = new DefineStmt("main", p);
     d->translate(constantValues, symbolTable, ralProgram, FT);
+	
+
+	
+	cout << "There are " << constantValues.size() << " constants" << endl;
+	
+	// Constants + TEMP + SP + thisConstant
+	int globalMemory = constantValues.size() + 4;
+	ralProgram.push_back("LD " +Number::getConstant(constantValues, globalMemory));
+	ralProgram.push_back("ST SP");
+	//FunCall("main", new list<Expr*>()).translate();
+	ralProgram.push_back("; CALL MAIN");
+	//ralProgram.push_back("halt:");
+	ralProgram.push_back("HLT");
+	
+
+	// Now print rest of the procs
+	for(map<string, Proc*>::iterator iter = FT.begin(); iter != FT.end(); iter++) {
+		Proc* p = iter->second;
+		ralProgram.push_back("; +proc(" + iter->first +")");
+		ralProgram.push_back(iter->first+":");
+		vector<string> code = p->getCode();
+		ralProgram.insert(ralProgram.end(), code.begin(), code.end());	
+		ralProgram.push_back("; -proc(" + iter->first +")");
+	}
+	
 
     // Call it (with no parameters)
-    f = new FunCall("main", new list<Expr*>());
-
-    // Add the HALT here, program has ended
-    ralProgram.push_back("HLT");
+    
+    
+    
 }
 
 void Program::fixLabels()
@@ -149,8 +162,14 @@ void Program::optimize()
 
 void Program::compile()
 {
-    cout << "Translating" << endl;
+	// Primary Translate
     translate();
+    
+    // Fix up Procs with addresses
+    for(map<string, Proc*>::iterator iter = FT.begin(); iter != FT.end(); iter++) {
+    	Proc* p = iter->second;
+    	//p->link(constantValues);
+    }
 
     if (OPTIMIZE) {
         optimize();
@@ -164,5 +183,5 @@ void Program::compile()
 
 void Program::link()
 {
-    p->link(constantValues, symbolTable, ralProgram, FT);
+    //p->link(constantValues, symbolTable, ralProgram, FT);
 }

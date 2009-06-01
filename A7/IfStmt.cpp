@@ -18,6 +18,7 @@ IfStmt::IfStmt(Expr *E, StmtList *S1, StmtList *S2)
 
 void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT) const
 {
+	ralProgram.push_back("; +if");
 	// Handle Condition
 	string cond = E_->translate(constantValues, symbolTable, ralProgram, FT);
 	ralProgram.push_back("LDA " + cond);
@@ -51,5 +52,7 @@ void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetai
 
 	// Handle Last Label
 	ralProgram.push_back(newLabel2 + ":");
+	
+	ralProgram.push_back("; -if");
 }
 
