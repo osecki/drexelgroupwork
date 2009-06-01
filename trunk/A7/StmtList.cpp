@@ -13,6 +13,7 @@ void StmtList::insert(Stmt * S)
 
 void StmtList::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT)
 {
-	for (list<Stmt*>::iterator Sp = SL_.begin(); Sp != SL_.end(); Sp++)
+	for (list<Stmt*>::iterator Sp = SL_.begin(); Sp != SL_.end(); Sp++) {
 		(*Sp)->translate(constantValues, symbolTable, ralProgram, FT);
+	}
 }

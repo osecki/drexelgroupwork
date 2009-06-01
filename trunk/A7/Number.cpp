@@ -12,42 +12,47 @@ Number::Number(int value)
     value_ = value;
 }
 
-string Number::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT) const
-{
-	// Look into constant table for the Number. If it is there get value, otherwise create new Number and add to symbol table
-	string newConstant;
-	Program p;
-
-	map<int, string>::iterator location = constantValues.find(value_);
+string Number::getConstant(map<int, string> &constantValues, int value) {
+	map<int, string>::iterator location = constantValues.find(value);
 	if ( location!=constantValues.end() ) {
-		newConstant = constantValues[value_];
+		return constantValues[value];
 	} else {
 		stringstream outConst;
 
-		outConst << p.constantCounter;
-		newConstant = CONSTANT + outConst.str();
+		outConst << value;
+		string newConstant = CONSTANT + outConst.str();
 		// increment the counter for the next constant
-		p.constantCounter++;
+		Program::constantCounter++;
 		// add this into the constant table
-		constantValues[value_] = newConstant;
-		// then add to the symbol table
-		SymbolDetails newSymbolConst(value_, "Constant", -1);
-		symbolTable[newConstant] = newSymbolConst;
+		constantValues[value] = newConstant;
+		return newConstant;
 	}
+}
 
-	ralProgram.push_back("LDA " + newConstant);
+string Number::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT) const
+{
+	ralProgram.push_back("; + number");
+	// Look into constant table for the Number. If it is there get value, otherwise create new Number and add to symbol table
+	string newConstant = getConstant(constantValues, value_);
+
 
 	// create new temporary variable then Store the new ident there
 	string newTemp;
 	stringstream outTemp;
-	outTemp << p.temporaryVarCounter;
+	outTemp << Program::temporaryVarCounter;
 	newTemp = "T" + outTemp.str();
-	p.temporaryVarCounter++;
+	Program::temporaryVarCounter++;
 
 	SymbolDetails newSymbolTemp(-1, "Temporary", -1);
 	symbolTable[newTemp] = newSymbolTemp;
 
-	ralProgram.push_back("STA " + newTemp);
+	// Load the dynamic memory location
+	ralProgram.push_back("LD " + newConstant);
+	// Save the constant there
+	ralProgram.push_back("STO " + newTemp);
+	
+
+	ralProgram.push_back("; - number");
 
 	return newTemp;
 }

@@ -5,6 +5,8 @@ CFLAGS = -Wall -g -DOPTIMIZE=$(OPTIMIZE)
 SRC_FILES=interpreter.tab.cpp AssignStmt.cpp FunCall.cpp IfStmt.cpp Minus.cpp Plus.cpp Program.cpp SymbolDetails.cpp WhileStmt.cpp DefineStmt.cpp Ident.cpp Number.cpp Proc.cpp StmtList.cpp Times.cpp
 OBJECT_FILES=$(SRC_FILES:.cpp=.o)
 
+all:Compiler
+
 Compiler: $(OBJECT_FILES) lex.yy.o interpreter.tab.o
 	$(CC) $(CFLAGS) -o $@ $^
 
