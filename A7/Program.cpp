@@ -177,8 +177,11 @@ void Program::link()
     	constAddresses[a->second] = SymbolDetails(a->first, "CONSTANT", counter++);
     }
     
-    // loop through FP and set constants for the size
-    // [name] = P->getARSize();
+    // Loop through FP and set constants for the size
+    for(map<string, Proc*>::iterator iter = FT.begin(); iter != FT.end(); iter++) {
+				Proc* P = iter->second;
+				constAddresses["[" + name + "]"] = P->getARSize();
+		}
     
     // Calculate the addresses for labels
     map<string, int> labelValues;
