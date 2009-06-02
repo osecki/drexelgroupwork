@@ -18,7 +18,6 @@ int Program::labelCounter = 1;
 Program::Program(StmtList *SL)
 {
     constantValues.clear();
-    symbolTable.clear();
     FT.clear();
     SL_ = SL;
 }
@@ -54,7 +53,8 @@ void Program::translate()
 
     // Add the function to the function table
     d = new DefineStmt("main", p);
-    d->translate(constantValues, symbolTable, ralProgram, FT);
+    map<string, SymbolDetails> symbolTable;
+		d->translate(constantValues, symbolTable, ralProgram, FT);
 
 	// cout << "There are " << constantValues.size() << " constants" << endl;
 	
