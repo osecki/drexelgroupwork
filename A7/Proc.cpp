@@ -5,11 +5,12 @@
 #include <sstream>
 #include "StmtList.h"
 #include "Proc.h"
+#include "Program.h"
 #include "Number.h"
 
 #define RETURN_ADDRESS "RETURN_ADDRESS"
-#define PREV_FP "PREV_FP"
-#define RETURN "return"
+#define PREV_FP string("PREV_FP")
+#define RETURN string("return")
 
 Proc::Proc(list<string> *PL, StmtList *SL)
 {
@@ -53,7 +54,7 @@ string Proc::getOffset(const string & name, map<int, string> & constants) {
     } else if (type.compare("Variable") == 0) {
     	value = NumParam_ + s.getAddress();
 	} else {
-		return value;
+		return name;
 	}
 	
 	return Number::getConstant(constants, value);
@@ -68,13 +69,8 @@ string Proc::getOffset(const string & name, map<int, string> & constants) {
 // Convert statement list into RAL code
 void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
 {
+	// Translate all the statements
     SL_->translate(constantValues, symbolTable, ralProgram, FT);
-    ralProgram.push_back("; Reset stack pointer"); 
-    ralProgram.push_back("LDO " + getOffset(PREV_FP, constantValues));
-    ralProgram.push_back("ST FP");
-    ralProgram.push_back("; Jump back ");
-    ralProgram.push_back("JPI " + getOffset(RETURN_ADDRESS, constantValues));
-    
 
     temps = 0;
     vars = 0;
@@ -93,6 +89,15 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
 			constants++;
 		}
     }    
+    
+    ralProgram.push_back("; Reset stack pointer"); 
+    ralProgram.push_back("LDO " + getOffset(PREV_FP, constantValues));
+    ralProgram.push_back("ST " + FP);
+    ralProgram.push_back("; Jump back ");
+    ralProgram.push_back("LD " + FP);
+    ralProgram.push_back("ADD " + getOffset(RETURN_ADDRESS, constantValues)); 
+    ralProgram.push_back("ST " + FPB);
+    ralProgram.push_back("JPI " + FPB);
  
     // Fix up all the LDO and STO calls
     for(vector<string>::iterator itr = ralProgram.begin(); itr != ralProgram.end();) {
@@ -104,29 +109,33 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
 		if(instruction == "LDO") {
 			// Remove fake instruction
 			ralProgram.erase(itr);
-			// Add indirect 
-			itr = ralProgram.insert(itr, "LD FP");
+			// Add indirect
+			itr = ralProgram.insert(itr, "; " + fullInstruction);
+			itr++; 
+			itr = ralProgram.insert(itr, "LD " + FP);
 			itr++;
 			itr = ralProgram.insert(itr, "ADD " + getOffset(address, constantValues));
 			itr++;
-			itr = ralProgram.insert(itr, "ST FPB");
+			itr = ralProgram.insert(itr, "ST " + FPB);
 			itr++;
-			itr = ralProgram.insert(itr, "LDI FPB");
+			itr = ralProgram.insert(itr, "LDI " + FPB);
 			
 		} else if (instruction == "STO") {
 			// Remove fake instruction
 			ralProgram.erase(itr);
-			itr = ralProgram.insert(itr, "ST TEMP");
+			itr = ralProgram.insert(itr, "; " + fullInstruction);
+			itr++; 
+			itr = ralProgram.insert(itr, "ST " + TEMP);
 			itr++;
-			itr = ralProgram.insert(itr, "LD FP");
+			itr = ralProgram.insert(itr, "LD " + FP);
 			itr++;
 			itr = ralProgram.insert(itr, "ADD " + getOffset(address, constantValues));
 			itr++;
-			itr = ralProgram.insert(itr, "ST FPB");
+			itr = ralProgram.insert(itr, "ST " + FPB);
 			itr++;
-			itr = ralProgram.insert(itr, "LD TEMP");
+			itr = ralProgram.insert(itr, "LD " + TEMP);
 			itr++;
-			itr = ralProgram.insert(itr, "STI FPB");
+			itr = ralProgram.insert(itr, "STI " + FPB);
 		} else {
 			 itr++;
 		}
@@ -134,76 +143,3 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
 		// TODO - Handle JDO?
     }
 }
-
-
-
-
-/*
-void Proc::link(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT)
-{
-    // Loop through the symbol table three times, giving each addresses
-    int counter = 1;
-
-    // Assign Constants an address
-    for (map<string, SymbolDetails>::iterator a = symbolTable.begin(); a != symbolTable.end(); a++) {
-        if ( ((*a).second.getType()).compare("Constant") == 0 ) {
-            (*a).second.setAddress(counter);
-            counter++;
-        }
-    }
-
-    // Assign Variables an address
-    for (map<string, SymbolDetails>::iterator b = symbolTable.begin(); b != symbolTable.end(); b++) {
-        if ( ((*b).second.getType()).compare("Variable") == 0 ) {
-            (*b).second.setAddress(counter);
-            counter++;
-        }
-    }
-
-    // Assign Temporaries an address
-    for (map<string, SymbolDetails>::iterator c = symbolTable.begin(); c != symbolTable.end(); c++) {
-        if ( ((*c).second.getType()).compare("Temporary") == 0 ) {
-            (*c).second.setAddress(counter);
-            counter++;
-        }
-    }
-
-    // Calculate the addresses for labels
-    map<string, int> labelValues;
-    for ( unsigned  int i = 0; i < ralProgram.size(); i++ )
-    {
-        if ( ralProgram[i].find(":") != string::npos ) {
-            // First enter into map
-            labelValues[ralProgram[i].substr(0,ralProgram[i].find(":"))] = i + 1;
-
-            // Next delete from that one
-            ralProgram[i] = ralProgram[i].substr(ralProgram[i].find(":") + 1);
-        }
-    }
-
-    // Time to actually do the linking in the program
-    for ( unsigned int j = 0; j < ralProgram.size(); j++ )
-    {
-        string tempVar = ralProgram[j].substr(ralProgram[j].find(" ") + 1);
-
-        if ( ralProgram[j].find("HLT") == string::npos) {
-            // Need to decide if we look in symbolTable or labelTable
-            if ( (tempVar.substr(0, 1)).compare("L") == 0 ) {
-                int t1 = labelValues[tempVar];
-                string s1;
-                stringstream out1;
-                out1 << t1;
-                s1 = out1.str();
-                ralProgram[j] = ralProgram[j].substr(0, ralProgram[j].find(" ") + 1) + s1;
-            } else {
-                int t2 = symbolTable[tempVar].getAddress();
-                string s2;
-                stringstream out2;
-                out2 << t2;
-                s2 = out2.str();
-                ralProgram[j] = ralProgram[j].substr(0, ralProgram[j].find(" ") + 1) + s2;
-            }
-        }
-    }
-}
-*/
