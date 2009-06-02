@@ -33,7 +33,7 @@ void AssignStmt::translate(map<int, string> &constantValues, map<string, SymbolD
     
     // Perform the necessary RAL instructions
 	ralProgram.push_back("LDO " + E_->translate(constantValues, symbolTable, ralProgram, FT));
-	//ralProgram.push_back("STO " + name_);
+	ralProgram.push_back("STO " + name_);
 	
 	
 	/*
@@ -44,6 +44,8 @@ void AssignStmt::translate(map<int, string> &constantValues, map<string, SymbolD
 	// assignments have relative memory locations
 	ralProgram.push_back("STI " + name_);
 	*/
+
+
 		
 	ralProgram.push_back("; -assign (" + name_ + ")");
 }

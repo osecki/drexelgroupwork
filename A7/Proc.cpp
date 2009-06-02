@@ -72,11 +72,11 @@ string Proc::getOffset(const string & name, map<int, string> & constants) {
 	if(spot >= 0) {
 		value = spot; 
 	} else if(name.compare(PREV_FP) == 0) {
-		value = NumParam_ + vars + temps + 2;
-	} else if(name.compare(RETURN_ADDRESS) == 0) {
-		value = NumParam_ + vars + temps + 3; 
-	} else if(name.compare(RETURN) == 0) {
 		value = NumParam_ + vars + temps + 1;
+	} else if(name.compare(RETURN_ADDRESS) == 0) {
+		value = NumParam_ + vars + temps + 2; 
+	} else if(name.compare(RETURN) == 0) {
+		value = NumParam_ + vars + temps + 0;
 	} else if ( type.compare("Temporary") == 0 ) {
   		value = NumParam_ + vars + s.getAddress();
     } else if (type.compare("Variable") == 0) {
@@ -86,7 +86,7 @@ string Proc::getOffset(const string & name, map<int, string> & constants) {
 		return name;
 	}
 	
-	return Number::getConstant(constants, value + 1);
+	return Number::getConstant(constants, value);
 	
 	stringstream out;
 	out << value;
@@ -110,32 +110,32 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 	
 	// Set PREV_FP
 	ralProgram.push_back("; save previous FP");
-	ralProgram.push_back("LD [" + myName + "]");
+	ralProgram.push_back("LDA [" + myName + "]");
 	ralProgram.push_back("SUB " + Number::getConstant(constantValues, 2));
 	ralProgram.push_back("ADD " + NEXT_FP);
-	ralProgram.push_back("ST " + FPB);
-	ralProgram.push_back("LD " + FP);
+	ralProgram.push_back("STA " + FPB);
+	ralProgram.push_back("LDA " + FP);
 	ralProgram.push_back("STI " + FPB); 
 	
 	// Set FP
 	ralProgram.push_back("; set FP");
-	ralProgram.push_back("LD " + NEXT_FP);
-	ralProgram.push_back("ST " + FP);
+	ralProgram.push_back("LDA " + NEXT_FP);
+	ralProgram.push_back("STA " + FP);
 
 	// Update NEXT_FP based on size of Activation Record
 	ralProgram.push_back("; set " + NEXT_FP);
-	ralProgram.push_back("LD " + FP);
+	ralProgram.push_back("LDA " + FP);
 	ralProgram.push_back("ADD [" + myName + "]");
-	ralProgram.push_back("ST " + NEXT_FP);
+	ralProgram.push_back("STA " + NEXT_FP);
 	
 	// Set RETURN_ADDRESS
 	ralProgram.push_back("; save return address");
-	ralProgram.push_back("LD [" + myName + "]");
-	ralProgram.push_back("SUB " + Number::getConstant(constantValues, 2));
+	ralProgram.push_back("LDA [" + myName + "]");
+	ralProgram.push_back("SUB " + Number::getConstant(constantValues, 1));
 	ralProgram.push_back("ADD " + FP);
-	ralProgram.push_back("ST " + FPB);
-	ralProgram.push_back("LD " + LINE);
-	ralProgram.push_back("ADD " + Number::getConstant(constantValues, 3));
+	ralProgram.push_back("STA " + FPB);
+	ralProgram.push_back("LDA " + LINE);
+	//ralProgram.push_back("ADD " + Number::getConstant(constantValues, 3));
 	ralProgram.push_back("STI " + FPB);
 		
 	// (hard) Jump to start of progra
@@ -170,14 +170,19 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
 		}
     }    
     
+		ralProgram.push_back("; Back-up stack pointer");
+		ralProgram.push_back("LDA " + FP);
+		ralProgram.push_back("STA " + TEMP);
+
     ralProgram.push_back("; Reset stack pointer"); 
     ralProgram.push_back("LDO " + getOffset(PREV_FP, constantValues));
-    ralProgram.push_back("ST " + FP);
-    ralProgram.push_back("; Jump back ");
-    ralProgram.push_back("LD " + FP);
+    ralProgram.push_back("STA " + FP);
+    
+		ralProgram.push_back("; Jump back ");
+    ralProgram.push_back("LDA " + TEMP);
     ralProgram.push_back("ADD " + getOffset(RETURN_ADDRESS, constantValues)); 
-    ralProgram.push_back("ST " + FPB);
-    ralProgram.push_back("JPI " + FPB);
+    ralProgram.push_back("STA " + FPB);
+    ralProgram.push_back("JMI " + FPB);
  
     // Fix up all the LDO and STO calls
     for(vector<string>::iterator itr = ralProgram.begin(); itr != ralProgram.end();) {
@@ -192,11 +197,11 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
 			// Add indirect
 			itr = ralProgram.insert(itr, "; " + fullInstruction);
 			itr++; 
-			itr = ralProgram.insert(itr, "LD " + FP);
+			itr = ralProgram.insert(itr, "LDA " + FP);
 			itr++;
 			itr = ralProgram.insert(itr, "ADD " + getOffset(address, constantValues));
 			itr++;
-			itr = ralProgram.insert(itr, "ST " + FPB);
+			itr = ralProgram.insert(itr, "STA " + FPB);
 			itr++;
 			itr = ralProgram.insert(itr, "LDI " + FPB);
 			
@@ -205,15 +210,15 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
 			ralProgram.erase(itr);
 			itr = ralProgram.insert(itr, "; " + fullInstruction);
 			itr++; 
-			itr = ralProgram.insert(itr, "ST " + TEMP);
+			itr = ralProgram.insert(itr, "STA " + TEMP);
 			itr++;
-			itr = ralProgram.insert(itr, "LD " + FP);
+			itr = ralProgram.insert(itr, "LDA " + FP);
 			itr++;
 			itr = ralProgram.insert(itr, "ADD " + getOffset(address, constantValues));
 			itr++;
-			itr = ralProgram.insert(itr, "ST " + FPB);
+			itr = ralProgram.insert(itr, "STA " + FPB);
 			itr++;
-			itr = ralProgram.insert(itr, "LD " + TEMP);
+			itr = ralProgram.insert(itr, "LDA " + TEMP);
 			itr++;
 			itr = ralProgram.insert(itr, "STI " + FPB);
 		} else {

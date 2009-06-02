@@ -47,7 +47,7 @@ string Number::translate(map<int, string> &constantValues, map<string, SymbolDet
 	symbolTable[newTemp] = newSymbolTemp;
 
 	// Load the dynamic memory location
-	ralProgram.push_back("LD " + newConstant);
+	ralProgram.push_back("LDA " + newConstant);
 	// Save the constant there
 	ralProgram.push_back("STO " + newTemp);
 	
