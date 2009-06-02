@@ -141,16 +141,6 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 	// (hard) Jump to start of progra
 	ralProgram.push_back("JMP L_" + myName);
     ralProgram.push_back("; previous funcall should jump here");
-
-    /*
-    // Save return value
-    ralProgram.push_back("; save previous FP");
-    ralProgram.push_back("LDA [" + myName + "]");
-    ralProgram.push_back("SUB " + Number::getConstant(constantValues, 3));
-    ralProgram.push_back("ADD " + NEXT_FP);
-    */
-
-
 }
 
 
@@ -178,21 +168,26 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
 		}
     }
 
-		ralProgram.push_back("; Back-up stack pointer");
-		ralProgram.push_back("LDA " + FP);
-		ralProgram.push_back("STA " + TEMP);
+    ralProgram.push_back("; Back-up stack pointer");
+    ralProgram.push_back("LDA " + FP);
+    ralProgram.push_back("STA " + TEMP);
 
     ralProgram.push_back("; Reset stack pointer");
     ralProgram.push_back("LDO " + getOffset(PREV_FP, constantValues));
     ralProgram.push_back("STA " + FP);
 
-		ralProgram.push_back("; Jump back ");
+    ralProgram.push_back("; Jump back ");
     ralProgram.push_back("LDA " + TEMP);
     ralProgram.push_back("ADD " + getOffset(RETURN_ADDRESS, constantValues));
     ralProgram.push_back("STA " + FPB);
     ralProgram.push_back("LDI " + FPB);
-    ralProgram.push_back("STA " + FPB);
-    ralProgram.push_back("JMI " + FPB);
+    ralProgram.push_back("STA " + TEMP);
+
+    // Save return value
+    ralProgram.push_back("; before jumping get return value");
+    ralProgram.push_back("LDO " + RETURN);
+
+    ralProgram.push_back("JMI " + TEMP);
 
     // Fix up all the LDO and STO calls
     for(vector<string>::iterator itr = ralProgram.begin(); itr != ralProgram.end();) {
