@@ -178,7 +178,7 @@ void RAM::execute()
 		switch (op) {
 		case LDA:
 			x = program[pc].operand;
-			ac = memoryRead[x];
+			ac = memoryRead(x);
 			pc++;
 			break;
 
@@ -260,7 +260,7 @@ int RAM::memoryRead(int x)
 	else
 	{
 		// Resize by creating a new array
-		T *save = new memory[memorySize * (x / memorySize + 1) + 1];
+		int *save = new int[memorySize * (x / memorySize + 1) + 1];
 
 		// Copy the data
 		for ( int i = 0; i < memorySize + 1; i++ )
@@ -292,7 +292,7 @@ void RAM::memoryWrite(int x, int y)
 	else
 	{
 		// Resize by creating a new array
-		T *save = new memory[memorySize * (x / memorySize + 1) + 1];
+		int *save = new int[memorySize * (x / memorySize + 1) + 1];
 
 		// Copy the data
 		for ( int i = 0; i < memorySize + 1; i++ )
