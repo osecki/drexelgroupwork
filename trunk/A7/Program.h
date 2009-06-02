@@ -7,6 +7,10 @@
 #include "StmtList.h"
 using namespace std;
 
+#define FP string("FP")
+#define TEMP string("TEMP")
+#define FPB string("FPB")
+
 class Proc;
 class FunCall;
 class DefineStmt;
@@ -17,19 +21,21 @@ public:
     Program(StmtList *SL);
     Program(){};
 		//~Program() {delete SL_; };
-    void dump();
+	void dump();
+    void dumpCode(ostream& out);
     //void eval();
     void translate();
-		void optimize();
-		void fixLabels();
-		void link();
-		void compile();
+	void optimize();
+	void fixLabels();
+	void link();
+	void compile();
 
     static int constantCounter;
     static int temporaryVarCounter;
     static int labelCounter;
 private:
     StmtList *SL_;
+    map<string, int> constAddresses;
     map<int, string> constantValues;
     map<string, SymbolDetails> symbolTable;
     vector<string> ralProgram;

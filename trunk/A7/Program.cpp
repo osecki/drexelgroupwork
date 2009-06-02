@@ -10,6 +10,7 @@
 #include "DefineStmt.h"
 #include "Number.h"
 
+
 int Program::constantCounter = 1;
 int Program::temporaryVarCounter = 1;
 int Program::labelCounter = 1;
@@ -22,49 +23,14 @@ Program::Program(StmtList *SL)
     SL_ = SL;
 }
 
-void Program::dump()
+void Program::dump() {
+	dumpCode(cout);
+}
+
+void Program::dumpCode(ostream& out)
 {
-	/*
-    cout << "Symbol Table" << endl;
-    cout << "Symbol\t\tValue\t\tType\t\tAddress" << endl;
-    for (map<string, SymbolDetails>::iterator sti = symbolTable.begin(); sti!=symbolTable.end(); sti++) {
-        cout<<(*sti).first<<"\t\t"<<(*sti).second.getValue() << "\t\t" << (*sti).second.getType() << "\t\t" << (*sti).second.getAddress() << endl;
-    }
-
-    cout << endl;
-    cout << "Program below:" << endl;
-    cout << endl;
-	*/
-	
-	
-	
     for (unsigned int i=0; i< ralProgram.size(); i++)
-        cout << ralProgram[i] << endl;
-    
-	/*
-    ofstream progFile;
-    progFile.open ("prog.txt");
-    for (unsigned int i=0; i< ralProgram.size(); i++)
-        progFile << ralProgram[i] << endl;
-    progFile.close();
-
-    cout << endl;
-    cout << "Program file created in prog.txt:" << endl;
-    cout << "Memory file created in mem.txt" << endl;
-
-    ofstream memFile;
-    memFile.open ("mem.txt");
-
-    // Output Constants to file
-    for (map<string, SymbolDetails>::iterator a = symbolTable.begin(); a != symbolTable.end(); a++) {
-        if ( ((*a).second.getType()).compare("Constant") == 0 )
-        {
-            memFile << (*a).second.getAddress() << "  " << (*a).second.getValue() << endl;
-        }
-    }
-
-    memFile.close();
-	*/
+        out << ralProgram[i] << endl;
 }
 
 void Program::translate()
@@ -75,22 +41,20 @@ void Program::translate()
     // Add the function to the function table
     d = new DefineStmt("main", p);
     d->translate(constantValues, symbolTable, ralProgram, FT);
-	
 
-	
-	cout << "There are " << constantValues.size() << " constants" << endl;
+	// cout << "There are " << constantValues.size() << " constants" << endl;
 	
 	// Constants + TEMP + SP + thisConstant
 	int globalMemory = constantValues.size() + 4;
 	ralProgram.push_back("LD " +Number::getConstant(constantValues, globalMemory));
-	ralProgram.push_back("ST SP");
+	ralProgram.push_back("ST " + FP);
 	//FunCall("main", new list<Expr*>()).translate();
 	ralProgram.push_back("; CALL MAIN");
 	//ralProgram.push_back("halt:");
 	ralProgram.push_back("HLT");
 	
 
-	// Now print rest of the procs
+	// Print out all the procs
 	for(map<string, Proc*>::iterator iter = FT.begin(); iter != FT.end(); iter++) {
 		Proc* p = iter->second;
 		ralProgram.push_back("; +proc(" + iter->first +")");
@@ -165,23 +129,83 @@ void Program::compile()
 	// Primary Translate
     translate();
     
-    // Fix up Procs with addresses
-    for(map<string, Proc*>::iterator iter = FT.begin(); iter != FT.end(); iter++) {
-    	Proc* p = iter->second;
-    	//p->link(constantValues);
-    }
+    // Save current state
+    ofstream out("preLinking-program.txt");
+    dumpCode(out);
+    out.close();
 
     if (OPTIMIZE) {
         optimize();
     }
 
-    //fixLabels();
+    fixLabels();
 
-    //link();
+    link();
 }
 
 
 void Program::link()
 {
-    //p->link(constantValues, symbolTable, ralProgram, FT);
+	
+    // Loop through the symbol table three times, giving each addresses
+    int counter = 1;
+
+    // Assign Constants an address
+	constAddresses.clear(); 
+    constAddresses[FP] = counter++;
+    constAddresses[TEMP] = counter++;
+    constAddresses[FPB] = counter++;
+    
+
+    for (map<int, string>::iterator a = constantValues.begin(); a != constantValues.end(); a++) {
+    	//cout << "Constant: " << a->second << endl;
+    	constAddresses[a->second] = counter;
+        counter++;
+    }
+    
+    // Calculate the addresses for labels
+    map<string, int> labelValues;
+    for ( unsigned  int i = 0; i < ralProgram.size(); i++ )
+    {
+    	if ( ralProgram[i].find(";") != 0 ) {
+	        if ( ralProgram[i].find(":") != string::npos ) {
+	            // First enter into map
+	            labelValues[ralProgram[i].substr(0,ralProgram[i].find(":"))] = i + 1;
+	
+	            // Next delete from that one
+	            ralProgram[i] = ralProgram[i].substr(ralProgram[i].find(":") + 1);
+	        }
+    	}
+    }
+
+    // Time to actually do the linking in the program
+    for ( unsigned int j = 0; j < ralProgram.size(); j++ )
+    {
+    	if ( ralProgram[j].find(";") != 0 ) {
+	        string tempVar = ralProgram[j].substr(ralProgram[j].find(" ") + 1);
+	
+	        if ( ralProgram[j].find("HLT") == string::npos) {
+	            // Need to decide if we look in symbolTable or labelTable
+	            if ( (tempVar.substr(0, 1)).compare("L") == 0 ) {
+	                int t1 = labelValues[tempVar];
+	                string s1;
+	                stringstream out1;
+	                out1 << t1;
+	                s1 = out1.str();
+	                ralProgram[j] = ralProgram[j].substr(0, ralProgram[j].find(" ") + 1) + s1;
+	            } else {
+	            	if(constAddresses.find(tempVar) == constAddresses.end()) {
+	            		cout << "Error, unknown variable: " << tempVar << endl;
+	            		exit(1);
+	            	}
+	                int t2 = constAddresses[tempVar];
+	                string s2;
+	                stringstream out2;
+	                out2 << t2;
+	                s2 = out2.str();
+	                ralProgram[j] = ralProgram[j].substr(0, ralProgram[j].find(" ") + 1) + s2;
+	            }
+	        }
+    	}
+    }
 }
