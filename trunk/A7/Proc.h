@@ -17,7 +17,7 @@ public:
     // Generate code for the function
     void translate(map<int, string> &constantValues, map<string, Proc*> &FT);
     
-    void apply(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT, const list<Expr*> parameters);
+    void apply(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT, const list<Expr*> parameters, string myName);
     
     void insert(ostream& out) const;
     

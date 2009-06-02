@@ -34,10 +34,24 @@ void Program::dump() {
 
 void Program::dumpMemory(ostream& out)
 {
+	// Sort map by values
+	
+	vector<SymbolDetails> v;
+	map<SymbolDetails, string> m;
+	
 	for(map<string,SymbolDetails>::iterator iter = constAddresses.begin(); iter!=constAddresses.end(); iter++) {
-		SymbolDetails s = iter->second;
-		out << setw(10) << left << s.getValue() << "; " << iter->first<< endl;
+		v.push_back(iter->second);
+		m[iter->second] = iter->first;
 	}	
+	
+	
+	
+	sort(v.begin(),v.end());
+	
+	
+	for(vector<SymbolDetails>::iterator i = v.begin(); i!= v.end(); i++) {
+		out << setw(10) << left << i->getValue() << "; " << m[*i] << endl; 
+	}
 }
 
 void Program::dumpCode(ostream& out)
@@ -169,7 +183,7 @@ void Program::link()
     constAddresses[FP] = SymbolDetails(0, "CONSTANT", counter++);
     constAddresses[TEMP] = SymbolDetails(0, "CONSTANT", counter++);
     constAddresses[FPB] = SymbolDetails(0, "CONSTANT", counter++);
-    constAddresses[NEXT_FP] = SymbolDetails(0, "CONSTANT", counter++);
+    constAddresses[NEXT_FP] = SymbolDetails(4 + constantValues.size() + FT.size(), "CONSTANT", counter++);
     
 
     for (map<int, string>::iterator a = constantValues.begin(); a != constantValues.end(); a++) {
@@ -179,16 +193,16 @@ void Program::link()
     
     // Loop through FP and set constants for the size
     for(map<string, Proc*>::iterator iter = FT.begin(); iter != FT.end(); iter++) {
-				Proc* P = iter->second;
-				constAddresses["[" + name + "]"] = P->getARSize();
-		}
+		Proc* P = iter->second;
+		constAddresses["[" + iter->first + "]"] = SymbolDetails(P->getARSize(), "CONSTANT", counter++);
+	}
     
     // Calculate the addresses for labels
     map<string, int> labelValues;
-		int actualI = 0;
+	int actualI = 0;
     for ( unsigned  int i = 0; i < ralProgram.size(); i++ )
     {
-			// Enter if it's not a comment and contains a label
+		// Enter if it's not a comment and contains a label
     	if ( ralProgram[i].find(";") != 0 ) {
 	        if ( ralProgram[i].find(":") != string::npos ) {
 	            // First enter into map
@@ -197,11 +211,12 @@ void Program::link()
 	            // Next delete from that one
 	            ralProgram[i] = ralProgram[i].substr(ralProgram[i].find(":") + 1);
 	        }
-					actualI++;
+			actualI++;
     	}
     }
 
     // Time to actually do the linking in the program
+    int actualJ = 1;
     for ( unsigned int j = 0; j < ralProgram.size(); j++ )
     {
     	if ( ralProgram[j].find(";") != 0 ) {
@@ -216,9 +231,16 @@ void Program::link()
 	                out1 << t1;
 	                s1 = out1.str();
 	                ralProgram[j] = ralProgram[j].substr(0, ralProgram[j].find(" ") + 1) + s1;
+	            } else if(ralProgram[j].find(LINE) != string::npos) {
+	            	int t1 = actualJ;
+	            	string s1;
+	                stringstream out1;
+	                out1 << t1;
+	                s1 = out1.str();
+	                ralProgram[j] = ralProgram[j].substr(0, ralProgram[j].find(" ") + 1) + s1;
 	            } else {
 	            	if(constAddresses.find(tempVar) == constAddresses.end()) {
-	            		cout << "Error, unknown variable: " << tempVar << endl;
+	            		cout << "Error: unknown variable: " << tempVar << endl;
 	            		exit(1);
 	            	}
 	                int t2 = constAddresses[tempVar].getAddress();
@@ -229,6 +251,7 @@ void Program::link()
 	                ralProgram[j] = ralProgram[j].substr(0, ralProgram[j].find(" ") + 1) + s2;
 	            }
 	        }
+	        actualJ++;
     	}
     }
 }

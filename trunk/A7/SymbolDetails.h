@@ -12,7 +12,7 @@ public:
 	
 	int getValue();
 	string getType();
-	int getAddress();
+	int getAddress() const;
 	void setValue(int v);
 	void setType(string t);
 	void setAddress(int a);
@@ -22,5 +22,8 @@ private:
   string type_;
   int address_;
 };
+
+ 
+bool operator<(const SymbolDetails & left, const SymbolDetails & right);
 
 #endif

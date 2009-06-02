@@ -23,7 +23,7 @@ string SymbolDetails::getType() {
 	return type_;
 }
 
-int SymbolDetails::getAddress() {
+int SymbolDetails::getAddress() const {
 	return address_;
 }
 
@@ -39,3 +39,7 @@ void SymbolDetails::setAddress(int a) {
 	this->address_ = a;
 }
 
+
+bool operator<(const SymbolDetails & left,  const SymbolDetails & right){
+	return left.getAddress() < right.getAddress();
+}
