@@ -190,10 +190,8 @@ void Program::link()
 	
 	            // Next delete from that one
 	            ralProgram[i] = ralProgram[i].substr(ralProgram[i].find(":") + 1);
-
-							// Iterate counter of lines of code
-							actualI++;
 	        }
+					actualI++;
     	}
     }
 
