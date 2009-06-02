@@ -25,6 +25,20 @@ Program::Program(StmtList *SL)
 
 void Program::dump() {
 	dumpCode(cout);
+	ofstream fout("program.txt");
+	dumpCode(fout);
+	fout.close();
+	
+	ofstream memout("mem.txt");
+	dumpMemory(memout);
+}
+
+void Program::dumpMemory(ostream& out)
+{
+	for(map<string,SymbolDetails>::iterator iter = constAddresses.begin(); iter!=constAddresses.end(); iter++) {
+		SymbolDetails s = iter->second;
+		out << setw(10) << left << s.getValue() << "; " << iter->first<< endl;
+	}	
 }
 
 void Program::dumpCode(ostream& out)
@@ -48,8 +62,9 @@ void Program::translate()
 	int globalMemory = constantValues.size() + 4;
 	ralProgram.push_back("LD " +Number::getConstant(constantValues, globalMemory));
 	ralProgram.push_back("ST " + FP);
-	//FunCall("main", new list<Expr*>()).translate();
-	ralProgram.push_back("; CALL MAIN");
+	
+	FunCall("main", new list<Expr*>()).translate(constantValues, symbolTable, ralProgram, FT);	
+	
 	//ralProgram.push_back("halt:");
 	ralProgram.push_back("HLT");
 	
@@ -151,16 +166,15 @@ void Program::link()
     int counter = 1;
 
     // Assign Constants an address
-	constAddresses.clear(); 
-    constAddresses[FP] = counter++;
-    constAddresses[TEMP] = counter++;
-    constAddresses[FPB] = counter++;
+	
+    constAddresses[FP] = SymbolDetails(0, "CONSTANT", counter++);
+    constAddresses[TEMP] = SymbolDetails(0, "CONSTANT", counter++);
+    constAddresses[FPB] = SymbolDetails(0, "CONSTANT", counter++);
     
 
     for (map<int, string>::iterator a = constantValues.begin(); a != constantValues.end(); a++) {
     	//cout << "Constant: " << a->second << endl;
-    	constAddresses[a->second] = counter;
-        counter++;
+    	constAddresses[a->second] = SymbolDetails(a->first, "CONSTANT", counter++);
     }
     
     // Calculate the addresses for labels
@@ -198,7 +212,7 @@ void Program::link()
 	            		cout << "Error, unknown variable: " << tempVar << endl;
 	            		exit(1);
 	            	}
-	                int t2 = constAddresses[tempVar];
+	                int t2 = constAddresses[tempVar].getAddress();
 	                string s2;
 	                stringstream out2;
 	                out2 << t2;
