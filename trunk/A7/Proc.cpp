@@ -138,8 +138,8 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 	ralProgram.push_back("ADD " + Number::getConstant(constantValues, 3));
 	ralProgram.push_back("STI " + FPB);
 		
-	// (hard) Jump to start of program
-	ralProgram.push_back("JMP L_" + name_);
+	// (hard) Jump to start of progra
+	ralProgram.push_back("JMP L_" + myName);
 	 
 	ralProgram.push_back("; previous funcall should jump here");
 	
