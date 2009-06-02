@@ -27,9 +27,7 @@ public:
     void dumpCode(ostream& out);
     void dumpMemory(ostream& out);
     
-    //void eval();
     void translate();
-	void optimize();
 	void fixLabels();
 	void link();
 	void compile();
