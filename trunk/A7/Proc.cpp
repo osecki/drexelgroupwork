@@ -29,6 +29,7 @@ int Proc::getARSize() const {
 		cout << "Program error, AR size accessed before translate!" << endl;
 		exit(1);
 	}
+    cerr << NumParam_ << "\t" << vars << "\t" << temps << "\t=" << NumParam_ + vars + temps + 3 << endl;
 	return NumParam_ + vars + temps + 3;
 }
 
@@ -183,8 +184,10 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
 			(*c).second.setAddress(temps);
 	  		temps++;
         } else if (type.compare("Variable") == 0) {
-        	(*c).second.setAddress(vars);
-        	vars++;
+            if(c->first != RETURN) {
+                (*c).second.setAddress(vars);
+                vars++;
+            }
 		} else {
 			constants++;
 		}
