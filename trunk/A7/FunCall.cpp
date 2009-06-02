@@ -26,8 +26,7 @@ string FunCall::translate(map<int, string> &constantValues, map<string, SymbolDe
 	// Call apply
 	FT[name_]->apply(constantValues, symbolTable, ralProgram, FT, *AL_);
 	
-	// (hard) Jump to start of program 
-	// TODO this does not work
+	// (hard) Jump to start of program
 	ralProgram.push_back("JMP L_" + name_);
 	return "";
 }
