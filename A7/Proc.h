@@ -21,6 +21,8 @@ public:
     
     void insert(ostream& out) const;
     
+    int getARSize() const;
+    
     vector<string> getCode();
 
 private:

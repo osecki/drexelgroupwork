@@ -165,17 +165,20 @@ void Program::link()
     // Loop through the symbol table three times, giving each addresses
     int counter = 1;
 
-    // Assign Constants an address
-	
+    // Assign globals an address
     constAddresses[FP] = SymbolDetails(0, "CONSTANT", counter++);
     constAddresses[TEMP] = SymbolDetails(0, "CONSTANT", counter++);
     constAddresses[FPB] = SymbolDetails(0, "CONSTANT", counter++);
+    constAddresses[NEXT_FP] = SymbolDetails(0, "CONSTANT", counter++);
     
 
     for (map<int, string>::iterator a = constantValues.begin(); a != constantValues.end(); a++) {
     	//cout << "Constant: " << a->second << endl;
     	constAddresses[a->second] = SymbolDetails(a->first, "CONSTANT", counter++);
     }
+    
+    // loop through FP and set constants for the size
+    // [name] = P->getARSize();
     
     // Calculate the addresses for labels
     map<string, int> labelValues;

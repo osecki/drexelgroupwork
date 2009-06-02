@@ -10,6 +10,7 @@ using namespace std;
 #define FP string("FP")
 #define TEMP string("TEMP")
 #define FPB string("FPB")
+#define NEXT_FP string("NEXT_FP")
 
 class Proc;
 class FunCall;

@@ -22,6 +22,10 @@ Proc::Proc(list<string> *PL, StmtList *SL)
     ralProgram.clear();
 }
 
+int Proc::getARSize() const {
+	return NumParam_ + vars + temps + 3;
+}
+
 // Output program to stream
 void Proc::insert(ostream &out)  const {
 	for(vector<string>::const_iterator iter = ralProgram.begin(); iter!=ralProgram.end(); iter++) {
@@ -86,7 +90,6 @@ string Proc::getOffset(const string & name, map<int, string> & constants) {
 
 void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT, const list<Expr*> parameters ) {
 	// Set parameters 
-	int paramCounter = 1;
 	list<string>::iterator valueIterator = PL_->begin();
 	for(list<Expr*>::const_iterator iter = parameters.begin(); iter != parameters.end(); iter++) {
 		// Evaluate parameter
@@ -94,10 +97,11 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 		e->translate(constantValues, symbolTable, ralProgram, FT);
 		// Add parameter to symbol table for proc
 		ralProgram.push_back("STO " + getOffset(*valueIterator, constantValues));
-		paramCounter ++; 
+		valueIterator++;
 	}
 	
 	// Set PREV_FP
+	
 	
 	// Set RETURN_ADDRESS
 	
