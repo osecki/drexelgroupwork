@@ -36,7 +36,7 @@ int Proc::getARSize() const {
 void Proc::insert(ostream &out)  const {
 	for(vector<string>::const_iterator iter = ralProgram.begin(); iter!=ralProgram.end(); iter++) {
 		out << *iter << endl;
-	}	
+	}
 }
 
 // Output operator
@@ -52,13 +52,13 @@ vector<string> Proc::getCode() {
 
 int searchList(list<string> l, const string key) {
 	int spot = -1;
-	list<string>::iterator i; 
+	list<string>::iterator i;
 	for(i= l.begin(); i != l.end(); i++) {
 		spot++;
 		if(*i == key) {
 			return spot;
 		}
-	} 
+	}
 	return -1;
 }
 
@@ -67,14 +67,14 @@ string Proc::getOffset(const string & name, map<int, string> & constants) {
 	SymbolDetails s = symbolTable[name];
 	int value;
 	string type = s.getType();
-	
+
 	int spot = searchList(*PL_, name);
 	if(spot >= 0) {
-		value = spot; 
+		value = spot;
 	} else if(name.compare(PREV_FP) == 0) {
 		value = NumParam_ + vars + temps + 1;
 	} else if(name.compare(RETURN_ADDRESS) == 0) {
-		value = NumParam_ + vars + temps + 2; 
+		value = NumParam_ + vars + temps + 2;
 	} else if(name.compare(RETURN) == 0) {
 		value = NumParam_ + vars + temps + 0;
 	} else if ( type.compare("Temporary") == 0 ) {
@@ -85,9 +85,9 @@ string Proc::getOffset(const string & name, map<int, string> & constants) {
 		// TODO is this right?
 		return name;
 	}
-	
+
 	return Number::getConstant(constants, value);
-	
+
 	stringstream out;
 	out << value;
 	return out.str();
@@ -95,9 +95,9 @@ string Proc::getOffset(const string & name, map<int, string> & constants) {
 
 
 void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT, const list<Expr*> parameters, string myName) {
-	
+
 	// Set parameters
-	ralProgram.push_back("; set parameters"); 
+	ralProgram.push_back("; set parameters");
 	list<string>::iterator valueIterator = PL_->begin();
 	for(list<Expr*>::const_iterator iter = parameters.begin(); iter != parameters.end(); iter++) {
 		// Evaluate parameter
@@ -107,7 +107,7 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 		ralProgram.push_back("STO " + getOffset(*valueIterator, constantValues));
 		valueIterator++;
 	}
-	
+
 	// Set PREV_FP
 	ralProgram.push_back("; save previous FP");
 	ralProgram.push_back("LDA [" + myName + "]");
@@ -115,8 +115,8 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 	ralProgram.push_back("ADD " + NEXT_FP);
 	ralProgram.push_back("STA " + FPB);
 	ralProgram.push_back("LDA " + FP);
-	ralProgram.push_back("STI " + FPB); 
-	
+	ralProgram.push_back("STI " + FPB);
+
 	// Set FP
 	ralProgram.push_back("; set FP");
 	ralProgram.push_back("LDA " + NEXT_FP);
@@ -127,7 +127,7 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 	ralProgram.push_back("LDA " + FP);
 	ralProgram.push_back("ADD [" + myName + "]");
 	ralProgram.push_back("STA " + NEXT_FP);
-	
+
 	// Set RETURN_ADDRESS
 	ralProgram.push_back("; save return address");
 	ralProgram.push_back("LDA [" + myName + "]");
@@ -137,12 +137,12 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 	ralProgram.push_back("LDA " + LINE);
 	//ralProgram.push_back("ADD " + Number::getConstant(constantValues, 3));
 	ralProgram.push_back("STI " + FPB);
-		
+
 	// (hard) Jump to start of progra
 	ralProgram.push_back("JMP L_" + myName);
-	 
+
 	ralProgram.push_back("; previous funcall should jump here");
-	
+
 }
 
 
@@ -155,7 +155,7 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
     temps = 0;
     vars = 0;
     constants = 0;
-    
+
     // Count variables
     for (map<string, SymbolDetails>::iterator c = symbolTable.begin(); c != symbolTable.end(); c++) {
     	string type = (*c).second.getType();
@@ -168,35 +168,37 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
 		} else {
 			constants++;
 		}
-    }    
-    
+    }
+
 		ralProgram.push_back("; Back-up stack pointer");
 		ralProgram.push_back("LDA " + FP);
 		ralProgram.push_back("STA " + TEMP);
 
-    ralProgram.push_back("; Reset stack pointer"); 
+    ralProgram.push_back("; Reset stack pointer");
     ralProgram.push_back("LDO " + getOffset(PREV_FP, constantValues));
     ralProgram.push_back("STA " + FP);
-    
+
 		ralProgram.push_back("; Jump back ");
     ralProgram.push_back("LDA " + TEMP);
-    ralProgram.push_back("ADD " + getOffset(RETURN_ADDRESS, constantValues)); 
+    ralProgram.push_back("ADD " + getOffset(RETURN_ADDRESS, constantValues));
+    ralProgram.push_back("STA " + FPB);
+    ralProgram.push_back("LDI " + FPB);
     ralProgram.push_back("STA " + FPB);
     ralProgram.push_back("JMI " + FPB);
- 
+
     // Fix up all the LDO and STO calls
     for(vector<string>::iterator itr = ralProgram.begin(); itr != ralProgram.end();) {
     	string fullInstruction = *itr;
 		stringstream in(fullInstruction);
 		string instruction, address;
 		in >> instruction >> address;
-		
+
 		if(instruction == "LDO") {
 			// Remove fake instruction
 			ralProgram.erase(itr);
 			// Add indirect
 			itr = ralProgram.insert(itr, "; " + fullInstruction);
-			itr++; 
+			itr++;
 			itr = ralProgram.insert(itr, "LDA " + FP);
 			itr++;
 			itr = ralProgram.insert(itr, "ADD " + getOffset(address, constantValues));
@@ -204,12 +206,12 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
 			itr = ralProgram.insert(itr, "STA " + FPB);
 			itr++;
 			itr = ralProgram.insert(itr, "LDI " + FPB);
-			
+
 		} else if (instruction == "STO") {
 			// Remove fake instruction
 			ralProgram.erase(itr);
 			itr = ralProgram.insert(itr, "; " + fullInstruction);
-			itr++; 
+			itr++;
 			itr = ralProgram.insert(itr, "STA " + TEMP);
 			itr++;
 			itr = ralProgram.insert(itr, "LDA " + FP);
