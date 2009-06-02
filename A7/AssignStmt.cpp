@@ -30,12 +30,16 @@ void AssignStmt::translate(map<int, string> &constantValues, map<string, SymbolD
 
 	// Perform the necessary RAL instructions
 	//string offset = E_->translate(constantValues, symbolTable, ralProgram, FT);
-    
+
     // Perform the necessary RAL instructions
-	ralProgram.push_back("LDO " + E_->translate(constantValues, symbolTable, ralProgram, FT));
+    // TODO dynamic cast instead of looking at return value
+    string returnAddress = E_->translate(constantValues, symbolTable, ralProgram, FT);
+    if(returnAddress != "") {
+        ralProgram.push_back("LDO " + E_->translate(constantValues, symbolTable, ralProgram, FT));
+    }
 	ralProgram.push_back("STO " + name_);
-	
-	
+
+
 	/*
 	ralProgram.push_back("LD FP");
 	ralProgram.push_back("ADD " + offset);
@@ -46,7 +50,7 @@ void AssignStmt::translate(map<int, string> &constantValues, map<string, SymbolD
 	*/
 
 
-		
+
 	ralProgram.push_back("; -assign (" + name_ + ")");
 }
 

@@ -1,2 +1,3 @@
-x:=10;
-while x do y:= 11 - 10; x := 0 od
+define f proc(x) return:= 1 end;
+y := f(10)
+

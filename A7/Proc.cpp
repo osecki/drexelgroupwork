@@ -102,9 +102,31 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 	for(list<Expr*>::const_iterator iter = parameters.begin(); iter != parameters.end(); iter++) {
 		// Evaluate parameter
 		Expr* e = *iter;
-		e->translate(constantValues, symbolTable, ralProgram, FT);
+		string address = e->translate(constantValues, symbolTable, ralProgram, FT);
+        //ralProgram.push_back("LDO " + address);
 		// Add parameter to symbol table for proc
-		ralProgram.push_back("STO " + getOffset(*valueIterator, constantValues));
+		//ralProgram.push_back("STO " + getOffset(*valueIterator, constantValues));
+/*
+            itr = ralProgram.insert(itr, "STA " + TEMP);
+            itr++;
+            itr = ralProgram.insert(itr, "LDA " + FP);
+            itr++;
+            itr = ralProgram.insert(itr, "ADD " + getOffset(address, constantValues));
+            itr++;
+            itr = ralProgram.insert(itr, "STA " + FPB);
+            itr++;
+            itr = ralProgram.insert(itr, "LDA " + TEMP);
+            itr++;
+            itr = ralProgram.insert(itr, "STI " + FPB);
+*/
+
+        // Save the value returned
+        ralProgram.push_back("STA " + TEMP);
+        ralProgram.push_back("LDA " + getOffset(*valueIterator, constantValues));
+        ralProgram.push_back("ADD " + NEXT_FP);
+        ralProgram.push_back("STA " + FPB);
+        ralProgram.push_back("LDA " + TEMP);
+        ralProgram.push_back("STI " + FPB);
 		valueIterator++;
 	}
 
@@ -181,13 +203,18 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
     ralProgram.push_back("ADD " + getOffset(RETURN_ADDRESS, constantValues));
     ralProgram.push_back("STA " + FPB);
     ralProgram.push_back("LDI " + FPB);
-    ralProgram.push_back("STA " + TEMP);
+    ralProgram.push_back("STA " + FPB);
 
     // Save return value
     ralProgram.push_back("; before jumping get return value");
-    ralProgram.push_back("LDO " + RETURN);
+    //ralProgram.push_back("LDO " + RETURN);
+    ralProgram.push_back("LDA " + TEMP); // Temp is current FP
+    ralProgram.push_back("ADD " + getOffset(RETURN, constantValues));
+    ralProgram.push_back("STA " + TEMP); // Mangle Temp with return address
+    ralProgram.push_back("LDI " + TEMP); // Load the return value to accumulator
 
-    ralProgram.push_back("JMI " + TEMP);
+
+    ralProgram.push_back("JMI " + FPB);
 
     // Fix up all the LDO and STO calls
     for(vector<string>::iterator itr = ralProgram.begin(); itr != ralProgram.end();) {
