@@ -47,7 +47,7 @@ void Program::dumpMemory(ostream& out)
 	sort(v.begin(),v.end());
 
 	for(vector<SymbolDetails>::iterator i = v.begin(); i!= v.end(); i++) {
-		out << setw(10) << left << i->getValue() << "; " << m[*i] << endl;
+		out << setw(10) << left << i->getAddress() << " " << i->getValue() << "; " << m[*i] << endl;
 	}
 }
 
