@@ -27,7 +27,7 @@ void Program::dump() {
 	ofstream fout("program.txt");
 	dumpCode(fout);
 	fout.close();
-	
+
 	ofstream memout("mem.txt");
 	dumpMemory(memout);
 }
@@ -35,19 +35,19 @@ void Program::dump() {
 void Program::dumpMemory(ostream& out)
 {
 	// Sort map by values (big hack)
-	
+
 	vector<SymbolDetails> v;
 	map<SymbolDetails, string> m;
-	
+
 	for(map<string,SymbolDetails>::iterator iter = constAddresses.begin(); iter!=constAddresses.end(); iter++) {
 		v.push_back(iter->second);
 		m[iter->second] = iter->first;
-	}	
-	
+	}
+
 	sort(v.begin(),v.end());
-	
+
 	for(vector<SymbolDetails>::iterator i = v.begin(); i!= v.end(); i++) {
-		out << setw(10) << left << i->getValue() << "; " << m[*i] << endl; 
+		out << setw(10) << left << i->getValue() << "; " << m[*i] << endl;
 	}
 }
 
@@ -68,27 +68,27 @@ void Program::translate()
 		d->translate(constantValues, symbolTable, ralProgram, FT);
 
 	// cout << "There are " << constantValues.size() << " constants" << endl;
-	
+
 	// Constants + TEMP + SP + thisConstant
 	int globalMemory = constantValues.size() + 4;
 	//ralProgram.push_back("LD " +Number::getConstant(constantValues, globalMemory));
 	//ralProgram.push_back("ST " + FP);
-	
-	FunCall("main", new list<Expr*>()).translate(constantValues, symbolTable, ralProgram, FT);	
-	
+
+	FunCall("main", new list<Expr*>()).translate(constantValues, symbolTable, ralProgram, FT);
+
 	//ralProgram.push_back("halt:");
 	ralProgram.push_back("HLT");
-	
+
 	// Print out all the procs
 	for(map<string, Proc*>::iterator iter = FT.begin(); iter != FT.end(); iter++) {
 		Proc* p = iter->second;
 		ralProgram.push_back("; +proc(" + iter->first +")");
 		ralProgram.push_back("L_" + iter->first+":");
 		vector<string> code = p->getCode();
-		ralProgram.insert(ralProgram.end(), code.begin(), code.end());	
+		ralProgram.insert(ralProgram.end(), code.begin(), code.end());
 		ralProgram.push_back("; -proc(" + iter->first +")");
 	}
-	
+
     // Call it (with no parameters)
 }
 
@@ -149,7 +149,7 @@ void Program::compile()
 {
 	// Primary Translate
     translate();
-    
+
     // Save current state
     ofstream out("preLinking-program.txt");
     dumpCode(out);
@@ -167,28 +167,6 @@ void Program::compile()
 
 void Program::link()
 {
-	
-    // Loop through the symbol table three times, giving each addresses
-    int counter = 1;
-
-    // Assign globals an address
-    constAddresses[FP] = SymbolDetails(0, "CONSTANT", counter++);
-    constAddresses[TEMP] = SymbolDetails(0, "CONSTANT", counter++);
-    constAddresses[FPB] = SymbolDetails(0, "CONSTANT", counter++);
-    constAddresses[NEXT_FP] = SymbolDetails(5 + constantValues.size() + FT.size(), "CONSTANT", counter++);
-    
-
-    for (map<int, string>::iterator a = constantValues.begin(); a != constantValues.end(); a++) {
-    	//cout << "Constant: " << a->second << endl;
-    	constAddresses[a->second] = SymbolDetails(a->first, "CONSTANT", counter++);
-    }
-    
-    // Loop through FP and set constants for the size
-    for(map<string, Proc*>::iterator iter = FT.begin(); iter != FT.end(); iter++) {
-		Proc* P = iter->second;
-		constAddresses["[" + iter->first + "]"] = SymbolDetails(P->getARSize(), "CONSTANT", counter++);
-	}
-    
     // Calculate the addresses for labels
     map<string, int> labelValues;
 		int actualI = 1;
@@ -199,7 +177,7 @@ void Program::link()
 	        if ( ralProgram[i].find(":") != string::npos ) {
 	            // First enter into map
 	            labelValues[ralProgram[i].substr(0,ralProgram[i].find(":"))] = actualI + 1;
-	
+
 	            // Next delete from that one
 	            ralProgram[i] = ralProgram[i].substr(ralProgram[i].find(":") + 1);
 	        }
@@ -214,11 +192,34 @@ void Program::link()
 				if ( ralProgram[k].find(LINE) != string::npos) {
 					string address = Number::getConstant(constantValues, actualK + 2);
 					ralProgram[k] = ralProgram[k].substr(0, ralProgram[k].find(" ") + 1) + address;
-			  }	
+			  }
 				actualK++;
 			}
 
 		}
+
+
+
+    // Loop through the symbol table three times, giving each addresses
+    int counter = 1;
+
+    // Assign globals an address
+    constAddresses[FP] = SymbolDetails(0, "CONSTANT", counter++);
+    constAddresses[TEMP] = SymbolDetails(0, "CONSTANT", counter++);
+    constAddresses[FPB] = SymbolDetails(0, "CONSTANT", counter++);
+    constAddresses[NEXT_FP] = SymbolDetails(5 + constantValues.size() + FT.size(), "CONSTANT", counter++);
+
+
+    for (map<int, string>::iterator a = constantValues.begin(); a != constantValues.end(); a++) {
+        //cout << "Constant: " << a->second << endl;
+        constAddresses[a->second] = SymbolDetails(a->first, "CONSTANT", counter++);
+    }
+
+    // Loop through FP and set constants for the size
+    for(map<string, Proc*>::iterator iter = FT.begin(); iter != FT.end(); iter++) {
+        Proc* P = iter->second;
+        constAddresses["[" + iter->first + "]"] = SymbolDetails(P->getARSize(), "CONSTANT", counter++);
+    }
 
     // Time to actually do the linking in the program
     int actualJ = 1;
@@ -226,7 +227,7 @@ void Program::link()
     {
     	if ( ralProgram[j].find(";") != 0 ) {
 	        string tempVar = ralProgram[j].substr(ralProgram[j].find(" ") + 1);
-	
+
 	        if ( ralProgram[j].find("HLT") == string::npos) {
 	            // Need to decide if we look in symbolTable or labelTable
 	            if ( (tempVar.substr(0, 1)).compare("L") == 0 ) {
