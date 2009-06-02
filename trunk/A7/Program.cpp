@@ -71,15 +71,14 @@ void Program::translate()
 	
 	// Constants + TEMP + SP + thisConstant
 	int globalMemory = constantValues.size() + 4;
-	ralProgram.push_back("LD " +Number::getConstant(constantValues, globalMemory));
-	ralProgram.push_back("ST " + FP);
+	//ralProgram.push_back("LD " +Number::getConstant(constantValues, globalMemory));
+	//ralProgram.push_back("ST " + FP);
 	
 	FunCall("main", new list<Expr*>()).translate(constantValues, symbolTable, ralProgram, FT);	
 	
 	//ralProgram.push_back("halt:");
 	ralProgram.push_back("HLT");
 	
-
 	// Print out all the procs
 	for(map<string, Proc*>::iterator iter = FT.begin(); iter != FT.end(); iter++) {
 		Proc* p = iter->second;
@@ -90,11 +89,7 @@ void Program::translate()
 		ralProgram.push_back("; -proc(" + iter->first +")");
 	}
 	
-
     // Call it (with no parameters)
-    
-    
-    
 }
 
 void Program::fixLabels()
@@ -180,7 +175,7 @@ void Program::link()
     constAddresses[FP] = SymbolDetails(0, "CONSTANT", counter++);
     constAddresses[TEMP] = SymbolDetails(0, "CONSTANT", counter++);
     constAddresses[FPB] = SymbolDetails(0, "CONSTANT", counter++);
-    constAddresses[NEXT_FP] = SymbolDetails(4 + constantValues.size() + FT.size(), "CONSTANT", counter++);
+    constAddresses[NEXT_FP] = SymbolDetails(5 + constantValues.size() + FT.size(), "CONSTANT", counter++);
     
 
     for (map<int, string>::iterator a = constantValues.begin(); a != constantValues.end(); a++) {
@@ -196,7 +191,7 @@ void Program::link()
     
     // Calculate the addresses for labels
     map<string, int> labelValues;
-	int actualI = 0;
+		int actualI = 1;
     for ( unsigned  int i = 0; i < ralProgram.size(); i++ )
     {
 		// Enter if it's not a comment and contains a label
@@ -212,6 +207,19 @@ void Program::link()
     	}
     }
 
+		// Handle "LINE"
+		int actualK = 1;
+		for ( unsigned int k = 1; k < ralProgram.size(); k++ ) {
+			if(ralProgram[k].find(";") != 0  ) {
+				if ( ralProgram[k].find(LINE) != string::npos) {
+					string address = Number::getConstant(constantValues, actualK + 2);
+					ralProgram[k] = ralProgram[k].substr(0, ralProgram[k].find(" ") + 1) + address;
+			  }	
+				actualK++;
+			}
+
+		}
+
     // Time to actually do the linking in the program
     int actualJ = 1;
     for ( unsigned int j = 0; j < ralProgram.size(); j++ )
@@ -224,13 +232,6 @@ void Program::link()
 	            if ( (tempVar.substr(0, 1)).compare("L") == 0 ) {
 	                int t1 = labelValues[tempVar];
 	                string s1;
-	                stringstream out1;
-	                out1 << t1;
-	                s1 = out1.str();
-	                ralProgram[j] = ralProgram[j].substr(0, ralProgram[j].find(" ") + 1) + s1;
-	            } else if(ralProgram[j].find(LINE) != string::npos) {
-	            	int t1 = actualJ;
-	            	string s1;
 	                stringstream out1;
 	                out1 << t1;
 	                s1 = out1.str();
