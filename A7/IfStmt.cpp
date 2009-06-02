@@ -24,12 +24,11 @@ void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetai
 	ralProgram.push_back("LDO " + cond);
 
 	// Handle First Jumps
-	Program p;
 	string newLabel1;
 	stringstream outLabel1;
-	outLabel1 << p.labelCounter;
+	outLabel1 << Program::labelCounter;
 	newLabel1 = "L" + outLabel1.str();
-	p.labelCounter++;
+	Program::labelCounter++;
 
 	ralProgram.push_back("JMN " + newLabel1);
 	ralProgram.push_back("JMZ " + newLabel1);
@@ -40,9 +39,9 @@ void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetai
 	// Handle Second Jumps
 	string newLabel2;
 	stringstream outLabel2;
-	outLabel2 << p.labelCounter;
+	outLabel2 << Program::labelCounter;
 	newLabel2 = "L" + outLabel2.str();
-	p.labelCounter++;
+	Program::labelCounter++;
 
 	ralProgram.push_back("JMP " + newLabel2);
 
@@ -52,7 +51,7 @@ void IfStmt::translate(map<int, string> &constantValues, map<string, SymbolDetai
 
 	// Handle Last Label
 	ralProgram.push_back(newLabel2 + ":");
-	
+
 	ralProgram.push_back("; -if");
 }
 

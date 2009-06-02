@@ -108,7 +108,7 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 		valueIterator++;
 	}
 
-	// Set PREV_FP
+    // Set PREV_FP
 	ralProgram.push_back("; save previous FP");
 	ralProgram.push_back("LDA [" + myName + "]");
 	ralProgram.push_back("SUB " + Number::getConstant(constantValues, 2));
@@ -140,8 +140,16 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 
 	// (hard) Jump to start of progra
 	ralProgram.push_back("JMP L_" + myName);
+    ralProgram.push_back("; previous funcall should jump here");
 
-	ralProgram.push_back("; previous funcall should jump here");
+    /*
+    // Save return value
+    ralProgram.push_back("; save previous FP");
+    ralProgram.push_back("LDA [" + myName + "]");
+    ralProgram.push_back("SUB " + Number::getConstant(constantValues, 3));
+    ralProgram.push_back("ADD " + NEXT_FP);
+    */
+
 
 }
 

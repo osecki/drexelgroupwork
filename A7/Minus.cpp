@@ -20,8 +20,10 @@ string Minus::translate(map<int, string> &constantValues, map<string, SymbolDeta
 	  string temp1, temp2;
 		temp1 = op1_->translate(constantValues, symbolTable, ralProgram, FT);
 		temp2 = op2_->translate(constantValues, symbolTable, ralProgram, FT);
-		ralProgram.push_back("LDO " + temp1);
-		ralProgram.push_back("SUB " + temp2);
+		ralProgram.push_back("LDO " + temp2);
+        ralProgram.push_back("STA " + TEMP);
+        ralProgram.push_back("LDO " + temp1);
+		ralProgram.push_back("SUB " + TEMP);
 
 		// Handle Final Store and Temporary Variable Creation
 		Program P;
@@ -30,11 +32,11 @@ string Minus::translate(map<int, string> &constantValues, map<string, SymbolDeta
 		out << P.temporaryVarCounter;
 		newTemp = "T" + out.str();
 		P.temporaryVarCounter++;
-		
+
 		SymbolDetails newSymbolTemp(-1, "Temporary", -1);
 		symbolTable[newTemp] = newSymbolTemp;
 		ralProgram.push_back("STO " + newTemp);
-		
+
 		return newTemp;
 }
 
