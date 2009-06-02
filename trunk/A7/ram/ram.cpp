@@ -178,43 +178,43 @@ void RAM::execute()
 		switch (op) {
 		case LDA:
 			x = program[pc].operand;
-			ac = memory[x];
+			ac = memoryRead[x];
 			pc++;
 			break;
 
 		case LDI:
 			x = program[pc].operand;
-			ac = memory[memory[x]];
+			ac = memoryRead(memoryRead(x));
 			pc++;
 			break;
 
 		case STA:
 			x = program[pc].operand;
-			memory[x] = ac;
+			memoryWrite(x, ac);
 			pc++;
 			break;
 
 		case STI:
 			x = program[pc].operand;
-		  memory[memory[x]] = ac;
-		  pc++;
+		  	memoryWrite(memoryRead(x), ac);
+		  	pc++;
 			break;
 
 		case ADD:
 			x = program[pc].operand;
-			ac = ac + memory[x];
+			ac = ac + memoryRead(x);
 			pc++;
 			break;
 
 		case SUB:
 			x = program[pc].operand;
-			ac = ac - memory[x];
+			ac = ac - memoryRead(x);
 			pc++;
 			break;
 
-    case MUL:
+    		case MUL:
 			x = program[pc].operand;
-			ac = ac * memory[x];
+			ac = ac * memoryRead(x);
 			pc++;
 			break;
 
@@ -231,7 +231,7 @@ void RAM::execute()
 				pc++;
 			break;
 
-    case JMN:
+    		case JMN:
 			x = program[pc].operand;
 			if (ac < 0)
 				pc = x;
@@ -241,13 +241,77 @@ void RAM::execute()
 
 		case JMI:
 			x = program[pc].operand;
-			pc = memory[x];
+			pc = memoryRead(x);
 			break;
 
 		case HLT:
 			halted = true;
 			break;
 		}
+	}
+}
+
+int RAM::memoryRead(int x)
+{
+	if ( x < (memorySize + 1) )
+	{
+		return memory[x];
+	}
+	else
+	{
+		// Resize by creating a new array
+		T *save = new memory[memorySize * (x / memorySize + 1) + 1];
+
+		// Copy the data
+		for ( int i = 0; i < memorySize + 1; i++ )
+  			save[i] = memory[i];
+
+		// Populate the rest
+		for ( int j = memorySize + 1; j < memorySize * (x / memorySize + 1) + 1; j++)
+			save[j] = -1;
+
+		// Change the size to match
+		memorySize *= (x / memorySize + 1);
+
+		// Destroy the old array
+		delete [] memory;
+
+		// Reset to the new array
+		memory = save;
+
+		return memory[x];
+	}
+}
+
+void RAM::memoryWrite(int x, int y)
+{
+	if ( x < (memorySize + 1) )
+	{
+		memory[x] = y;
+	}
+	else
+	{
+		// Resize by creating a new array
+		T *save = new memory[memorySize * (x / memorySize + 1) + 1];
+
+		// Copy the data
+		for ( int i = 0; i < memorySize + 1; i++ )
+  			save[i] = memory[i];
+
+		// Populate the rest
+		for ( int j = memorySize + 1; j < memorySize * (x / memorySize + 1) + 1; j++)
+			save[j] = -1;
+
+		// Change the size to match
+		memorySize *= (x / memorySize + 1);
+
+		// Destroy the old array
+		delete [] memory;
+
+		// Reset to the new array
+		memory = save;
+
+		memory[x] = y;
 	}
 }
 
