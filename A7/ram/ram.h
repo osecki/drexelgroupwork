@@ -25,6 +25,9 @@ public:
 //       and memory addresses and illegal opcodes should be provided.
 	void execute();
 
+int memoryRead(int x);
+void memoryWrite(int x, int y);
+
 // Dump memory contents
 	void dump();
 
