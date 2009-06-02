@@ -73,7 +73,7 @@ void Program::translate()
 	for(map<string, Proc*>::iterator iter = FT.begin(); iter != FT.end(); iter++) {
 		Proc* p = iter->second;
 		ralProgram.push_back("; +proc(" + iter->first +")");
-		ralProgram.push_back(iter->first+":");
+		ralProgram.push_back("L_" + iter->first+":");
 		vector<string> code = p->getCode();
 		ralProgram.insert(ralProgram.end(), code.begin(), code.end());	
 		ralProgram.push_back("; -proc(" + iter->first +")");

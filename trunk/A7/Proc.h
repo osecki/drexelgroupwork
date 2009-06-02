@@ -17,6 +17,8 @@ public:
     // Generate code for the function
     void translate(map<int, string> &constantValues, map<string, Proc*> &FT);
     
+    void apply(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT, const list<Expr*> parameters);
+    
     void insert(ostream& out) const;
     
     vector<string> getCode();
@@ -24,8 +26,7 @@ public:
 private:
     StmtList *SL_;
     list<string> *PL_;
-    unsigned int NumParam_;
-    
+
     // Code for the proc
     vector<string> ralProgram;
     
@@ -35,9 +36,10 @@ private:
     // Convert an address into an actual offset
     string getOffset(const string & name, map<int, string> & constants);
     
-    int temps;
-    int vars;
-    int constants;
+    unsigned int NumParam_;
+    unsigned int temps;
+    unsigned int vars;
+    unsigned int constants;
     
 };
 

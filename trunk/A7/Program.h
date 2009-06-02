@@ -39,7 +39,6 @@ private:
     StmtList *SL_;
     map<string, SymbolDetails> constAddresses;
     map<int, string> constantValues;
-    map<string, SymbolDetails> symbolTable;
     vector<string> ralProgram;
     Proc* p;
     FunCall* f;
