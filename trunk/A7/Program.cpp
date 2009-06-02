@@ -34,7 +34,7 @@ void Program::dump() {
 
 void Program::dumpMemory(ostream& out)
 {
-	// Sort map by values
+	// Sort map by values (big hack)
 	
 	vector<SymbolDetails> v;
 	map<SymbolDetails, string> m;
@@ -44,10 +44,7 @@ void Program::dumpMemory(ostream& out)
 		m[iter->second] = iter->first;
 	}	
 	
-	
-	
 	sort(v.begin(),v.end());
-	
 	
 	for(vector<SymbolDetails>::iterator i = v.begin(); i!= v.end(); i++) {
 		out << setw(10) << left << i->getValue() << "; " << m[*i] << endl; 
