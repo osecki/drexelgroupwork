@@ -11,6 +11,7 @@ using namespace std;
 #define TEMP string("TEMP")
 #define FPB string("FPB")
 #define NEXT_FP string("NEXT_FP")
+#define LINE string("ROW")
 
 class Proc;
 class FunCall;

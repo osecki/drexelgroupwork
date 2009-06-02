@@ -20,9 +20,15 @@ Proc::Proc(list<string> *PL, StmtList *SL)
     NumParam_ = PL->size();
     symbolTable.clear();
     ralProgram.clear();
+    vars = -1;
+    temps = -1;
 }
 
 int Proc::getARSize() const {
+	if(vars < 0 || temps < 0) {
+		cout << "Program error, AR size accessed before translate!" << endl;
+		exit(1);
+	}
 	return NumParam_ + vars + temps + 3;
 }
 
@@ -88,8 +94,10 @@ string Proc::getOffset(const string & name, map<int, string> & constants) {
 }
 
 
-void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT, const list<Expr*> parameters ) {
-	// Set parameters 
+void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT, const list<Expr*> parameters, string myName) {
+	
+	// Set parameters
+	ralProgram.push_back("; set parameters"); 
 	list<string>::iterator valueIterator = PL_->begin();
 	for(list<Expr*>::const_iterator iter = parameters.begin(); iter != parameters.end(); iter++) {
 		// Evaluate parameter
@@ -101,11 +109,37 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 	}
 	
 	// Set PREV_FP
+	ralProgram.push_back("; save previous FP");
+	ralProgram.push_back("LD [" + myName + "]");
+	ralProgram.push_back("SUB " + Number::getConstant(constantValues, 2));
+	ralProgram.push_back("ADD " + NEXT_FP);
+	ralProgram.push_back("ST " + FPB);
+	ralProgram.push_back("LD " + FP);
+	ralProgram.push_back("STI " + FPB); 
 	
+	// Set FP
+	ralProgram.push_back("; set FP");
+	ralProgram.push_back("LD " + NEXT_FP);
+	ralProgram.push_back("ST " + FP);
+
+	// Update NEXT_FP based on size of Activation Record
+	ralProgram.push_back("; set " + NEXT_FP);
+	ralProgram.push_back("LD " + FP);
+	ralProgram.push_back("ADD [" + myName + "]");
+	ralProgram.push_back("ST " + NEXT_FP);
 	
 	// Set RETURN_ADDRESS
+	ralProgram.push_back("; save return address");
+	ralProgram.push_back("LD [" + myName + "]");
+	ralProgram.push_back("SUB " + Number::getConstant(constantValues, 2));
+	ralProgram.push_back("ADD " + FP);
+	ralProgram.push_back("ST " + FPB);
+	ralProgram.push_back("LD " + LINE);
+	ralProgram.push_back("ADD " + Number::getConstant(constantValues, 2));
+	ralProgram.push_back("STI " + FPB);
 	
-	// Update NEXT_FP based on size of Activation Record
+	ralProgram.push_back("; previous funcall should jump here"); 
+	
 }
 
 
