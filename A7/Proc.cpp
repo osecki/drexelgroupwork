@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 #include "StmtList.h"
 #include "Proc.h"
 #include "Program.h"
@@ -39,31 +40,69 @@ vector<string> Proc::getCode() {
 }
 
 
+int searchList(list<string> l, const string key) {
+	int spot = -1;
+	list<string>::iterator i; 
+	for(i= l.begin(); i != l.end(); i++) {
+		spot++;
+		if(*i == key) {
+			return spot;
+		}
+	} 
+	return -1;
+}
+
+
 string Proc::getOffset(const string & name, map<int, string> & constants) {
 	SymbolDetails s = symbolTable[name];
 	int value;
 	string type = s.getType();
-	if(name.compare(PREV_FP) == 0) {
-		value = NumParam_ + vars + temps + 1;
+	
+	int spot = searchList(*PL_, name);
+	if(spot >= 0) {
+		value = spot; 
+	} else if(name.compare(PREV_FP) == 0) {
+		value = NumParam_ + vars + temps + 2;
 	} else if(name.compare(RETURN_ADDRESS) == 0) {
-		value = NumParam_ + vars + temps + 2; 
+		value = NumParam_ + vars + temps + 3; 
 	} else if(name.compare(RETURN) == 0) {
-		value = NumParam_ + vars + temps;
+		value = NumParam_ + vars + temps + 1;
 	} else if ( type.compare("Temporary") == 0 ) {
   		value = NumParam_ + vars + s.getAddress();
     } else if (type.compare("Variable") == 0) {
     	value = NumParam_ + s.getAddress();
 	} else {
+		// TODO is this right?
 		return name;
 	}
 	
-	return Number::getConstant(constants, value);
+	return Number::getConstant(constants, value + 1);
 	
 	stringstream out;
 	out << value;
 	return out.str();
 }
 
+
+void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT, const list<Expr*> parameters ) {
+	// Set parameters 
+	int paramCounter = 1;
+	list<string>::iterator valueIterator = PL_->begin();
+	for(list<Expr*>::const_iterator iter = parameters.begin(); iter != parameters.end(); iter++) {
+		// Evaluate parameter
+		Expr* e = *iter;
+		e->translate(constantValues, symbolTable, ralProgram, FT);
+		// Add parameter to symbol table for proc
+		ralProgram.push_back("STO " + getOffset(*valueIterator, constantValues));
+		paramCounter ++; 
+	}
+	
+	// Set PREV_FP
+	
+	// Set RETURN_ADDRESS
+	
+	// Update NEXT_FP based on size of Activation Record
+}
 
 
 // Convert statement list into RAL code
@@ -139,7 +178,5 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
 		} else {
 			 itr++;
 		}
-		
-		// TODO - Handle JDO?
     }
 }
