@@ -18,22 +18,10 @@ string Minus::translate(map<int, string> &constantValues, map<string, SymbolDeta
 {
 	  // Handle two operands and the Load and operator
 	  string temp1, temp2;
-	  if ( OPTIMIZE)
-	  {
-			  temp1 = op2_->translate(constantValues, symbolTable, ralProgram, FT);
-			  temp2 = op1_->translate(constantValues, symbolTable, ralProgram, FT);
-
-				ralProgram.push_back("LDA " + temp2);
-				ralProgram.push_back("SUB " + temp1);
-		}
-    else
-	  {
-		    temp1 = op1_->translate(constantValues, symbolTable, ralProgram, FT);
-			  temp2 = op2_->translate(constantValues, symbolTable, ralProgram, FT);
-
-				ralProgram.push_back("LDA " + temp1);
-				ralProgram.push_back("SUB " + temp2);
-		}
+		temp1 = op1_->translate(constantValues, symbolTable, ralProgram, FT);
+		temp2 = op2_->translate(constantValues, symbolTable, ralProgram, FT);
+		ralProgram.push_back("LDO " + temp1);
+		ralProgram.push_back("SUB " + temp2);
 
 		// Handle Final Store and Temporary Variable Creation
 		Program P;
@@ -45,7 +33,7 @@ string Minus::translate(map<int, string> &constantValues, map<string, SymbolDeta
 		
 		SymbolDetails newSymbolTemp(-1, "Temporary", -1);
 		symbolTable[newTemp] = newSymbolTemp;
-		ralProgram.push_back("STA " + newTemp);
+		ralProgram.push_back("STO " + newTemp);
 		
 		return newTemp;
 }

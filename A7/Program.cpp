@@ -131,20 +131,6 @@ void Program::fixLabels()
     }
 }
 
-void Program::optimize()
-{
-    // Iterate through, looking for Store followed by Load with same variable.
-    // If this is found, Delete the load
-    for ( unsigned int i = 0; i < ralProgram.size() - 1; i++ ) {
-        if ( ralProgram[i].find("STA") == 0 && ralProgram[i+1].find("LDA") == 0 &&
-            (ralProgram[i].substr(3)).compare(ralProgram[i+1].substr(3)) == 0 ){
-            // Delete the Load
-            vector<string>::iterator temp = ralProgram.begin() + i;
-            ralProgram.erase(temp + 1, temp + 2);
-        }
-    }
-}
-
 void Program::compile()
 {
 	// Primary Translate
@@ -154,10 +140,6 @@ void Program::compile()
     ofstream out("preLinking-program.txt");
     dumpCode(out);
     out.close();
-
-    if (OPTIMIZE) {
-        optimize();
-    }
 
     fixLabels();
 

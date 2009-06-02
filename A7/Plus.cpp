@@ -18,22 +18,10 @@ string Plus::translate(map<int, string> &constantValues, map<string, SymbolDetai
 {
 	// Handle two operands
   string temp1, temp2;
-	if ( OPTIMIZE)
-	{
-		string temp1 = op2_->translate(constantValues, symbolTable, ralProgram, FT);
-		string temp2 = op1_->translate(constantValues, symbolTable, ralProgram, FT);
-	
-		 ralProgram.push_back("LDO " + temp2);
-		 ralProgram.push_back("ADD " + temp1);			 
-	}
-	else
-	{
-		string temp1 = op1_->translate(constantValues, symbolTable, ralProgram, FT);
-		string temp2 = op2_->translate(constantValues, symbolTable, ralProgram, FT);
-	
-		 ralProgram.push_back("LDO " + temp1);
-		 ralProgram.push_back("ADD " + temp2);			 
-	}
+	temp1 = op1_->translate(constantValues, symbolTable, ralProgram, FT);
+	temp2 = op2_->translate(constantValues, symbolTable, ralProgram, FT);
+	ralProgram.push_back("LDO " + temp1);
+	ralProgram.push_back("ADD " + temp2);
 
 	// Handle Final Store and Temporary Variable Creation
 	Program P;
