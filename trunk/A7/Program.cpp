@@ -179,15 +179,20 @@ void Program::link()
     
     // Calculate the addresses for labels
     map<string, int> labelValues;
+		int actualI = 0;
     for ( unsigned  int i = 0; i < ralProgram.size(); i++ )
     {
+			// Enter if it's not a comment and contains a label
     	if ( ralProgram[i].find(";") != 0 ) {
 	        if ( ralProgram[i].find(":") != string::npos ) {
 	            // First enter into map
-	            labelValues[ralProgram[i].substr(0,ralProgram[i].find(":"))] = i + 1;
+	            labelValues[ralProgram[i].substr(0,ralProgram[i].find(":"))] = actualI + 1;
 	
 	            // Next delete from that one
 	            ralProgram[i] = ralProgram[i].substr(ralProgram[i].find(":") + 1);
+
+							// Iterate counter of lines of code
+							actualI++;
 	        }
     	}
     }
