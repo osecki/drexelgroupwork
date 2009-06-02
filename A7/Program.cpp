@@ -151,14 +151,14 @@ void Program::link()
 {
     // Calculate the addresses for labels
     map<string, int> labelValues;
-		int actualI = 1;
+    int actualI = 1;
     for ( unsigned  int i = 0; i < ralProgram.size(); i++ )
     {
 		// Enter if it's not a comment and contains a label
     	if ( ralProgram[i].find(";") != 0 ) {
 	        if ( ralProgram[i].find(":") != string::npos ) {
 	            // First enter into map
-	            labelValues[ralProgram[i].substr(0,ralProgram[i].find(":"))] = actualI + 1;
+	            labelValues[ralProgram[i].substr(0,ralProgram[i].find(":"))] = actualI;
 
 	            // Next delete from that one
 	            ralProgram[i] = ralProgram[i].substr(ralProgram[i].find(":") + 1);
@@ -167,18 +167,18 @@ void Program::link()
     	}
     }
 
-		// Handle "LINE"
-		int actualK = 1;
-		for ( unsigned int k = 1; k < ralProgram.size(); k++ ) {
-			if(ralProgram[k].find(";") != 0  ) {
-				if ( ralProgram[k].find(LINE) != string::npos) {
-					string address = Number::getConstant(constantValues, actualK + 2);
-					ralProgram[k] = ralProgram[k].substr(0, ralProgram[k].find(" ") + 1) + address;
-			  }
-				actualK++;
-			}
+    // Handle "LINE"
+    int actualK = 1;
+    for ( unsigned int k = 1; k < ralProgram.size(); k++ ) {
+        if(ralProgram[k].find(";") != 0  ) {
+            if ( ralProgram[k].find(LINE) != string::npos) {
+                string address = Number::getConstant(constantValues, actualK + 3);
+                ralProgram[k] = ralProgram[k].substr(0, ralProgram[k].find(" ") + 1) + address;
+            }
+            actualK++;
+        }
 
-		}
+    }
 
 
 
