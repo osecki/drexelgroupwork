@@ -11,7 +11,7 @@ using namespace std;
 // Constructors
 
 RAM::RAM() {
-	const int DEFMEMSIZE = 100;
+	const int DEFMEMSIZE = 10;
 	const int DEFPROGSIZE = 50;
 	memorySize = DEFMEMSIZE;
 	programSize = DEFPROGSIZE;

@@ -137,11 +137,16 @@ void Program::compile()
     translate();
 
     // Save current state
-    ofstream out("preLinking-program.txt");
-    dumpCode(out);
-    out.close();
+    ofstream out1("preLabel-program.txt");
+    dumpCode(out1);
+    out1.close();
 
     fixLabels();
+
+    ofstream out2("preLinking-program.txt");
+    dumpCode(out2);
+    out2.close();
+
 
     link();
 }
@@ -162,8 +167,10 @@ void Program::link()
 
 	            // Next delete from that one
 	            ralProgram[i] = ralProgram[i].substr(ralProgram[i].find(":") + 1);
-	        }
-			actualI++;
+                i--;
+	        } else {
+                actualI++;
+            }
     	}
     }
 
