@@ -8,15 +8,18 @@ FunCall::FunCall(string name, list<Expr*> *AL)
     AL_ = AL;
 }
 
-FunCall::~FunCall() { delete AL_; }
+FunCall::~FunCall() { 
+	delete AL_; 
+}
 
-/*Element* FunCall::eval(map<string,Element*> NT, map<string,Proc*> FT) const
-{
-    return FT[name_]->apply(NT, FT, AL_);
-}*/
 
 string FunCall::translate(map<int, string> &constantValues, map<string, SymbolDetails> &symbolTable, vector<string> &ralProgram, map<string, Proc*> &FT) const
 {
-	// TODO
+	// Load up parameters, previous FP, return address
+	
+	// Call apply
+	
+	// (hard) Jump to start of program 
+	ralProgram.push_back("JMP L_" + name_);
 	return "";
 }

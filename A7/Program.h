@@ -23,6 +23,8 @@ public:
 		//~Program() {delete SL_; };
 	void dump();
     void dumpCode(ostream& out);
+    void dumpMemory(ostream& out);
+    
     //void eval();
     void translate();
 	void optimize();
@@ -35,7 +37,7 @@ public:
     static int labelCounter;
 private:
     StmtList *SL_;
-    map<string, int> constAddresses;
+    map<string, SymbolDetails> constAddresses;
     map<int, string> constantValues;
     map<string, SymbolDetails> symbolTable;
     vector<string> ralProgram;
