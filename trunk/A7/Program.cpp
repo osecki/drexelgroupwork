@@ -23,13 +23,15 @@ Program::Program(StmtList *SL)
 }
 
 void Program::dump() {
-	dumpCode(cout);
 	ofstream fout("program.txt");
 	dumpCode(fout);
 	fout.close();
 
 	ofstream memout("mem.txt");
 	dumpMemory(memout);
+
+    cout << "Final program: program.txt has " << ralProgram.size() << " lines." << endl
+         << "Initial memory: mem.txt has " << constAddresses.size() << " lines" << endl;
 }
 
 void Program::dumpMemory(ostream& out)
@@ -67,17 +69,9 @@ void Program::translate()
     map<string, SymbolDetails> symbolTable;
 		d->translate(constantValues, symbolTable, ralProgram, FT);
 
-	// cout << "There are " << constantValues.size() << " constants" << endl;
-
-	// Constants + TEMP + SP + thisConstant
-	//int globalMemory = constantValues.size() + 4;
-	//ralProgram.push_back("LD " +Number::getConstant(constantValues, globalMemory));
-	//ralProgram.push_back("ST " + FP);
-
 	FunCall("main", new list<Expr*>()).translate(constantValues, symbolTable, ralProgram, FT);
     ralProgram.pop_back();
 
-	//ralProgram.push_back("halt:");
 	ralProgram.push_back("HLT");
 
 	// Print out all the procs
