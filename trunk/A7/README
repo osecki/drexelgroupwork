@@ -55,11 +55,17 @@ Running the code:
 -To run the code, run "make" to first compile it. To run, then do
 "./Compiler < inputFile".  It will print output and it will create a file
 "program.txt" and "mem.txt" to run in the RAM simulator. To run that, compile
-it and run the main. It will ask for program and memory size, followed by file paths.
--The example from the slide is included in samples/*, along with many other
-examples. You need to know the number of lines in each file to run them.
-Samples contains some sample examples with different types of procs, and
-their resulting outputs.
+it (g++ *.cpp *.h -o RAM) and run the main (./RAM). It will ask for program 
+and memory size, followed by file paths. You will need to calculate their lines.
+
+*** The "main()" activation record is put first, so look for the results of
+variables in main() right below the last spot in initial memory. (I.E. if
+you have two variables in main, and initial memory is size 30, look at slots
+31 and 32 for your ending variables results). ***
+
+-Examples are included in samples/*. You need to know the number of lines 
+in each file to run them. Samples contains some sample examples with different
+types of procs, and their resulting outputs are included there as well.
 
 How the code works:
 -The code works through starting with the code from Lecture 2c and then
@@ -75,7 +81,7 @@ function calls are made.
 
 Testing:
 -Testing was done using the files in samples/*. They all test a bunch of
-programs being converted, and there is the officialInput file for a
+programs being converted, and there are many example files for a
 comprehensive test, along with its program.txt and mem.txt for its
 output.
 

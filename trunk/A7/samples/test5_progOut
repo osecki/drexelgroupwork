@@ -1,0 +1,503 @@
+; set parameters
+; save previous FP
+LDA 29
+SUB 7
+ADD 4
+STA 3
+LDA 1
+STI 3
+; set FP
+LDA 4
+STA 1
+; set NEXT_FP
+LDA 1
+ADD 29
+STA 4
+; save return address
+LDA 29
+SUB 6
+ADD 1
+STA 3
+LDA 24
+STI 3
+JMP 328
+; previous funcall should jump here
+HLT
+; +proc(add)
+; +assign (z)
+; LDO x
+LDA 1
+ADD 5
+STA 3
+LDI 3
+; STO T1
+STA 2
+LDA 1
+ADD 10
+STA 3
+LDA 2
+STI 3
+; LDO y
+LDA 1
+ADD 6
+STA 3
+LDI 3
+; STO T2
+STA 2
+LDA 1
+ADD 11
+STA 3
+LDA 2
+STI 3
+; LDO T2
+LDA 1
+ADD 11
+STA 3
+LDI 3
+STA 2
+; LDO T1
+LDA 1
+ADD 10
+STA 3
+LDI 3
+ADD 2
+; STO T3
+STA 2
+LDA 1
+ADD 12
+STA 3
+LDA 2
+STI 3
+; LDO x
+LDA 1
+ADD 5
+STA 3
+LDI 3
+; STO T4
+STA 2
+LDA 1
+ADD 13
+STA 3
+LDA 2
+STI 3
+; LDO y
+LDA 1
+ADD 6
+STA 3
+LDI 3
+; STO T5
+STA 2
+LDA 1
+ADD 14
+STA 3
+LDA 2
+STI 3
+; LDO T5
+LDA 1
+ADD 14
+STA 3
+LDI 3
+STA 2
+; LDO T4
+LDA 1
+ADD 13
+STA 3
+LDI 3
+ADD 2
+; STO T6
+STA 2
+LDA 1
+ADD 15
+STA 3
+LDA 2
+STI 3
+; LDO T6
+LDA 1
+ADD 15
+STA 3
+LDI 3
+; STO z
+STA 2
+LDA 1
+ADD 9
+STA 3
+LDA 2
+STI 3
+; -assign (z)
+; +assign (return)
+; LDO z
+LDA 1
+ADD 9
+STA 3
+LDI 3
+; STO T7
+STA 2
+LDA 1
+ADD 16
+STA 3
+LDA 2
+STI 3
+; LDO z
+LDA 1
+ADD 9
+STA 3
+LDI 3
+; STO T8
+STA 2
+LDA 1
+ADD 17
+STA 3
+LDA 2
+STI 3
+; LDO T8
+LDA 1
+ADD 17
+STA 3
+LDI 3
+; STO return
+STA 2
+LDA 1
+ADD 18
+STA 3
+LDA 2
+STI 3
+; -assign (return)
+; Back-up stack pointer
+LDA 1
+STA 2
+; Reset stack pointer
+; LDO C14
+LDA 1
+ADD 19
+STA 3
+LDI 3
+STA 1
+; Jump back 
+LDA 2
+ADD 20
+STA 3
+LDI 3
+STA 3
+; before jumping get return value
+LDA 2
+ADD 18
+STA 2
+LDI 2
+JMI 3
+; -proc(add)
+; +proc(addthendouble)
+; +assign (z)
+; set parameters
+; LDO x
+LDA 1
+ADD 5
+STA 3
+LDI 3
+; STO T9
+STA 2
+LDA 1
+ADD 20
+STA 3
+LDA 2
+STI 3
+STA 2
+LDA 5
+ADD 4
+STA 3
+LDA 2
+STI 3
+; LDO y
+LDA 1
+ADD 6
+STA 3
+LDI 3
+; STO T10
+STA 2
+LDA 1
+ADD 11
+STA 3
+LDA 2
+STI 3
+STA 2
+LDA 6
+ADD 4
+STA 3
+LDA 2
+STI 3
+; save previous FP
+LDA 27
+SUB 7
+ADD 4
+STA 3
+LDA 1
+STI 3
+; set FP
+LDA 4
+STA 1
+; set NEXT_FP
+LDA 1
+ADD 27
+STA 4
+; save return address
+LDA 27
+SUB 6
+ADD 1
+STA 3
+LDA 25
+STI 3
+JMP 20
+; previous funcall should jump here
+; STO z
+STA 2
+LDA 1
+ADD 10
+STA 3
+LDA 2
+STI 3
+; -assign (z)
+; +assign (w)
+; LDO z
+LDA 1
+ADD 10
+STA 3
+LDI 3
+; STO T11
+STA 2
+LDA 1
+ADD 12
+STA 3
+LDA 2
+STI 3
+; + number
+LDA 7
+; STO T12
+STA 2
+LDA 1
+ADD 13
+STA 3
+LDA 2
+STI 3
+; - number
+; LDO T12
+LDA 1
+ADD 13
+STA 3
+LDI 3
+STA 2
+; LDO T11
+LDA 1
+ADD 12
+STA 3
+LDI 3
+MUL 2
+; STO T13
+STA 2
+LDA 1
+ADD 14
+STA 3
+LDA 2
+STI 3
+; LDO z
+LDA 1
+ADD 10
+STA 3
+LDI 3
+; STO T14
+STA 2
+LDA 1
+ADD 15
+STA 3
+LDA 2
+STI 3
+; + number
+LDA 7
+; STO T15
+STA 2
+LDA 1
+ADD 16
+STA 3
+LDA 2
+STI 3
+; - number
+; LDO T15
+LDA 1
+ADD 16
+STA 3
+LDI 3
+STA 2
+; LDO T14
+LDA 1
+ADD 15
+STA 3
+LDI 3
+MUL 2
+; STO T16
+STA 2
+LDA 1
+ADD 17
+STA 3
+LDA 2
+STI 3
+; LDO T16
+LDA 1
+ADD 17
+STA 3
+LDI 3
+; STO w
+STA 2
+LDA 1
+ADD 7
+STA 3
+LDA 2
+STI 3
+; -assign (w)
+; +assign (return)
+; LDO w
+LDA 1
+ADD 7
+STA 3
+LDI 3
+; STO T17
+STA 2
+LDA 1
+ADD 18
+STA 3
+LDA 2
+STI 3
+; LDO w
+LDA 1
+ADD 7
+STA 3
+LDI 3
+; STO T18
+STA 2
+LDA 1
+ADD 19
+STA 3
+LDA 2
+STI 3
+; LDO T18
+LDA 1
+ADD 19
+STA 3
+LDI 3
+; STO return
+STA 2
+LDA 1
+ADD 21
+STA 3
+LDA 2
+STI 3
+; -assign (return)
+; Back-up stack pointer
+LDA 1
+STA 2
+; Reset stack pointer
+; LDO C17
+LDA 1
+ADD 22
+STA 3
+LDI 3
+STA 1
+; Jump back 
+LDA 2
+ADD 23
+STA 3
+LDI 3
+STA 3
+; before jumping get return value
+LDA 2
+ADD 21
+STA 2
+LDI 2
+JMI 3
+; -proc(addthendouble)
+; +proc(main)
+; +assign (addthendoubleten)
+; set parameters
+; + number
+LDA 7
+; STO T19
+STA 2
+LDA 1
+ADD 6
+STA 3
+LDA 2
+STI 3
+; - number
+STA 2
+LDA 5
+ADD 4
+STA 3
+LDA 2
+STI 3
+; + number
+LDA 8
+; STO T20
+STA 2
+LDA 1
+ADD 7
+STA 3
+LDA 2
+STI 3
+; - number
+STA 2
+LDA 6
+ADD 4
+STA 3
+LDA 2
+STI 3
+; save previous FP
+LDA 28
+SUB 7
+ADD 4
+STA 3
+LDA 1
+STI 3
+; set FP
+LDA 4
+STA 1
+; set NEXT_FP
+LDA 1
+ADD 28
+STA 4
+; save return address
+LDA 28
+SUB 6
+ADD 1
+STA 3
+LDA 26
+STI 3
+JMP 149
+; previous funcall should jump here
+; STO addthendoubleten
+STA 2
+LDA 1
+ADD 5
+STA 3
+LDA 2
+STI 3
+; -assign (addthendoubleten)
+; Back-up stack pointer
+LDA 1
+STA 2
+; Reset stack pointer
+; LDO C4
+LDA 1
+ADD 9
+STA 3
+LDI 3
+STA 1
+; Jump back 
+LDA 2
+ADD 10
+STA 3
+LDI 3
+STA 3
+; before jumping get return value
+LDA 2
+ADD 8
+STA 2
+LDI 2
+JMI 3
+; -proc(main)
