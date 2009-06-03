@@ -1,0 +1,13 @@
+define add
+  proc(x,y)
+    z := x+y;
+    return := z
+end;
+define addthendouble
+  proc(x,y)
+    z := add(x,y);
+    w := z * 2;
+    return := w
+end;
+
+addthendoubletwenty:=addthendouble( add(2, 3) , 3 + 2)
