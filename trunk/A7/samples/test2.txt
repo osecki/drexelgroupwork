@@ -1,0 +1,7 @@
+define add
+  proc(x,y)
+    z := x+y;
+    return := z
+end;
+
+addfive:=add(2,3)
