@@ -75,6 +75,7 @@ void Program::translate()
 	//ralProgram.push_back("ST " + FP);
 
 	FunCall("main", new list<Expr*>()).translate(constantValues, symbolTable, ralProgram, FT);
+    ralProgram.pop_back();
 
 	//ralProgram.push_back("halt:");
 	ralProgram.push_back("HLT");
