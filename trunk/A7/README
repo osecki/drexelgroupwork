@@ -1,34 +1,27 @@
-Assignment 6
+Assignment 7
 CS550 Programming Languages
-Spring 2009, 5/27/2009
+Spring 2009, 6/3/2009
 Team: (Group 7) Jordan Osecki, Geoff Oxholm and Alimore Reza
-Team Lead on this Assignment:  Osecki and Reza
+Team Lead on this Assignment:  Oxholm
 
 Implemented successfully are the following parts:
--Part 1:  Extended RAM to have MUL and JMN
--Part 2:  Provided translate() method to build up a vector of RAL
-instructions
--Part 3:  Provided optimize() method to optimize the vector
--Part 4:  Modified the symbol table accordingly
--Part 5:  Provided link() method to convert to absolute RAL
--Part 6:  Provided compile() method
--Part 7:  Dump program and memory configuration to files for RAM simulation
-use
+-Part 1:  Updated language to Lecture 2C
+-Part 2:  Updated RAM simulator to handle JMI
+-Part 3:  Implemented a run-time stack to store activation records
+-Part 4:  Adjusted translate() methods and apply() in proc
+-Part 5:  Modified the symbol table accordingly
+-Part 6:  Implemented the link() method
+-Part 7:  Implemented the compile() method
+-Part 8:  Created output method which saves program.txt and memory.txt
 
 Notes:
--For peephole optimization, our program will switch the order in which
-math computations are done. They are purposely computed backwards in
-optimization mode in order to line up an extra "ST X, LD X" situation. Then
-the ST-LD situations are taken care of, with the LD instruction being
-deleted.
--One issue is our symbol table is in a map, which doesn't order correctly,
-so the temporary variable addresses aren't the same if there are more than 9
-temporaries (it orders 1, 10, 11, ..., 2, 21, ..., etc.)
--There seemed to mistakenly be a missing LD in the example slide
--Our optimize flag is set up through the makefile, similar to how our static
-and dynamic option was.
--Added support for nested ifs and while loops and the multiple label issue.
-There is a test file for it in samples/*.
+-Our A7 does not support optimization, as it was not required.
+-We modified RAM to support dynamic memory re-sizing, so that as activation
+records are added, it expands to handle it.
+-We treat main as its own type of proc, without a return. The activation
+records are created in the order that they are called.
+-Instead of modifying RAM to have it start the PC at main, the program is
+hard-coded to begin with a funCall to main().
 
 Files Included:
 
@@ -47,6 +40,9 @@ Files Included:
 -Times.h/.cpp - Mini-compiler File
 -Minus.h/.cpp - Mini-compiler File
 -Ident.h/.cpp - Mini-compiler File
+-DefineStmt.h/.cpp - Mini-compiler File
+-Proc.h/.cpp - Mini-compiler File
+-FunCall.h/.cpp - Mini-compiler File
 
 -SymbolDetails.h/.cpp - Has data structure for new symbol table
 
@@ -56,30 +52,30 @@ Files Included:
 
 Running the code:
 
--To run the code, run make flex and parse. To compile it with any
-optimizations, type 'make compile'. For optimizations, type 'make
-compileOptimize'. To run it without optimizations, use ./Compiler < input.
-To run it with optimizations, use ./CompilerOptimize < input. It will print
-output, but it will create a file "prog.txt" and "mem.txt" to run in the RAM
-simulator. To run that, compile it and run the main. It will ask for program
-and memory size, followed by file paths.
--The example from the slide is included in samples/*. Prog.txt will have 57
-lines unoptimized, 44 optimized. There are 22 instructions. When you run it
-in RAM, you will see fact = 120, n = -5, and i = 0. Samples/ contains the
-prog.txt and mem.txt for this example optimized and unoptimized.
+-To run the code, run "make" to first compile it. To run, then do
+"./Compiler < inputFile".  It will print output and it will create a file
+"program.txt" and "mem.txt" to run in the RAM simulator. To run that, compile
+it and run the main. It will ask for program and memory size, followed by file paths.
+-The example from the slide is included in samples/*, along with many other
+examples. You need to know the number of lines in each file to run them.
+Samples contains some sample examples with different types of procs, and
+their resulting outputs.
 
 How the code works:
--The code works through starting with the code from Lecture 2b and then
-making a translate() method just lik eval(), which builds a vector and edits
-a new symbol table. After it is over, optimize works as described in
-"Notes", changing the vector. Then addresses for the symbols and labels are
+-The code works through starting with the code from Lecture 2c and then
+making a translate() method just like eval(), which builds a vector and edits
+a new symbol table. After it is over, addresses for the symbols and labels are
 calculated, and substituted into the list. Then the two files are created.
+With the additionm of Procs, this has caused much of the control code to be
+moved to Proc.cpp in the translate() and apply() methods there. Main is
+treated as a proc and there is a funCall at the beginning of each program
+that hard-codedly calls main(). A function table keeps track of the
+functions and there are activation records which will expand memory as more
+function calls are made.
 
 Testing:
 -Testing was done using the files in samples/*. They all test a bunch of
-programs being converted, and there is the slideExample* files for everything
-asked for the example from the slides, along with its prog.txt and mem.txt for its
+programs being converted, and there is the officialInput file for a
+comprehensive test, along with its program.txt and mem.txt for its
 output.
--The official 'sample input' and 'sample output' provided is in
-slideExample and all of the prog/mem.txt's, respectively.
 
