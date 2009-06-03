@@ -20,8 +20,10 @@ string Times::translate(map<int, string> &constantValues, map<string, SymbolDeta
     string temp1, temp2;
 		temp1 = op1_->translate(constantValues, symbolTable, ralProgram, FT);
 		temp2 = op2_->translate(constantValues, symbolTable, ralProgram, FT);
+		ralProgram.push_back("LDO " + temp2);
+		ralProgram.push_back("STA " + TEMP);
 		ralProgram.push_back("LDO " + temp1);
-		ralProgram.push_back("MUL " + temp2); 	
+		ralProgram.push_back("MUL " + TEMP); 	
 
 		// Handle Final Store and Temporary Variable Creation
 		Program P;

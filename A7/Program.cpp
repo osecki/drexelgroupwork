@@ -70,7 +70,7 @@ void Program::translate()
 	// cout << "There are " << constantValues.size() << " constants" << endl;
 
 	// Constants + TEMP + SP + thisConstant
-	int globalMemory = constantValues.size() + 4;
+	//int globalMemory = constantValues.size() + 4;
 	//ralProgram.push_back("LD " +Number::getConstant(constantValues, globalMemory));
 	//ralProgram.push_back("ST " + FP);
 

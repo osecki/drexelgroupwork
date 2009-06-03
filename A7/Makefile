@@ -1,7 +1,6 @@
 CC=g++-4.2
 C=gcc-4.2
-OPTIMIZE=false
-CFLAGS = -Wall -g -DOPTIMIZE=$(OPTIMIZE)
+CFLAGS = -Wall -g
 SRC_FILES=interpreter.tab.cpp AssignStmt.cpp FunCall.cpp IfStmt.cpp Minus.cpp Plus.cpp Program.cpp SymbolDetails.cpp WhileStmt.cpp DefineStmt.cpp Ident.cpp Number.cpp Proc.cpp StmtList.cpp Times.cpp
 OBJECT_FILES=$(SRC_FILES:.cpp=.o)
 
@@ -26,7 +25,6 @@ interpreter.tab.c interpreter.tab.h: interpreter.y
 	bison -d *.y	
 
 interpreter.tab.o: interpreter.tab.h interpreter.tab.c
-
 
 $(OBJECT_FILES): %.o: %.cpp
 	$(CC) -c $(CFLAGS) $< -o $@
