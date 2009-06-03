@@ -63,6 +63,11 @@ variables in main() right below the last spot in initial memory. (I.E. if
 you have two variables in main, and initial memory is size 30, look at slots
 31 and 32 for your ending variables results). ***
 
+*** Sometimes there are just so many variables (i.e. recursion) that it will
+scroll off of the screen in the printed output from RAM. If this occurs,
+simply output the result to a file and look in the appropriate slots for
+your variable answers. ***
+
 -Examples are included in samples/*. You need to know the number of lines 
 in each file to run them. Samples contains some sample examples with different
 types of procs, and their resulting outputs are included there as well.
