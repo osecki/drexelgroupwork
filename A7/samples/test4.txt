@@ -1,0 +1,14 @@
+define add
+  proc(x,y)
+    z := x+y;
+    return := z
+end;
+define addthendouble
+  proc(x,y)
+    z := add(x,y);
+    w := z * 2;
+    return := z
+end;
+
+addfive:=add(2,3);
+addthendoubleten:=addthendouble(2,3)

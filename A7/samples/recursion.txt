@@ -1,0 +1,8 @@
+define recuradd
+  proc(x)
+    z := x-1;
+    if x then return := x + recuradd(z)
+    else return := 0 fi
+end;
+
+recurfifteen:=recuradd(5)

@@ -1,0 +1,7 @@
+define inc
+  proc(x)
+    z := x+1;
+    return := z
+end;
+
+incfive:=inc(4)

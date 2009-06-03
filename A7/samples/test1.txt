@@ -1,0 +1,13 @@
+define add
+  proc(x,y)
+    z := x+y;
+    return := z
+end;
+define mult
+  proc(x,y)
+    z := x*y;
+    return := z
+end;
+
+addfive:=add(2,3);
+multsix:=mult(2,3)
