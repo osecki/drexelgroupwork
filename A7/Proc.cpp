@@ -29,7 +29,7 @@ int Proc::getARSize() const {
 		cout << "Program error, AR size accessed before translate!" << endl;
 		exit(1);
 	}
-    cerr << NumParam_ << "\t" << vars << "\t" << temps << "\t=" << NumParam_ + vars + temps + 3 << endl;
+
 	return NumParam_ + vars + temps + 3;
 }
 
