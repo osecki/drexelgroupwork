@@ -104,23 +104,6 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 		// Evaluate parameter
 		Expr* e = *iter;
 		string address = e->translate(constantValues, symbolTable, ralProgram, FT);
-        //ralProgram.push_back("LDO " + address);
-		// Add parameter to symbol table for proc
-		//ralProgram.push_back("STO " + getOffset(*valueIterator, constantValues));
-/*
-            itr = ralProgram.insert(itr, "STA " + TEMP);
-            itr++;
-            itr = ralProgram.insert(itr, "LDA " + FP);
-            itr++;
-            itr = ralProgram.insert(itr, "ADD " + getOffset(address, constantValues));
-            itr++;
-            itr = ralProgram.insert(itr, "STA " + FPB);
-            itr++;
-            itr = ralProgram.insert(itr, "LDA " + TEMP);
-            itr++;
-            itr = ralProgram.insert(itr, "STI " + FPB);
-*/
-
         // Save the value returned
         ralProgram.push_back("STA " + TEMP);
         ralProgram.push_back("LDA " + getOffset(*valueIterator, constantValues));
@@ -158,7 +141,6 @@ void Proc::apply(map<int, string> &constantValues, map<string, SymbolDetails> &s
 	ralProgram.push_back("ADD " + FP);
 	ralProgram.push_back("STA " + FPB);
 	ralProgram.push_back("LDA " + LINE);
-	//ralProgram.push_back("ADD " + Number::getConstant(constantValues, 3));
 	ralProgram.push_back("STI " + FPB);
 
 	// (hard) Jump to start of progra
@@ -215,7 +197,6 @@ void Proc::translate(map<int, string> &constantValues, map<string, Proc*> &FT)
     ralProgram.push_back("ADD " + getOffset(RETURN, constantValues));
     ralProgram.push_back("STA " + TEMP); // Mangle Temp with return address
     ralProgram.push_back("LDI " + TEMP); // Load the return value to accumulator
-
 
     ralProgram.push_back("JMI " + FPB);
 

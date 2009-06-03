@@ -26,12 +26,11 @@ string Minus::translate(map<int, string> &constantValues, map<string, SymbolDeta
 		ralProgram.push_back("SUB " + TEMP);
 
 		// Handle Final Store and Temporary Variable Creation
-		Program P;
 		string newTemp;
 		stringstream out;
-		out << P.temporaryVarCounter;
+		out << Program::temporaryVarCounter;
 		newTemp = "T" + out.str();
-		P.temporaryVarCounter++;
+		Program::temporaryVarCounter++;
 
 		SymbolDetails newSymbolTemp(-1, "Temporary", -1);
 		symbolTable[newTemp] = newSymbolTemp;

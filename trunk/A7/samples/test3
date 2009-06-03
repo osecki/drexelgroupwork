@@ -4,4 +4,4 @@ define inc
     return := z
 end;
 
-incfive:=inc(4)
+incfive:=inc(4)+1
